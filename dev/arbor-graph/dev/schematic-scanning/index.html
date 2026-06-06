@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Arbor — Building Graph</title>
+<title>Arbor — Exposed Structure</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #0a0a0f; color: #e0e0e0; font-family: 'Inter', 'Segoe UI', sans-serif; overflow: hidden; }
 
   #canvas-container { position: fixed; inset: 0; }
-
   #ui { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
 
-  /* Header */
   #header {
     position: absolute; top: 0; left: 0; right: 0;
     padding: 16px 20px;
@@ -22,78 +20,59 @@
   #header .subtitle { font-size: 12px; color: #666; }
   #stats { margin-left: auto; font-size: 11px; color: #555; letter-spacing: 0.05em; }
 
-  /* Legend */
+  #hover-readout {
+    position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+    background: rgba(10,10,15,0.9); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 6px 12px; font-size: 12px; color: #ddd;
+    pointer-events: none; opacity: 0; transition: opacity 0.12s; white-space: nowrap;
+  }
+  #hover-readout.visible { opacity: 1; }
+  #hover-readout .htype { color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-left: 8px; }
+
   #legend {
     position: absolute; bottom: 20px; left: 20px;
     background: rgba(10,10,15,0.85); backdrop-filter: blur(8px);
     border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px; padding: 12px 14px;
-    pointer-events: auto;
+    border-radius: 8px; padding: 12px 14px; pointer-events: auto;
   }
   #legend h3 { font-size: 10px; font-weight: 600; color: #555; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 11px; color: #aaa; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .legend-line { width: 20px; height: 2px; flex-shrink: 0; }
   .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
 
-  /* Info panel */
-  #panel {
-    position: absolute; top: 64px; right: 20px;
-    width: 240px;
-    background: rgba(10,10,15,0.92); backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 10px; padding: 16px;
-    pointer-events: auto;
-    opacity: 0; transform: translateX(10px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-  #panel.visible { opacity: 1; transform: translateX(0); }
-  #panel-type-badge {
-    display: inline-block; padding: 2px 8px; border-radius: 4px;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; margin-bottom: 10px;
-  }
-  #panel-label { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-  #panel-id { font-size: 11px; color: #555; margin-bottom: 12px; font-family: monospace; }
-  #panel-meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 11px; }
-  #panel-meta .key { color: #555; }
-  #panel-meta .val { color: #ccc; }
-  #panel-close {
-    position: absolute; top: 10px; right: 12px;
-    background: none; border: none; color: #555; cursor: pointer;
-    font-size: 16px; line-height: 1;
-  }
-  #panel-close:hover { color: #ccc; }
-
-  /* Floor filter */
-  #floor-filter {
-    position: absolute; top: 64px; left: 20px;
+  #controls {
+    position: absolute; top: 64px; left: 20px; width: 168px;
     background: rgba(10,10,15,0.85); backdrop-filter: blur(8px);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px; padding: 12px 14px;
-    pointer-events: auto; max-height: calc(100vh - 160px); overflow-y: auto;
+    pointer-events: auto; max-height: calc(100vh - 200px); overflow-y: auto;
   }
-  #floor-filter h3 { font-size: 10px; font-weight: 600; color: #555; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  #controls h3 { font-size: 10px; font-weight: 600; color: #555; letter-spacing: 0.12em; text-transform: uppercase; margin: 10px 0 8px; }
+  #controls h3:first-child { margin-top: 0; }
   .floor-btn {
     display: block; width: 100%; text-align: left;
     background: none; border: none; color: #888; cursor: pointer;
     font-size: 11px; padding: 4px 6px; border-radius: 4px;
-    transition: background 0.1s, color 0.1s;
-    white-space: nowrap;
+    transition: background 0.1s, color 0.1s; white-space: nowrap;
   }
   .floor-btn:hover { background: rgba(255,255,255,0.05); color: #ccc; }
   .floor-btn.active { background: rgba(255,255,255,0.1); color: #fff; }
   .floor-btn.all { color: #4a90d9; }
-  #stair-toggle {
-    margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);
+  .chk { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #aaa; cursor: pointer; padding: 3px 0; }
+  .chk input { accent-color: #4a90d9; }
+  .sep { border-top: 1px solid rgba(255,255,255,0.08); margin: 10px 0 0; padding-top: 4px; }
+  #reset-btn {
+    margin-top: 10px; width: 100%; padding: 6px;
+    background: rgba(255,107,74,0.12); border: 1px solid rgba(255,107,74,0.3);
+    color: #ff9a7a; border-radius: 6px; cursor: pointer; font-size: 11px;
   }
-  #stair-toggle label { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #aaa; cursor: pointer; }
+  #reset-btn:hover { background: rgba(255,107,74,0.2); }
 
-  /* Controls hint */
-  #hints {
+  #stack-hud {
     position: absolute; bottom: 20px; right: 20px;
-    font-size: 10px; color: #444; text-align: right; line-height: 1.8;
+    font-size: 11px; color: #888; text-align: right; line-height: 1.7; pointer-events: none;
   }
+  #stack-hud .keys { color: #555; font-size: 10px; }
+  #stack-hud b { color: #ddd; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -103,45 +82,45 @@
   <div id="header">
     <div>
       <h1>ARBOR · Bankside Yards</h1>
-      <div class="subtitle">Building 1 — Room Graph Network</div>
+      <div class="subtitle">Building 1 — Exposed Structure (floors · inner walls · doors · stairs)</div>
     </div>
     <div id="stats">Loading...</div>
   </div>
 
-  <div id="floor-filter">
+  <div id="hover-readout"></div>
+
+  <div id="controls">
     <h3>Floors</h3>
     <button class="floor-btn all active" data-floor="all">All Floors</button>
-    <div id="stair-toggle">
-      <label><input type="checkbox" id="cores-checkbox" checked> Show stairs &amp; lifts</label>
-    </div>
-  </div>
+    <div id="floor-list"></div>
 
-  <div id="panel">
-    <button id="panel-close">✕</button>
-    <div id="panel-type-badge"></div>
-    <div id="panel-label"></div>
-    <div id="panel-id"></div>
-    <div id="panel-meta"></div>
+    <h3 class="sep">Show Types</h3>
+    <div id="type-filters"></div>
+
+    <h3 class="sep">Detail</h3>
+    <div id="detail-filters"></div>
+
+    <button id="reset-btn">Reset hidden</button>
   </div>
 
   <div id="legend">
-    <h3>Room Type</h3>
-    <div class="legend-item"><div class="legend-dot" style="background:#4a90d9"></div> Office</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#9b9b9b"></div> Core (Lift/Stair)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#7ed321"></div> Circulation</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#f5a623"></div> Plant</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#bd10e0"></div> Amenity</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#50e3c2"></div> Residential</div>
+    <h3>Floor Type</h3>
+    <div class="legend-item"><div class="legend-swatch" style="background:#4a90d9"></div> Office</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#bd10e0"></div> Amenity</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#7ed321"></div> Circulation</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#9b9b9b"></div> Core</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#f5a623"></div> Plant</div>
     <hr style="border-color:rgba(255,255,255,0.08);margin:8px 0">
-    <h3>Circulation</h3>
-    <div class="legend-item"><div class="legend-swatch" style="background:#ff6b4a"></div> Stair (3D run)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#c8ccd8"></div> Inner wall</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ffffff"></div> Door</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ff6b4a"></div> Stair (solid run)</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#50e3c2;opacity:0.5"></div> Lift shaft</div>
-    <div class="legend-item"><div class="legend-line" style="background:#3a5a8a"></div> Intra-floor edge</div>
   </div>
 
-  <div id="hints">
-    Drag to orbit · Scroll to zoom · Click node to inspect<br>
-    Pick a floor to isolate it — stairs stay visible
+  <div id="stack-hud">
+    <div><b id="hud-hidden">0</b> hidden</div>
+    <div class="keys">click = hide · <b>B</b> undo · <b>N</b> redo</div>
+    <div class="keys">drag orbit · scroll zoom</div>
   </div>
 </div>
 
@@ -157,6 +136,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 // ── Colour palette ────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
@@ -166,21 +146,24 @@ const TYPE_COLORS = {
   plant:       0xf5a623,
   amenity:     0xbd10e0,
   residential: 0x50e3c2,
-  external:    0x444444,
-  unknown:     0x555555,
+  external:    0x556644,
+  unknown:     0x666677,
 };
-const TYPE_HEX = {
-  office:      '#4a90d9',
-  core:        '#9b9b9b',
-  circulation: '#7ed321',
-  plant:       '#f5a623',
-  amenity:     '#bd10e0',
-  residential: '#50e3c2',
-  external:    '#444444',
-  unknown:     '#555555',
+const STAIR_COLOR     = 0xff6b4a;
+const LIFT_COLOR      = 0xff3df0;  // lift shafts: distinct glowing magenta, own colour
+const DOOR_COLOR      = 0xffffff;
+const PARTITION_COLOR = 0xc8ccd8;
+const OUTER_WALL_COLOR = 0x8a94b0;  // building envelope (smoothed outline)
+
+// Plants are clutter → off by default. Everything else on.
+const categoryEnabled = {
+  office: true, amenity: true, core: true, circulation: true,
+  residential: true, external: true, unknown: true, plant: false,
 };
-const STAIR_COLOR = 0xff6b4a;
-const LIFT_COLOR  = 0x50e3c2;
+let coresEnabled      = true;   // vertical stairs/lifts
+let partitionsEnabled = true;   // inner walls
+let outerWallsEnabled = true;   // building envelope (outer walls)
+let labelsEnabled     = false;  // room name sprites
 
 // ── Scene ─────────────────────────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -190,54 +173,90 @@ renderer.setClearColor(0x0a0a0f);
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0a0a0f, 0.006);
+scene.fog = new THREE.FogExp2(0x0a0a0f, 0.0045);
 
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
-camera.position.set(34, 38, 48);
+camera.position.set(40, 44, 56);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.06;
 controls.minDistance = 5;
-controls.maxDistance = 240;
-controls.target.set(11, 18, 11);
+controls.maxDistance = 280;
+controls.target.set(11, 24, 11);
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
-scene.add(ambientLight);
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
 const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-dirLight.position.set(30, 80, 30);
+dirLight.position.set(30, 90, 30);
 scene.add(dirLight);
-const dirLight2 = new THREE.DirectionalLight(0x6688cc, 0.3);
-dirLight2.position.set(-40, 20, -30);
+const dirLight2 = new THREE.DirectionalLight(0x6688cc, 0.35);
+dirLight2.position.set(-40, 30, -30);
 scene.add(dirLight2);
 
 // ── Layout constants ──────────────────────────────────────────────────────────
-const SCALE_XY = 20;   // normalised 0-1 → world units
-const SCALE_Z  = 1.0;  // z (metres) → world units (already in metres)
-const FLOOR_W  = 22;   // square floor plate width/depth in world units
-const FLOOR_H  = 0.10; // floor plate thickness
-const NODE_R   = 0.28; // sphere radius
+const SCALE_XY    = 20;    // normalised 0-1 → world units
+const SCALE_Z     = 1.0;   // z (metres) → world units
+const FLOOR_W     = 22;    // square reference plate per level
+const PLATE_H     = 0.08;
+const SLAB_H      = 0.18;  // per-room floor tile thickness
+const PARTITION_H = 2.4;   // inner wall height (storey spacing is 3.5m)
+const WALL_T      = 0.07;  // wall panel thickness (thinner = crisper sections)
+const DOOR_H      = 2.0;
+const MIN_FOOT    = 0.6;   // min footprint / wall length (avoid slivers)
 
 // ── State ───────────────────────────────────────────────────────────────────
 let graphData = null;
-const nodeMeshes = [];        // flat list for raycasting
-const floorGroups = {};       // String(level) → THREE.Group (nodes + intra-edges + plate + label)
-const coresGroup = new THREE.Group();   // vertical circulation: stair runs + lift shafts
-scene.add(coresGroup);
-let selectedMesh = null;
+let wallsData = null;     // M1: real wall segments from vector_extract.py (walls.json)
+const pickables = [];     // leaf meshes for raycasting (each has userData.hideTarget)
+const hideUnits = [];     // unique Object3D units that visibility applies to
+const undoStack = [];
+const redoStack = [];
 let activeFloor = 'all';
 
-function worldPos(node) {
-  return new THREE.Vector3(
-    node.x * SCALE_XY,
-    node.z * SCALE_Z,
-    node.y * SCALE_XY
-  );
+const slabMat = new Map();   // type → shared material (room floor tile)
+function slabMatFor(type) {
+  if (slabMat.has(type)) return slabMat.get(type);
+  const color = TYPE_COLORS[type] ?? TYPE_COLORS.unknown;
+  const m = new THREE.MeshStandardMaterial({
+    color, emissive: color, emissiveIntensity: 0.18,
+    transparent: true, opacity: 0.42, roughness: 0.5, metalness: 0.05,
+  });
+  slabMat.set(type, m);
+  return m;
+}
+const partitionMat = new THREE.MeshStandardMaterial({
+  color: PARTITION_COLOR, emissive: PARTITION_COLOR, emissiveIntensity: 0.06,
+  transparent: true, opacity: 0.5, roughness: 0.7, side: THREE.DoubleSide,
+});
+const doorMat = new THREE.MeshStandardMaterial({
+  color: DOOR_COLOR, emissive: DOOR_COLOR, emissiveIntensity: 0.25,
+  transparent: true, opacity: 0.75, roughness: 0.4,
+});
+const coreMat = new THREE.MeshStandardMaterial({
+  color: TYPE_COLORS.core, emissive: TYPE_COLORS.core, emissiveIntensity: 0.18,
+  transparent: true, opacity: 0.6, roughness: 0.55,
+});
+
+// register a hide unit + its pickable leaves
+function registerUnit(unit, leaves, ud) {
+  unit.userData = Object.assign({ manualHidden: false }, ud);
+  hideUnits.push(unit);
+  for (const leaf of leaves) {
+    leaf.userData = leaf.userData || {};
+    leaf.userData.hideTarget = unit;
+    pickables.push(leaf);
+  }
 }
 
-// ── 3D circulation geometry ─────────────────────────────────────────────────
-// Switchback stair tower between a lower and upper landing.
+// ── Vertical circulation (kept solid, spans floors) ──────────────────────────
+const coresGroup = new THREE.Group();
+scene.add(coresGroup);
+
+// Switchback stair for one storey. Steps are CONNECTED: treads are contiguous
+// (full width, no gaps) and each has a riser closing the vertical gap to the step
+// below, so the flight reads as one continuous staircase. A landing joins the two
+// flights, and the run spans the full storey (lower.y → upper.y) so consecutive
+// storeys' runs stack end-to-end.
 function makeStairRun(pa, pb) {
   const lower = pa.y <= pb.y ? pa : pb;
   const upper = pa.y <= pb.y ? pb : pa;
@@ -245,266 +264,517 @@ function makeStairRun(pa, pb) {
   const rise = upper.y - lower.y;
   if (rise < 0.01) return g;
 
-  const flights = 2;
-  const perFlight = 5;
-  const total = flights * perFlight;
-  const runLen = 2.0;           // horizontal extent of one flight (world units)
-  const treadW = runLen / perFlight;
-  const treadGeo = new THREE.BoxGeometry(treadW * 0.92, 0.07, 1.0);
   const mat = new THREE.MeshStandardMaterial({
     color: STAIR_COLOR, emissive: STAIR_COLOR, emissiveIntensity: 0.3, roughness: 0.5,
   });
+  const cx = (lower.x + upper.x) / 2, cz = (lower.z + upper.z) / 2;
 
-  const cx = (lower.x + upper.x) / 2;
-  const cz = (lower.z + upper.z) / 2;
-  for (let i = 0; i < total; i++) {
-    const t = (i + 0.5) / total;
-    const y = lower.y + rise * t + 0.08;
-    const flight = Math.floor(i / perFlight);
-    const inFlight = i % perFlight;
-    const sign = flight % 2 === 0 ? 1 : -1;
-    const xoff = sign * ((inFlight + 0.5) / perFlight - 0.5) * runLen;
-    const zoff = flight % 2 === 0 ? -0.55 : 0.55;
-    const m = new THREE.Mesh(treadGeo, mat);
-    m.position.set(cx + xoff, y, cz + zoff);
+  const perFlight = 6, flights = 2, total = perFlight * flights;
+  const stepRise = rise / total;
+  const flightRun = 2.2;                  // horizontal span of one flight
+  const treadW = flightRun / perFlight;   // contiguous tread depth-along-travel
+  const treadDepth = 0.9;                 // width across the flight
+  const zHalf = treadDepth / 2 + 0.05;    // the two parallel flights offset in z
+  const treadThick = Math.min(0.07, stepRise * 0.5);
+
+  const addBox = (w, h, d, x, y, z) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    m.position.set(x, y, z);
     g.add(m);
+  };
+
+  for (let i = 0; i < total; i++) {
+    const flight = Math.floor(i / perFlight), inFlight = i % perFlight;
+    const dir = flight % 2 === 0 ? 1 : -1;
+    const z = cz + (flight % 2 === 0 ? -zHalf : zHalf);
+    const xStart = cx - dir * flightRun / 2;
+    const x = xStart + dir * (inFlight + 0.5) * treadW;
+    const yTop = lower.y + (i + 1) * stepRise;
+    addBox(treadW, treadThick, treadDepth, x, yTop, z);                        // tread
+    addBox(treadThick, stepRise, treadDepth, x - dir * treadW / 2,             // riser
+      yTop - stepRise / 2, z);
   }
-  // central stringer line so the tower reads as continuous
-  const lineGeo = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(cx, lower.y, cz),
-    new THREE.Vector3(cx, upper.y, cz),
-  ]);
-  g.add(new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: STAIR_COLOR, transparent: true, opacity: 0.35 })));
+  // landing joining the two flights at the turn (top of flight 0)
+  const yLand = lower.y + perFlight * stepRise;
+  const xTurn = cx + flightRun / 2;
+  addBox(treadW, treadThick, 2 * zHalf + treadDepth, xTurn, yLand, cz);
   return g;
 }
 
-// Translucent lift shaft column between two stops.
-function makeLiftShaft(pa, pb) {
-  const h = Math.abs(pb.y - pa.y);
-  if (h < 0.01) return null;
-  const geo = new THREE.BoxGeometry(0.8, h, 0.8);
+// One continuous lift shaft running the served height of the building as four thin,
+// glassy, glowing walls (a see-through tube) so the vertical transport reads clearly
+// through the structure. cx/cz = plan position (world), y0..y1 = served height range.
+// OVERRUN bridges the one-storey gap between range-sheet segments (lifts extract per
+// 4-floor sheet) so the shaft reads continuous up the building. SCALE_Z*3.5 ≈ a storey.
+const LIFT_SIZE = 1.1, LIFT_WALL_T = 0.06, LIFT_OVERRUN = 3.7;
+function buildLiftColumn(cx, cz, y0, y1) {
+  const g = new THREE.Group();
+  const top = y1 + LIFT_OVERRUN;          // motor-room overrun above top served floor
+  const h = top - y0;
+  if (h < 0.01) return g;
+  const yc = (y0 + top) / 2;
+  const half = LIFT_SIZE / 2;
   const mat = new THREE.MeshStandardMaterial({
-    color: LIFT_COLOR, emissive: LIFT_COLOR, emissiveIntensity: 0.18,
-    transparent: true, opacity: 0.22, roughness: 0.3,
+    color: LIFT_COLOR, emissive: LIFT_COLOR, emissiveIntensity: 0.55,
+    transparent: true, opacity: 0.16, roughness: 0.2, side: THREE.DoubleSide,
   });
-  const m = new THREE.Mesh(geo, mat);
-  m.position.set((pa.x + pb.x) / 2, (pa.y + pb.y) / 2, (pa.z + pb.z) / 2);
-  return m;
+  const addWall = (w, d, x, z) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    m.position.set(x, yc, z);
+    g.add(m);
+  };
+  addWall(LIFT_SIZE, LIFT_WALL_T, cx, cz - half);  // front
+  addWall(LIFT_SIZE, LIFT_WALL_T, cx, cz + half);  // back
+  addWall(LIFT_WALL_T, LIFT_SIZE, cx - half, cz);  // left
+  addWall(LIFT_WALL_T, LIFT_SIZE, cx + half, cz);  // right
+  // bright vertical edge posts so the shaft pops even at distance
+  const postMat = new THREE.MeshStandardMaterial({
+    color: LIFT_COLOR, emissive: LIFT_COLOR, emissiveIntensity: 0.9, roughness: 0.3,
+  });
+  for (const sx of [-half, half]) for (const sz of [-half, half]) {
+    const p = new THREE.Mesh(new THREE.BoxGeometry(0.05, h, 0.05), postMat);
+    p.position.set(cx + sx, yc, cz + sz);
+    g.add(p);
+  }
+  return g;
+}
+
+// ── Inner-wall builders (with door gap) ──────────────────────────────────────
+// Wall running along X, centred at (xc, zc), spanning `len` in X.
+function wallAlongX(group, xc, zc, len, baseY, mat) {
+  const wallY = baseY + PARTITION_H / 2;
+  if (len < 2.0) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(len, PARTITION_H, WALL_T), mat);
+    m.position.set(xc, wallY, zc); group.add(m); return;
+  }
+  const doorW = Math.min(1.4, len * 0.45), seg = (len - doorW) / 2, offs = doorW / 2 + seg / 2;
+  for (const s of [-1, 1]) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(seg, PARTITION_H, WALL_T), mat);
+    m.position.set(xc + s * offs, wallY, zc); group.add(m);
+  }
+  const door = new THREE.Mesh(new THREE.BoxGeometry(doorW * 0.9, DOOR_H, WALL_T * 0.6), doorMat);
+  door.position.set(xc, baseY + DOOR_H / 2, zc); group.add(door);
+}
+// Wall running along Z, centred at (xc, zc), spanning `len` in Z.
+function wallAlongZ(group, xc, zc, len, baseY, mat) {
+  const wallY = baseY + PARTITION_H / 2;
+  if (len < 2.0) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(WALL_T, PARTITION_H, len), mat);
+    m.position.set(xc, wallY, zc); group.add(m); return;
+  }
+  const doorW = Math.min(1.4, len * 0.45), seg = (len - doorW) / 2, offs = doorW / 2 + seg / 2;
+  for (const s of [-1, 1]) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(WALL_T, PARTITION_H, seg), mat);
+    m.position.set(xc, wallY, zc + s * offs); group.add(m);
+  }
+  const door = new THREE.Mesh(new THREE.BoxGeometry(WALL_T * 0.6, DOOR_H, doorW * 0.9), doorMat);
+  door.position.set(xc, baseY + DOOR_H / 2, zc); group.add(door);
 }
 
 // ── Build scene ─────────────────────────────────────────────────────────────
+let roomCount = 0, partitionCount = 0, doorCount = 0;
+
+function worldXZ(n) { return [n.x * SCALE_XY, n.y * SCALE_XY]; }
+
+// Room → floor tile (hero) + outline + optional label.
+function buildRoom(node) {
+  const type = node.type;
+  const [cx, cz] = worldXZ(node);
+  const baseY = node.z * SCALE_Z;
+  const wWorld = Math.max((node.w || 0) * SCALE_XY, MIN_FOOT);
+  const dWorld = Math.max((node.h || 0) * SCALE_XY, MIN_FOOT);
+  const fl = String(node.floor);
+
+  const geo = new THREE.BoxGeometry(wWorld, SLAB_H, dWorld);
+  const slab = new THREE.Mesh(geo, slabMatFor(type));
+  slab.position.set(cx, baseY + SLAB_H / 2, cz);
+  const outline = new THREE.LineSegments(
+    new THREE.EdgesGeometry(geo),
+    new THREE.LineBasicMaterial({ color: TYPE_COLORS[type] ?? 0x888888, transparent: true, opacity: 0.6 })
+  );
+  outline.position.copy(slab.position);
+  scene.add(slab); scene.add(outline);
+  registerUnit(slab, [slab], { type, floorLevel: fl, label: node.label, kind: 'floor', id: node.id, outline });
+  roomCount++;
+
+  // Room label (toggle, default off) — not pickable, follows floor + labels flag.
+  const sprite = makeTextSprite(node.label, '#cdd6e6', 18);
+  sprite.position.set(cx, baseY + 1.1, cz);
+  sprite.scale.set(4.5, 1.1, 1);
+  scene.add(sprite);
+  registerUnit(sprite, [], { isLabel: true, floorLevel: fl, label: node.label, kind: 'label' });
+}
+
+function buildCoreMarker(node) {
+  const [cx, cz] = worldXZ(node);
+  const baseY = node.z * SCALE_Z;
+  const m = new THREE.Mesh(new THREE.BoxGeometry(0.7, PARTITION_H * 0.85, 0.7), coreMat);
+  m.position.set(cx, baseY + PARTITION_H * 0.425, cz);
+  scene.add(m);
+  registerUnit(m, [m], { type: 'core', floorLevel: String(node.floor), label: node.label, kind: 'core', id: node.id });
+}
+
+// Inner wall = partition between two neighbouring rooms (one per intra-link).
+// Placed at the midline on the shared boundary → never on the external envelope.
+function buildPartition(a, b) {
+  const ax = a.x * SCALE_XY, az = a.y * SCALE_XY, bx = b.x * SCALE_XY, bz = b.y * SCALE_XY;
+  const aw = Math.max((a.w || 0) * SCALE_XY, MIN_FOOT), ad = Math.max((a.h || 0) * SCALE_XY, MIN_FOOT);
+  const bw = Math.max((b.w || 0) * SCALE_XY, MIN_FOOT), bd = Math.max((b.h || 0) * SCALE_XY, MIN_FOOT);
+  const baseY = a.z * SCALE_Z;
+  const dx = bx - ax, dz = bz - az;
+  const g = new THREE.Group();
+
+  if (Math.abs(dx) >= Math.abs(dz)) {
+    // vertical interface → wall runs along Z at x = midpoint
+    const x = (ax + bx) / 2;
+    const lo = Math.max(az - ad / 2, bz - bd / 2), hi = Math.min(az + ad / 2, bz + bd / 2);
+    let len = hi - lo, zc = (lo + hi) / 2;
+    if (len < MIN_FOOT) { len = Math.min(ad, bd) * 0.8; zc = (az + bz) / 2; }
+    wallAlongZ(g, x, zc, len, baseY, partitionMat);
+  } else {
+    const z = (az + bz) / 2;
+    const lo = Math.max(ax - aw / 2, bx - bw / 2), hi = Math.min(ax + aw / 2, bx + bw / 2);
+    let len = hi - lo, xc = (lo + hi) / 2;
+    if (len < MIN_FOOT) { len = Math.min(aw, bw) * 0.8; xc = (ax + bx) / 2; }
+    wallAlongX(g, xc, z, len, baseY, partitionMat);
+  }
+  scene.add(g);
+  registerUnit(g, g.children, {
+    type: '__partition__', isPartition: true, floorLevel: String(a.floor),
+    label: `Partition · ${a.label} ↔ ${b.label}`, kind: 'partition',
+  });
+  partitionCount++; doorCount++;
+}
+
+// Merge a floor's wall segments (normalised 0-1) into ONE BufferGeometry of thin
+// vertical panels. Excluded from pickables (rooms stay the click targets).
+const _UP = new THREE.Vector3(0, 1, 0);
+function mergeWallSegs(segs, baseY, thickness) {
+  const geoms = [];
+  for (const [x1, y1, x2, y2] of segs) {
+    const ax = x1 * SCALE_XY, az = y1 * SCALE_XY, bx = x2 * SCALE_XY, bz = y2 * SCALE_XY;
+    const dx = bx - ax, dz = bz - az;
+    const len = Math.hypot(dx, dz);
+    if (len < 1e-3) continue;
+    const g = new THREE.BoxGeometry(len, PARTITION_H, thickness);
+    const q = new THREE.Quaternion().setFromAxisAngle(_UP, -Math.atan2(dz, dx));
+    g.applyMatrix4(new THREE.Matrix4().compose(
+      new THREE.Vector3((ax + bx) / 2, baseY + PARTITION_H / 2, (az + bz) / 2),
+      q, new THREE.Vector3(1, 1, 1)));
+    geoms.push(g);
+  }
+  if (!geoms.length) return null;
+  const merged = mergeGeometries(geoms, false);
+  geoms.forEach(g => g.dispose());
+  return merged;
+}
+
+// Real walls from walls.json (vector_extract.py). Outer envelope and inner partitions
+// build as SEPARATE merged meshes per floor (decision 2A) with independent toggles:
+// inner → partitionsEnabled, outer → outerWallsEnabled.
+function buildVectorWalls(graph, walls) {
+  const zByLevel = {};
+  for (const fl of graph.floors) zByLevel[String(fl.level)] = fl.z * SCALE_Z;
+  const innerMat = new THREE.MeshStandardMaterial({
+    color: PARTITION_COLOR, transparent: true, opacity: 0.5, roughness: 0.85,
+    side: THREE.DoubleSide,
+  });
+  const outerMat = new THREE.MeshStandardMaterial({
+    color: OUTER_WALL_COLOR, transparent: true, opacity: 0.32, roughness: 0.9,
+    side: THREE.DoubleSide,
+  });
+  let innerCount = 0, outerCount = 0;
+  for (const [lvl, fl] of Object.entries(walls.floors)) {
+    const baseY = zByLevel[lvl];
+    if (baseY === undefined) continue;
+    // backward-compat: old schema was a flat array (treat as inner)
+    const inner = Array.isArray(fl) ? fl : (fl.inner || []);
+    const outer = Array.isArray(fl) ? [] : (fl.outer || []);
+
+    const innerGeo = mergeWallSegs(inner, baseY, WALL_T);
+    if (innerGeo) {
+      const mesh = new THREE.Mesh(innerGeo, innerMat);
+      scene.add(mesh);
+      registerUnit(mesh, [], {
+        type: '__vwall__', isPartition: true, floorLevel: lvl,
+        label: `Inner walls · L${lvl}`, kind: 'wall',
+      });
+      innerCount++; partitionCount += 1;
+    }
+    const outerGeo = mergeWallSegs(outer, baseY, WALL_T * 1.5);
+    if (outerGeo) {
+      const mesh = new THREE.Mesh(outerGeo, outerMat);
+      scene.add(mesh);
+      registerUnit(mesh, [], {
+        type: '__outerwall__', isOuterWall: true, floorLevel: lvl,
+        label: `Outer walls · L${lvl}`, kind: 'outerwall',
+      });
+      outerCount++;
+    }
+  }
+  console.log(`[viewer] vector walls: ${innerCount} inner + ${outerCount} outer floor-meshes`);
+}
+
 function buildScene(graph) {
   const nodeById = {};
   for (const n of graph.nodes) nodeById[n.id] = n;
 
-  // One group per floor
+  // Per-level reference plate (faint, hideable)
   for (const fl of graph.floors) {
-    const grp = new THREE.Group();
-    grp.userData = { floorLevel: String(fl.level) };
-    floorGroups[String(fl.level)] = grp;
-    scene.add(grp);
-
     const y = fl.z * SCALE_Z;
-
-    // Square floor plate (dimmed) + square outline so the building reads as stacked floors
-    const geo = new THREE.BoxGeometry(FLOOR_W, FLOOR_H, FLOOR_W);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, transparent: true, opacity: 0.16, roughness: 0.85 });
-    const plate = new THREE.Mesh(geo, mat);
-    plate.position.set(FLOOR_W / 2, y - FLOOR_H / 2, FLOOR_W / 2);
-    grp.add(plate);
-
-    const edges = new THREE.EdgesGeometry(geo);
-    const outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x33334d, transparent: true, opacity: 0.5 }));
+    const geo = new THREE.BoxGeometry(FLOOR_W, PLATE_H, FLOOR_W);
+    const plate = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0x1a1a2e, transparent: true, opacity: 0.06, roughness: 0.9 }));
+    plate.position.set(FLOOR_W / 2, y - PLATE_H, FLOOR_W / 2);
+    const outline = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: 0x33334d, transparent: true, opacity: 0.35 }));
     outline.position.copy(plate.position);
-    grp.add(outline);
+    scene.add(plate); scene.add(outline);
+    registerUnit(plate, [plate], { type: '__plate__', floorLevel: String(fl.level), label: fl.label, kind: 'plate', outline });
 
-    const sprite = makeTextSprite(fl.label, '#667');
+    const sprite = makeTextSprite(fl.label, '#667', 24);
     sprite.position.set(-1.5, y, FLOOR_W + 0.5);
-    grp.add(sprite);
+    scene.add(sprite);
   }
 
-  // Intra-floor edges → grouped into their floor group
-  const intraByFloor = {};
-  for (const e of graph.edges) {
-    if (e.type !== 'intra') continue;
-    const a = nodeById[e.source], b = nodeById[e.target];
-    if (!a || !b) continue;
-    const fl = String(a.floor);
-    (intraByFloor[fl] ??= []).push(worldPos(a), worldPos(b));
-  }
-  for (const [fl, pts] of Object.entries(intraByFloor)) {
-    if (!floorGroups[fl]) continue;
-    const geo = new THREE.BufferGeometry().setFromPoints(pts);
-    const line = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: 0x3a5a8a, transparent: true, opacity: 0.45 }));
-    floorGroups[fl].add(line);
+  // Rooms (cores → markers, others → floor tiles)
+  for (const n of graph.nodes) {
+    if (n.type === 'core') buildCoreMarker(n);
+    else buildRoom(n);
   }
 
-  // Inter-floor edges → 3D vertical circulation, classified by core type
+  // Inner walls. Prefer real vector walls (walls.json) when present; the merged
+  // per-floor mesh replaces the adjacency-derived partitions (decision 2A + retire
+  // buildPartition). Fall back to adjacency partitions only if walls.json is absent.
+  if (wallsData) {
+    buildVectorWalls(graph, wallsData);
+  } else {
+    for (const e of graph.edges) {
+      if (e.type !== 'intra') continue;
+      const a = nodeById[e.source], b = nodeById[e.target];
+      if (!a || !b || String(a.floor) !== String(b.floor)) continue;
+      buildPartition(a, b);
+    }
+  }
+
+  // Vertical circulation from inter-floor links
   for (const e of graph.edges) {
     if (e.type !== 'inter') continue;
     const a = nodeById[e.source], b = nodeById[e.target];
     if (!a || !b) continue;
-    const pa = worldPos(a), pb = worldPos(b);
+    const pa = new THREE.Vector3(a.x * SCALE_XY, a.z * SCALE_Z, a.y * SCALE_XY);
+    const pb = new THREE.Vector3(b.x * SCALE_XY, b.z * SCALE_Z, b.y * SCALE_XY);
     const kind = (a.label || b.label || '').toLowerCase();
     if (kind.includes('stair')) {
-      coresGroup.add(makeStairRun(pa, pb));
+      const run = makeStairRun(pa, pb);
+      coresGroup.add(run);
+      registerUnit(run, run.children, { type: '__core__', isCore: true, label: 'Stair run', kind: 'stair' });
     } else if (kind.includes('lift')) {
-      const shaft = makeLiftShaft(pa, pb);
-      if (shaft) coresGroup.add(shaft);
+      continue;  // lifts built as continuous columns below, not per-storey
     } else {
-      // corridor / other vertical link → faint connector line
-      const geo = new THREE.BufferGeometry().setFromPoints([pa, pb]);
-      coresGroup.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xe8a020, transparent: true, opacity: 0.3 })));
+      const ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints([pa, pb]), new THREE.LineBasicMaterial({ color: 0xe8a020, transparent: true, opacity: 0.3 }));
+      coresGroup.add(ln);
+      registerUnit(ln, [], { type: '__core__', isCore: true, label: 'Vertical link', kind: 'link' });
     }
   }
 
-  // Node spheres → their floor group
-  const sphereGeo = new THREE.SphereGeometry(NODE_R, 12, 8);
+  // Lift shafts as continuous full-height columns. Group lift cores by plan position
+  // (same lift across floors) and build one glassy shaft spanning the served range.
+  const liftCols = {};
   for (const n of graph.nodes) {
-    const color = TYPE_COLORS[n.type] ?? TYPE_COLORS.unknown;
-    const mat = new THREE.MeshStandardMaterial({
-      color, emissive: color, emissiveIntensity: 0.15, roughness: 0.4, metalness: 0.1,
-    });
-    const mesh = new THREE.Mesh(sphereGeo, mat);
-    mesh.position.copy(worldPos(n));
-    mesh.userData = { node: n, baseColor: color, baseEmissive: 0.15 };
-    const grp = floorGroups[String(n.floor)] ?? scene;
-    grp.add(mesh);
-    nodeMeshes.push(mesh);
+    if (n.type !== 'core') continue;
+    if (!(n.label || '').toLowerCase().includes('lift')) continue;
+    // coarse bucket (~0.5 world units) so a lift that drifts slightly per floor
+    // still merges into one continuous column instead of fragmenting
+    const key = `${Math.round(n.x * 40)}_${Math.round(n.y * 40)}`;
+    (liftCols[key] ||= { xs: [], ys: [], zs: [] });
+    liftCols[key].xs.push(n.x);
+    liftCols[key].ys.push(n.y);
+    liftCols[key].zs.push(n.z * SCALE_Z);
   }
+  const avg = arr => arr.reduce((s, v) => s + v, 0) / arr.length;
+  let liftCount = 0;
+  for (const col of Object.values(liftCols)) {
+    if (col.zs.length < 2) continue;  // need at least two floors to be a shaft
+    const cx = avg(col.xs) * SCALE_XY, cz = avg(col.ys) * SCALE_XY;
+    const shaft = buildLiftColumn(cx, cz, Math.min(...col.zs), Math.max(...col.zs));
+    coresGroup.add(shaft);
+    registerUnit(shaft, [], { type: '__core__', isCore: true, label: 'Lift shaft', kind: 'lift' });
+    liftCount++;
+  }
+  console.log(`[viewer] lift shafts: ${liftCount} continuous columns`);
 
-  // Stats
   document.getElementById('stats').textContent =
-    `${graph.nodes.length} rooms · ${graph.edges.length} edges · ${graph.floors.length} floors`;
+    `${roomCount} rooms · ${partitionCount} inner walls · ${doorCount} doors · ${graph.floors.length} floors`;
+  console.log(`[viewer] rooms=${roomCount} partitions=${partitionCount} doors=${doorCount} hideUnits=${hideUnits.length} pickables=${pickables.length}`);
 
-  // Floor filter buttons (top = highest level)
-  const filterEl = document.getElementById('floor-filter');
-  const stairToggle = document.getElementById('stair-toggle');
+  buildFloorButtons(graph);
+  buildTypeFilters();
+  buildDetailFilters();
+  applyAllVisibility();
+}
+
+// ── Visibility model ─────────────────────────────────────────────────────────
+function applyVisibility(unit) {
+  const u = unit.userData;
+  let vis;
+  if (u.isCore)            vis = coresEnabled && !u.manualHidden;
+  else {
+    const floorOK = activeFloor === 'all' || u.floorLevel === activeFloor;
+    if (u.isPartition)     vis = floorOK && partitionsEnabled && !u.manualHidden;
+    else if (u.isOuterWall) vis = floorOK && outerWallsEnabled && !u.manualHidden;
+    else if (u.isLabel)    vis = floorOK && labelsEnabled && !u.manualHidden;
+    else if (u.type === '__plate__') vis = floorOK && !u.manualHidden;
+    else                   vis = floorOK && (categoryEnabled[u.type] !== false) && !u.manualHidden;
+  }
+  unit.visible = vis;
+  if (u.outline) u.outline.visible = vis;
+}
+function applyAllVisibility() { for (const u of hideUnits) applyVisibility(u); }
+
+// ── Floor filter ─────────────────────────────────────────────────────────────
+function buildFloorButtons(graph) {
+  const list = document.getElementById('floor-list');
   for (const fl of [...graph.floors].reverse()) {
     const btn = document.createElement('button');
     btn.className = 'floor-btn';
     btn.textContent = fl.label;
     btn.dataset.floor = String(fl.level);
     btn.addEventListener('click', () => filterFloor(String(fl.level), btn));
-    filterEl.insertBefore(btn, stairToggle);
+    list.appendChild(btn);
   }
 }
-
 function filterFloor(level, btn) {
   activeFloor = level;
   document.querySelectorAll('.floor-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-
-  const isAll = level === 'all';
-  for (const [lvl, grp] of Object.entries(floorGroups)) {
-    grp.visible = isAll || lvl === level;
-  }
-  // Vertical circulation stays visible so you always see where stairs rise,
-  // unless the user explicitly hid it.
-  coresGroup.visible = document.getElementById('cores-checkbox').checked;
+  applyAllVisibility();
 }
 
-// ── Text sprite helper ────────────────────────────────────────────────────────
-function makeTextSprite(text, color = '#888888') {
+// ── Type + detail filters ────────────────────────────────────────────────────
+function buildTypeFilters() {
+  const wrap = document.getElementById('type-filters');
+  for (const t of ['office', 'amenity', 'circulation', 'core', 'plant', 'external', 'unknown']) {
+    const lbl = document.createElement('label');
+    lbl.className = 'chk';
+    lbl.innerHTML = `<input type="checkbox" ${categoryEnabled[t] ? 'checked' : ''}> ${t}`;
+    lbl.querySelector('input').addEventListener('change', e => { categoryEnabled[t] = e.target.checked; applyAllVisibility(); });
+    wrap.appendChild(lbl);
+  }
+}
+function buildDetailFilters() {
+  const wrap = document.getElementById('detail-filters');
+  const rows = [
+    { txt: 'inner walls', get: () => partitionsEnabled, set: v => partitionsEnabled = v },
+    { txt: 'outer walls', get: () => outerWallsEnabled, set: v => outerWallsEnabled = v },
+    { txt: 'stairs &amp; lifts', get: () => coresEnabled, set: v => coresEnabled = v },
+    { txt: 'labels', get: () => labelsEnabled, set: v => labelsEnabled = v },
+  ];
+  for (const r of rows) {
+    const lbl = document.createElement('label');
+    lbl.className = 'chk';
+    lbl.innerHTML = `<input type="checkbox" ${r.get() ? 'checked' : ''}> ${r.txt}`;
+    lbl.querySelector('input').addEventListener('change', e => { r.set(e.target.checked); applyAllVisibility(); });
+    wrap.appendChild(lbl);
+  }
+}
+
+// ── Hide / undo / redo ───────────────────────────────────────────────────────
+function hideUnit(unit) {
+  if (unit.userData.manualHidden) return;
+  unit.userData.manualHidden = true; applyVisibility(unit);
+  undoStack.push(unit); redoStack.length = 0; updateHud();
+}
+function undo() {
+  const unit = undoStack.pop(); if (!unit) return;
+  unit.userData.manualHidden = false; applyVisibility(unit);
+  redoStack.push(unit); updateHud();
+}
+function redo() {
+  const unit = redoStack.pop(); if (!unit) return;
+  unit.userData.manualHidden = true; applyVisibility(unit);
+  undoStack.push(unit); updateHud();
+}
+function resetHidden() {
+  for (const u of hideUnits) u.userData.manualHidden = false;
+  undoStack.length = 0; redoStack.length = 0; applyAllVisibility(); updateHud();
+}
+function updateHud() { document.getElementById('hud-hidden').textContent = String(undoStack.length); }
+
+document.getElementById('reset-btn').addEventListener('click', resetHidden);
+window.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if (k === 'b') undo();
+  else if (k === 'n') redo();
+  else if (k === 'r') resetHidden();
+});
+
+// ── Text sprite helper ───────────────────────────────────────────────────────
+function makeTextSprite(text, color = '#888888', size = 24) {
   const canvas = document.createElement('canvas');
   canvas.width = 256; canvas.height = 64;
   const ctx = canvas.getContext('2d');
-  ctx.font = 'bold 24px Inter, sans-serif';
+  ctx.font = `bold ${size}px Inter, sans-serif`;
   ctx.fillStyle = color;
   ctx.fillText(text, 4, 40);
   const tex = new THREE.CanvasTexture(canvas);
-  const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.7 });
-  const sprite = new THREE.Sprite(mat);
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.85, depthTest: false }));
   sprite.scale.set(6, 1.5, 1);
   return sprite;
 }
 
-// ── Raycaster / selection ─────────────────────────────────────────────────────
+// ── Raycaster: hover readout + click to hide ─────────────────────────────────
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+const readout = document.getElementById('hover-readout');
 
-renderer.domElement.addEventListener('click', e => {
+function pickAt(e) {
   pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
-  // only hit visible nodes
-  const hits = raycaster.intersectObjects(nodeMeshes.filter(m => m.visible && m.parent && m.parent.visible));
-  if (hits.length > 0) selectNode(hits[0].object);
-  else clearSelection();
+  const vis = pickables.filter(m => { const t = m.userData.hideTarget; return t && t.visible; });
+  const hits = raycaster.intersectObjects(vis, false);
+  return hits.length ? hits[0].object.userData.hideTarget : null;
+}
+
+renderer.domElement.addEventListener('pointermove', e => {
+  const unit = pickAt(e);
+  if (unit) {
+    readout.innerHTML = `${unit.userData.label || unit.userData.kind}<span class="htype">${unit.userData.kind}</span>`;
+    readout.classList.add('visible');
+  } else readout.classList.remove('visible');
 });
 
-function selectNode(mesh) {
-  if (selectedMesh && selectedMesh !== mesh) {
-    const prev = selectedMesh.userData;
-    selectedMesh.material.emissiveIntensity = prev.baseEmissive;
-    selectedMesh.scale.setScalar(1);
-  }
-  selectedMesh = mesh;
-  mesh.material.emissiveIntensity = 0.8;
-  mesh.scale.setScalar(1.6);
-  showPanel(mesh.userData.node);
-}
-
-function clearSelection() {
-  if (selectedMesh) {
-    selectedMesh.material.emissiveIntensity = selectedMesh.userData.baseEmissive;
-    selectedMesh.scale.setScalar(1);
-    selectedMesh = null;
-  }
-  document.getElementById('panel').classList.remove('visible');
-}
-
-function showPanel(node) {
-  const panel = document.getElementById('panel');
-  const badge = document.getElementById('panel-type-badge');
-  const color = TYPE_HEX[node.type] ?? '#555';
-
-  badge.textContent = node.type;
-  badge.style.background = color + '33';
-  badge.style.color = color;
-
-  document.getElementById('panel-label').textContent = node.label;
-  document.getElementById('panel-id').textContent = node.id;
-
-  const floorLabel = graphData.floors.find(f => String(f.level) === String(node.floor))?.label ?? `Level ${node.floor}`;
-  const neighbours = graphData.edges
-    .filter(e => e.source === node.id || e.target === node.id)
-    .map(e => e.source === node.id ? e.target : e.source);
-
-  document.getElementById('panel-meta').innerHTML = `
-    <span class="key">Floor</span><span class="val">${floorLabel}</span>
-    <span class="key">Type</span><span class="val">${node.type}</span>
-    <span class="key">Position</span><span class="val">${(node.x).toFixed(2)}, ${(node.y).toFixed(2)}</span>
-    <span class="key">Connections</span><span class="val">${neighbours.length}</span>
-  `;
-  panel.classList.add('visible');
-}
-
-document.getElementById('panel-close').addEventListener('click', clearSelection);
-document.querySelector('.floor-btn.all').addEventListener('click', e => filterFloor('all', e.target));
-document.getElementById('cores-checkbox').addEventListener('change', e => {
-  coresGroup.visible = e.target.checked;
+let downXY = null;
+renderer.domElement.addEventListener('pointerdown', e => { downXY = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (!downXY) return;
+  const moved = Math.hypot(e.clientX - downXY[0], e.clientY - downXY[1]);
+  downXY = null;
+  if (moved > 5) return;            // orbit drag, not a click
+  const unit = pickAt(e);
+  if (unit) hideUnit(unit);
 });
 
-// ── Animate ───────────────────────────────────────────────────────────────────
+// ── Animate ──────────────────────────────────────────────────────────────────
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
 }
-
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// ── Load data and start ───────────────────────────────────────────────────────
-fetch('./graph.json')
-  .then(r => r.json())
-  .then(data => {
-    graphData = data;
-    buildScene(data);
+// ── Load and start ───────────────────────────────────────────────────────────
+Promise.all([
+  fetch('./graph.json').then(r => r.json()),
+  fetch('./walls.json').then(r => r.ok ? r.json() : null).catch(() => null),
+])
+  .then(([graph, walls]) => {
+    graphData = graph;
+    wallsData = walls;  // null → falls back to adjacency partitions
+    buildScene(graph);
     animate();
   })
   .catch(err => {

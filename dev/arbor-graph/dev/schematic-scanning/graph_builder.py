@@ -44,8 +44,10 @@ def build_graph(floors: list[dict]) -> nx.Graph:
         z = level_to_z(lvl)
         for room in floor["rooms"]:
             bounds = room.get("approximate_bounds", {})
-            cx = bounds.get("x", 0.5) + bounds.get("w", 0.1) / 2
-            cy = bounds.get("y", 0.5) + bounds.get("h", 0.1) / 2
+            w = bounds.get("w", 0.1)
+            h = bounds.get("h", 0.1)
+            cx = bounds.get("x", 0.5) + w / 2
+            cy = bounds.get("y", 0.5) + h / 2
             G.add_node(
                 room["room_id"],
                 label=room.get("label", ""),
@@ -54,9 +56,11 @@ def build_graph(floors: list[dict]) -> nx.Graph:
                 x=round(cx, 4),
                 y=round(cy, 4),
                 z=round(z, 4),
+                w=round(w, 4),
+                h=round(h, 4),
             )
 
-        # Add core elements as nodes too
+        # Add core elements as nodes too (no bounds in source → small default footprint)
         for core in floor.get("core_elements", []):
             pos = core.get("position", {})
             G.add_node(
@@ -67,6 +71,8 @@ def build_graph(floors: list[dict]) -> nx.Graph:
                 x=round(pos.get("x", 0.5), 4),
                 y=round(pos.get("y", 0.5), 4),
                 z=round(z, 4),
+                w=0.04,
+                h=0.04,
             )
 
     # Pass 2: intra-floor edges from neighbours[]
