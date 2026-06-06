@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {"id": "L-2-LIFT-01", "label": "Lift", "type": "core", "floor": -2, "x": 0.52, "y": 0.48, "z": -7.0},
+    {"id": "L-2-STAIR-01", "label": "Stair", "type": "core", "floor": -2, "x": 0.46, "y": 0.44, "z": -7.0},
+    {"id": "L-2-01", "label": "Car Park", "type": "circulation", "floor": -2, "x": 0.3, "y": 0.5, "z": -7.0},
+    {"id": "L-2-02", "label": "Plant", "type": "plant", "floor": -2, "x": 0.65, "y": 0.3, "z": -7.0},
+    {"id": "L-2-03", "label": "Cycle Storage", "type": "amenity", "floor": -2, "x": 0.7, "y": 0.6, "z": -7.0},
+
+    {"id": "L-1-LIFT-01", "label": "Lift", "type": "core", "floor": -1, "x": 0.52, "y": 0.48, "z": -3.5},
+    {"id": "L-1-STAIR-01", "label": "Stair", "type": "core", "floor": -1, "x": 0.46, "y": 0.44, "z": -3.5},
+    {"id": "L-1-01", "label": "Car Park", "type": "circulation", "floor": -1, "x": 0.3, "y": 0.5, "z": -3.5},
+    {"id": "L-1-02", "label": "Plant", "type": "plant", "floor": -1, "x": 0.65, "y": 0.3, "z": -3.5},
+    {"id": "L-1-03", "label": "Lobby", "type": "circulation", "floor": -1, "x": 0.55, "y": 0.65, "z": -3.5},
+
+    {"id": "L0a-LIFT-01", "label": "Lift", "type": "core", "floor": "L0a", "x": 0.52, "y": 0.48, "z": 0.0},
+    {"id": "L0a-STAIR-01", "label": "Stair", "type": "core", "floor": "L0a", "x": 0.46, "y": 0.44, "z": 0.0},
+    {"id": "L0a-01", "label": "Retail", "type": "amenity", "floor": "L0a", "x": 0.2, "y": 0.4, "z": 0.0},
+    {"id": "L0a-02", "label": "Lobby", "type": "circulation", "floor": "L0a", "x": 0.55, "y": 0.55, "z": 0.0},
+    {"id": "L0a-03", "label": "Cycle Lift", "type": "core", "floor": "L0a", "x": 0.62, "y": 0.7, "z": 0.0},
+
+    {"id": "L1-LIFT-01", "label": "Lift", "type": "core", "floor": 1, "x": 0.52, "y": 0.48, "z": 3.5},
+    {"id": "L1-STAIR-01", "label": "Stair", "type": "core", "floor": 1, "x": 0.46, "y": 0.44, "z": 3.5},
+    {"id": "L1-01", "label": "Office (Class E)", "type": "office", "floor": 1, "x": 0.3, "y": 0.35, "z": 3.5},
+    {"id": "L1-02", "label": "Office (Class E)", "type": "office", "floor": 1, "x": 0.6, "y": 0.3, "z": 3.5},
+    {"id": "L1-03", "label": "Plant", "type": "plant", "floor": 1, "x": 0.7, "y": 0.55, "z": 3.5},
+    {"id": "L1-04", "label": "WC", "type": "amenity", "floor": 1, "x": 0.48, "y": 0.55, "z": 3.5},
+
+    {"id": "L2-LIFT-01", "label": "Lift", "type": "core", "floor": 2, "x": 0.52, "y": 0.48, "z": 7.0},
+    {"id": "L2-STAIR-01", "label": "Stair", "type": "core", "floor": 2, "x": 0.46, "y": 0.44, "z": 7.0},
+    {"id": "L2-01", "label": "Office (Class E)", "type": "office", "floor": 2, "x": 0.28, "y": 0.35, "z": 7.0},
+    {"id": "L2-02", "label": "Office (Class E)", "type": "office", "floor": 2, "x": 0.62, "y": 0.3, "z": 7.0},
+    {"id": "L2-03", "label": "Meeting Room", "type": "office", "floor": 2, "x": 0.45, "y": 0.2, "z": 7.0},
+    {"id": "L2-04", "label": "WC", "type": "amenity", "floor": 2, "x": 0.48, "y": 0.55, "z": 7.0},
+
+    {"id": "L6-LIFT-01", "label": "Lift", "type": "core", "floor": 6, "x": 0.52, "y": 0.48, "z": 21.0},
+    {"id": "L6-STAIR-01", "label": "Stair", "type": "core", "floor": 6, "x": 0.46, "y": 0.44, "z": 21.0},
+    {"id": "L6-01", "label": "Office (Class E)", "type": "office", "floor": 6, "x": 0.3, "y": 0.35, "z": 21.0},
+    {"id": "L6-02", "label": "Office (Class E)", "type": "office", "floor": 6, "x": 0.62, "y": 0.3, "z": 21.0},
+    {"id": "L6-03", "label": "Terrace", "type": "amenity", "floor": 6, "x": 0.2, "y": 0.6, "z": 21.0},
+
+    {"id": "L10-LIFT-01", "label": "Lift", "type": "core", "floor": 10, "x": 0.52, "y": 0.48, "z": 35.0},
+    {"id": "L10-STAIR-01", "label": "Stair", "type": "core", "floor": 10, "x": 0.46, "y": 0.44, "z": 35.0},
+    {"id": "L10-01", "label": "Office (Class E)", "type": "office", "floor": 10, "x": 0.3, "y": 0.35, "z": 35.0},
+    {"id": "L10-02", "label": "Office (Class E)", "type": "office", "floor": 10, "x": 0.62, "y": 0.3, "z": 35.0},
+
+    {"id": "L18-LIFT-01", "label": "Lift", "type": "core", "floor": 18, "x": 0.52, "y": 0.48, "z": 63.0},
+    {"id": "L18-STAIR-01", "label": "Stair", "type": "core", "floor": 18, "x": 0.46, "y": 0.44, "z": 63.0},
+    {"id": "L18-01", "label": "Plant", "type": "plant", "floor": 18, "x": 0.35, "y": 0.4, "z": 63.0},
+    {"id": "L18-02", "label": "Roof Plant", "type": "plant", "floor": 18, "x": 0.6, "y": 0.4, "z": 63.0}
+  ],
+  "edges": [
+    {"source": "L-2-01", "target": "L-2-LIFT-01", "type": "intra"},
+    {"source": "L-2-01", "target": "L-2-STAIR-01", "type": "intra"},
+    {"source": "L-2-02", "target": "L-2-LIFT-01", "type": "intra"},
+    {"source": "L-2-03", "target": "L-2-01", "type": "intra"},
+
+    {"source": "L-1-01", "target": "L-1-LIFT-01", "type": "intra"},
+    {"source": "L-1-01", "target": "L-1-STAIR-01", "type": "intra"},
+    {"source": "L-1-02", "target": "L-1-LIFT-01", "type": "intra"},
+    {"source": "L-1-03", "target": "L-1-LIFT-01", "type": "intra"},
+
+    {"source": "L0a-01", "target": "L0a-02", "type": "intra"},
+    {"source": "L0a-02", "target": "L0a-LIFT-01", "type": "intra"},
+    {"source": "L0a-02", "target": "L0a-STAIR-01", "type": "intra"},
+    {"source": "L0a-03", "target": "L0a-LIFT-01", "type": "intra"},
+
+    {"source": "L1-01", "target": "L1-LIFT-01", "type": "intra"},
+    {"source": "L1-01", "target": "L1-STAIR-01", "type": "intra"},
+    {"source": "L1-02", "target": "L1-LIFT-01", "type": "intra"},
+    {"source": "L1-03", "target": "L1-LIFT-01", "type": "intra"},
+    {"source": "L1-04", "target": "L1-LIFT-01", "type": "intra"},
+    {"source": "L1-01", "target": "L1-02", "type": "intra"},
+
+    {"source": "L2-01", "target": "L2-LIFT-01", "type": "intra"},
+    {"source": "L2-01", "target": "L2-STAIR-01", "type": "intra"},
+    {"source": "L2-02", "target": "L2-LIFT-01", "type": "intra"},
+    {"source": "L2-03", "target": "L2-LIFT-01", "type": "intra"},
+    {"source": "L2-04", "target": "L2-LIFT-01", "type": "intra"},
+    {"source": "L2-01", "target": "L2-02", "type": "intra"},
+
+    {"source": "L6-01", "target": "L6-LIFT-01", "type": "intra"},
+    {"source": "L6-01", "target": "L6-STAIR-01", "type": "intra"},
+    {"source": "L6-02", "target": "L6-LIFT-01", "type": "intra"},
+    {"source": "L6-03", "target": "L6-01", "type": "intra"},
+
+    {"source": "L10-01", "target": "L10-LIFT-01", "type": "intra"},
+    {"source": "L10-01", "target": "L10-STAIR-01", "type": "intra"},
+    {"source": "L10-02", "target": "L10-LIFT-01", "type": "intra"},
+
+    {"source": "L18-01", "target": "L18-LIFT-01", "type": "intra"},
+    {"source": "L18-02", "target": "L18-01", "type": "intra"},
+
+    {"source": "L-2-LIFT-01", "target": "L-1-LIFT-01", "type": "inter"},
+    {"source": "L-2-STAIR-01", "target": "L-1-STAIR-01", "type": "inter"},
+    {"source": "L-1-LIFT-01", "target": "L0a-LIFT-01", "type": "inter"},
+    {"source": "L-1-STAIR-01", "target": "L0a-STAIR-01", "type": "inter"},
+    {"source": "L0a-LIFT-01", "target": "L1-LIFT-01", "type": "inter"},
+    {"source": "L0a-STAIR-01", "target": "L1-STAIR-01", "type": "inter"},
+    {"source": "L1-LIFT-01", "target": "L2-LIFT-01", "type": "inter"},
+    {"source": "L1-STAIR-01", "target": "L2-STAIR-01", "type": "inter"},
+    {"source": "L2-LIFT-01", "target": "L6-LIFT-01", "type": "inter"},
+    {"source": "L2-STAIR-01", "target": "L6-STAIR-01", "type": "inter"},
+    {"source": "L6-LIFT-01", "target": "L10-LIFT-01", "type": "inter"},
+    {"source": "L6-STAIR-01", "target": "L10-STAIR-01", "type": "inter"},
+    {"source": "L10-LIFT-01", "target": "L18-LIFT-01", "type": "inter"},
+    {"source": "L10-STAIR-01", "target": "L18-STAIR-01", "type": "inter"}
+  ],
+  "floors": [
+    {"level": -2, "z": -7.0, "label": "Basement B2"},
+    {"level": -1, "z": -3.5, "label": "Basement B1"},
+    {"level": "L0a", "z": 0.0, "label": "Ground Floor"},
+    {"level": 1, "z": 3.5, "label": "Level 1"},
+    {"level": 2, "z": 7.0, "label": "Level 2"},
+    {"level": 6, "z": 21.0, "label": "Level 6"},
+    {"level": 10, "z": 35.0, "label": "Level 10"},
+    {"level": 18, "z": 63.0, "label": "Roof"}
+  ]
+}
