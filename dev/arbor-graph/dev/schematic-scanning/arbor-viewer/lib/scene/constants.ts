@@ -24,6 +24,8 @@ export const ENTRANCE_COLOR = 0x00ff9c; // external portals: bright pulse
 export const PARTITION_COLOR = 0xc8ccd8;
 export const OUTER_WALL_COLOR = 0x8a94b0; // building envelope
 export const BG_COLOR = 0x0a0a0f;
+export const FLOOR_FILL_COLOR = 0x20243a; // wall-bounded interior slab
+export const GREEN_COLOR = 0x3a7d34; // roof cap + site ground ("outside areas")
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 export const SCALE_XY = 20; // normalised 0-1 → world units
@@ -35,6 +37,7 @@ export const PARTITION_H = 2.4; // inner wall height
 export const WALL_T = 0.07; // wall panel thickness
 export const DOOR_H = 2.0;
 export const MIN_FOOT = 0.6; // min footprint / wall length
+export const GROUND_SIZE = 220; // green site plane around the building
 
 // Lift shaft geometry
 export const LIFT_SIZE = 1.1;

@@ -7,9 +7,10 @@ import {
   wallSegTransform,
   partitionPlacement,
   doorGap,
+  outerRing,
 } from '@/lib/scene/geometry';
 import { SCALE_XY, MIN_FOOT, LIFT_OVERRUN } from '@/lib/scene/constants';
-import type { GraphNode } from '@/lib/types';
+import type { GraphNode, WallSeg } from '@/lib/types';
 
 const node = (p: Partial<GraphNode>): GraphNode => ({
   id: 'n',
@@ -25,6 +26,40 @@ const node = (p: Partial<GraphNode>): GraphNode => ({
 describe('worldXZ', () => {
   it('scales normalised coords to world units', () => {
     expect(worldXZ({ x: 0.5, y: 0.25 })).toEqual([0.5 * SCALE_XY, 0.25 * SCALE_XY]);
+  });
+});
+
+describe('outerRing', () => {
+  // A unit square traced head-to-tail (already ordered, as in walls.json).
+  const square: WallSeg[] = [
+    [0, 0, 1, 0],
+    [1, 0, 1, 1],
+    [1, 1, 0, 1],
+    [0, 1, 0, 0],
+  ];
+
+  it('returns one scaled vertex per segment, in order, no closing dup', () => {
+    expect(outerRing(square)).toEqual([
+      [0, 0],
+      [1 * SCALE_XY, 0],
+      [1 * SCALE_XY, 1 * SCALE_XY],
+      [0, 1 * SCALE_XY],
+    ]);
+  });
+
+  it('chains unordered / reversed segments into the same ring', () => {
+    const scrambled: WallSeg[] = [
+      [0, 0, 1, 0],
+      [0, 1, 0, 0], // reversed
+      [1, 1, 0, 1],
+      [1, 0, 1, 1],
+    ];
+    expect(outerRing(scrambled)).toEqual(outerRing(square));
+  });
+
+  it('handles empty and degenerate input', () => {
+    expect(outerRing([])).toEqual([]);
+    expect(outerRing([[0, 0, 1, 0]])).toEqual([[0, 0]]);
   });
 });
 

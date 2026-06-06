@@ -15,12 +15,14 @@ import { Partitions } from './Partitions';
 import { Stairs } from './Stairs';
 import { Lifts } from './Lifts';
 import { Entrances } from './Entrances';
+import { PathOverlay } from './PathOverlay';
 
 interface Props extends UnitHandlers {
   data: LoadedData;
+  routePath?: string[] | null;
 }
 
-export const Scene = memo(function Scene({ data, ...h }: Props) {
+export const Scene = memo(function Scene({ data, routePath, ...h }: Props) {
   const { graph, walls, building } = data;
   return (
     <>
@@ -40,7 +42,7 @@ export const Scene = memo(function Scene({ data, ...h }: Props) {
         target={[11, 24, 11]}
       />
 
-      <FloorPlates graph={graph} {...h} />
+      <FloorPlates graph={graph} walls={walls} {...h} />
       <Rooms graph={graph} {...h} />
       <CoreMarkers graph={graph} {...h} />
       {/* 127 troika SDF text meshes — only mount them when labels are actually on. */}
@@ -56,6 +58,9 @@ export const Scene = memo(function Scene({ data, ...h }: Props) {
       <Lifts graph={graph} {...h} />
 
       {building && <Entrances building={building} {...h} />}
+      {building && routePath && routePath.length > 1 && (
+        <PathOverlay building={building} path={routePath} />
+      )}
     </>
   );
 });

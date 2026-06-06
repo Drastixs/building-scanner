@@ -1,6 +1,6 @@
 // Pure geometry math, ported verbatim from index.html. No Three.js, no React —
 // every function returns plain data so it can be unit-tested in isolation.
-import type { GraphNode } from '@/lib/types';
+import type { GraphNode, WallSeg } from '@/lib/types';
 import {
   SCALE_XY,
   SCALE_Z,
@@ -30,6 +30,45 @@ export interface Box {
 // ── normalised plan → world XZ ────────────────────────────────────────────────
 export function worldXZ(n: { x: number; y: number }): [number, number] {
   return [n.x * SCALE_XY, n.y * SCALE_XY];
+}
+
+// ── Outer wall loop → ordered world-XZ polygon ────────────────────────────────
+// The `outer` segments of a floor enclose the building envelope. Chain them
+// head-to-tail into an ordered ring of [worldX, worldZ] points so the floor slab
+// can be filled to "span the walls". Robust to reversed/unordered segments; the
+// final duplicate (loop closure) is dropped so THREE.Shape closes it implicitly.
+export function outerRing(segs: WallSeg[]): [number, number][] {
+  if (segs.length === 0) return [];
+  const eq = (a: number, b: number) => Math.abs(a - b) < 1e-2;
+  const used = new Array(segs.length).fill(false);
+  const W = (n: number) => n * SCALE_XY;
+
+  const [s0x, s0y, , ] = segs[0];
+  used[0] = true;
+  const ring: [number, number][] = [[W(s0x), W(s0y)]];
+  let curX = segs[0][2];
+  let curY = segs[0][3];
+
+  for (let step = 1; step < segs.length; step++) {
+    // Stop before re-appending the start vertex (closed loop).
+    if (eq(curX, s0x) && eq(curY, s0y)) break;
+    ring.push([W(curX), W(curY)]);
+
+    let found = -1;
+    let rev = false;
+    for (let i = 0; i < segs.length; i++) {
+      if (used[i]) continue;
+      const s = segs[i];
+      if (eq(s[0], curX) && eq(s[1], curY)) { found = i; rev = false; break; }
+      if (eq(s[2], curX) && eq(s[3], curY)) { found = i; rev = true; break; }
+    }
+    if (found < 0) break;
+    used[found] = true;
+    const s = segs[found];
+    curX = rev ? s[0] : s[2];
+    curY = rev ? s[1] : s[3];
+  }
+  return ring;
 }
 
 // ── Switchback stair run for one storey (pa/pb in WORLD space) ────────────────
