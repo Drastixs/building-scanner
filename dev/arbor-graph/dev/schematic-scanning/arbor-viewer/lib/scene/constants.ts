@@ -9,7 +9,7 @@ export const TYPE_COLORS: Record<NodeType, number> = {
   plant: 0xf5a623,
   amenity: 0xbd10e0,
   residential: 0x50e3c2,
-  external: 0x556644,
+  external: 0x3a7d34, // outside areas / terraces — green, tied to the floor
   unknown: 0x666677,
 };
 
@@ -25,7 +25,7 @@ export const PARTITION_COLOR = 0xc8ccd8;
 export const OUTER_WALL_COLOR = 0x8a94b0; // building envelope
 export const BG_COLOR = 0x0a0a0f;
 export const FLOOR_FILL_COLOR = 0x20243a; // wall-bounded interior slab
-export const GREEN_COLOR = 0x3a7d34; // roof cap + site ground ("outside areas")
+export const GREEN_COLOR = 0x3a7d34; // site ground + outside areas (terraces)
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 export const SCALE_XY = 20; // normalised 0-1 → world units

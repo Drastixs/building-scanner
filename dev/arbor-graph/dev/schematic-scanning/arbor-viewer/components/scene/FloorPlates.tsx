@@ -10,7 +10,6 @@ import {
   FLOOR_W,
   PLATE_H,
   SCALE_Z,
-  PARTITION_H,
   FLOOR_FILL_COLOR,
   GREEN_COLOR,
   GROUND_SIZE,
@@ -60,15 +59,12 @@ export function FloorPlates({
     });
   }, [graph.floors, walls]);
 
-  // Top floor → green roof cap; lowest floor → green site ground.
-  const { topFloor, minBaseY } = useMemo(() => {
-    let top = floors[0];
+  // Lowest floor → green site ground. No predetermined roof cap: green is
+  // reserved for genuine outside areas (terraces), drawn as external rooms.
+  const minBaseY = useMemo(() => {
     let min = floors[0]?.baseY ?? 0;
-    for (const f of floors) {
-      if (!top || f.z > top.z) top = f;
-      if (f.baseY < min) min = f.baseY;
-    }
-    return { topFloor: top, minBaseY: min };
+    for (const f of floors) if (f.baseY < min) min = f.baseY;
+    return min;
   }, [floors]);
 
   return (
@@ -138,21 +134,6 @@ export function FloorPlates({
           </Text>
         </group>
       ))}
-
-      {/* Green roof cap over the top floor's footprint, above its walls. */}
-      {topFloor?.shape && (
-        <mesh
-          rotation={[Math.PI / 2, 0, 0]}
-          position={[0, topFloor.baseY + PARTITION_H, 0]}
-        >
-          <shapeGeometry args={[topFloor.shape]} />
-          <meshStandardMaterial
-            color={GREEN_COLOR}
-            side={THREE.DoubleSide}
-            roughness={0.85}
-          />
-        </mesh>
-      )}
 
       {/* Green site ground around the building, just below the lowest floor. */}
       <mesh
