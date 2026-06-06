@@ -1,0 +1,7 @@
+mubit-sdk
+anthropic
+openai
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv

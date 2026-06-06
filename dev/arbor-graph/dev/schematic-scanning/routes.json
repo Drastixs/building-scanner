@@ -1,0 +1,886 @@
+{
+  "floors": [
+    {
+      "id": "floor:L0a",
+      "level": "L0a",
+      "label": "Level L0a",
+      "z": 0.0
+    },
+    {
+      "id": "floor:L0b",
+      "level": "L0b",
+      "label": "Level L0b",
+      "z": 1.75
+    },
+    {
+      "id": "floor:1",
+      "level": 1,
+      "label": "Level 1",
+      "z": 3.5
+    }
+  ],
+  "connectors": [
+    {
+      "id": "LIFT-01",
+      "kind": "lift",
+      "serves": [
+        "L0a",
+        "L0b",
+        1
+      ]
+    },
+    {
+      "id": "LIFT-02",
+      "kind": "lift",
+      "serves": [
+        "L0a",
+        "L0b"
+      ]
+    },
+    {
+      "id": "STAIR-01",
+      "kind": "stair",
+      "serves": [
+        "L0a",
+        "L0b",
+        1
+      ]
+    },
+    {
+      "id": "STAIR-02",
+      "kind": "stair",
+      "serves": [
+        "L0a",
+        "L0b"
+      ]
+    },
+    {
+      "id": "LIFT-03",
+      "kind": "lift",
+      "serves": [
+        "L0b"
+      ]
+    },
+    {
+      "id": "LIFT-04",
+      "kind": "lift",
+      "serves": [
+        "L0b"
+      ]
+    },
+    {
+      "id": "LIFT-05",
+      "kind": "lift",
+      "serves": [
+        "L0b"
+      ]
+    },
+    {
+      "id": "LIFT-06",
+      "kind": "lift",
+      "serves": [
+        "L0b"
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "id": "L0a-01",
+      "label": "Hotel (Core C and D)",
+      "type": "amenity",
+      "floor": "L0a"
+    },
+    {
+      "id": "L0a-02",
+      "label": "Storage",
+      "type": "amenity",
+      "floor": "L0a"
+    },
+    {
+      "id": "L0a-03",
+      "label": "Plant",
+      "type": "plant",
+      "floor": "L0a"
+    },
+    {
+      "id": "L0a-04",
+      "label": "Plant",
+      "type": "plant",
+      "floor": "L0a"
+    },
+    {
+      "id": "L0a-05",
+      "label": "Power",
+      "type": "plant",
+      "floor": "L0a"
+    },
+    {
+      "id": "L0a-06",
+      "label": "Unisex Accessible WC",
+      "type": "amenity",
+      "floor": "L0a"
+    },
+    {
+      "id": "L0a-07",
+      "label": "Public WCs",
+      "type": "amenity",
+      "floor": "L0a"
+    },
+    {
+      "id": "LL0b-01",
+      "label": "Office Reception & Event Space",
+      "type": "office",
+      "floor": "L0b"
+    },
+    {
+      "id": "LL0b-02",
+      "label": "Plant",
+      "type": "plant",
+      "floor": "L0b"
+    },
+    {
+      "id": "LL0b-03",
+      "label": "Public Lobby",
+      "type": "amenity",
+      "floor": "L0b"
+    },
+    {
+      "id": "LL0b-04",
+      "label": "Retail",
+      "type": "amenity",
+      "floor": "L0b"
+    },
+    {
+      "id": "LL0b-06",
+      "label": "Lift Lobby",
+      "type": "circulation",
+      "floor": "L0b"
+    },
+    {
+      "id": "L1-01",
+      "label": "Office",
+      "type": "office",
+      "floor": 1
+    },
+    {
+      "id": "L1-02",
+      "label": "Plant",
+      "type": "plant",
+      "floor": 1
+    },
+    {
+      "id": "L1-03",
+      "label": "WC Male",
+      "type": "amenity",
+      "floor": 1
+    },
+    {
+      "id": "L1-04",
+      "label": "WC Female",
+      "type": "amenity",
+      "floor": 1
+    },
+    {
+      "id": "L1-05",
+      "label": "Accessible WC",
+      "type": "amenity",
+      "floor": 1
+    }
+  ],
+  "entrances": [
+    {
+      "id": "PL0a-01",
+      "via": "Thames Path",
+      "floor": "L0a"
+    },
+    {
+      "id": "PL0a-02",
+      "via": "Short Stay Cycle Parking",
+      "floor": "L0a"
+    },
+    {
+      "id": "PL0b-15",
+      "via": "Office Entrance",
+      "floor": "L0b"
+    },
+    {
+      "id": "PL0b-16",
+      "via": "Retail Entrance",
+      "floor": "L0b"
+    }
+  ],
+  "edges": [
+    {
+      "source": "LIFT-01",
+      "target": "floor:L0a",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-01",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-02",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-03",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-04",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-05",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-06",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L0a-07",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-01",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-01",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-01",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-01",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-01",
+      "target": "floor:1",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L1-03",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 0
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L1-01",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 1
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L1-02",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 2
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L1-04",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 2
+    },
+    {
+      "source": "LIFT-01",
+      "target": "L1-05",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 2
+    },
+    {
+      "source": "LIFT-02",
+      "target": "floor:L0a",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-01",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-02",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-03",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-04",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-05",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-06",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-02",
+      "target": "L0a-07",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-02",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-02",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-02",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-02",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-02",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-02",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "STAIR-01",
+      "target": "floor:L0a",
+      "rel": "serves"
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-03",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 0
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-01",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-02",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-04",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-05",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-06",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 3
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L0a-07",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 3
+    },
+    {
+      "source": "STAIR-01",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "STAIR-01",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "STAIR-01",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "STAIR-01",
+      "target": "floor:1",
+      "rel": "serves"
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L1-03",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 0
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L1-01",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 1
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L1-02",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 2
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L1-04",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 2
+    },
+    {
+      "source": "STAIR-01",
+      "target": "L1-05",
+      "rel": "reaches",
+      "floor": 1,
+      "hops": 2
+    },
+    {
+      "source": "STAIR-02",
+      "target": "floor:L0a",
+      "rel": "serves"
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-01",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 0
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-02",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-03",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-04",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-05",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-06",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "STAIR-02",
+      "target": "L0a-07",
+      "rel": "reaches",
+      "floor": "L0a",
+      "hops": 2
+    },
+    {
+      "source": "STAIR-02",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "STAIR-02",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "STAIR-02",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "STAIR-02",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-03",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-03",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-03",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-03",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-03",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-03",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-04",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-04",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-04",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-04",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-04",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-04",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-05",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-05",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-05",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-05",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-05",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-05",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "LIFT-06",
+      "target": "floor:L0b",
+      "rel": "serves"
+    },
+    {
+      "source": "LIFT-06",
+      "target": "LL0b-03",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 0
+    },
+    {
+      "source": "LIFT-06",
+      "target": "LL0b-01",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-06",
+      "target": "LL0b-04",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-06",
+      "target": "LL0b-06",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 1
+    },
+    {
+      "source": "LIFT-06",
+      "target": "LL0b-02",
+      "rel": "reaches",
+      "floor": "L0b",
+      "hops": 2
+    },
+    {
+      "source": "floor:L0a",
+      "target": "floor:L0b",
+      "rel": "transfer",
+      "via": "LIFT-01"
+    },
+    {
+      "source": "floor:L0b",
+      "target": "floor:1",
+      "rel": "transfer",
+      "via": "LIFT-01"
+    },
+    {
+      "source": "floor:L0a",
+      "target": "floor:L0b",
+      "rel": "transfer",
+      "via": "LIFT-02"
+    },
+    {
+      "source": "floor:L0a",
+      "target": "floor:L0b",
+      "rel": "transfer",
+      "via": "STAIR-01"
+    },
+    {
+      "source": "floor:L0b",
+      "target": "floor:1",
+      "rel": "transfer",
+      "via": "STAIR-01"
+    },
+    {
+      "source": "floor:L0a",
+      "target": "floor:L0b",
+      "rel": "transfer",
+      "via": "STAIR-02"
+    },
+    {
+      "source": "PL0a-01",
+      "target": "floor:L0a",
+      "rel": "enters"
+    },
+    {
+      "source": "PL0a-02",
+      "target": "floor:L0a",
+      "rel": "enters"
+    },
+    {
+      "source": "PL0b-15",
+      "target": "floor:L0b",
+      "rel": "enters"
+    },
+    {
+      "source": "PL0b-16",
+      "target": "floor:L0b",
+      "rel": "enters"
+    }
+  ]
+}
