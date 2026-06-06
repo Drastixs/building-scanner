@@ -24,7 +24,7 @@ export const ENTRANCE_COLOR = 0x00ff9c; // external portals: bright pulse
 export const PARTITION_COLOR = 0xc8ccd8;
 export const OUTER_WALL_COLOR = 0x8a94b0; // building envelope
 export const BG_COLOR = 0x0a0a0f;
-export const FLOOR_FILL_COLOR = 0x20243a; // wall-bounded interior slab
+export const FLOOR_FILL_COLOR = 0x000000; // wall-bounded interior slab — black
 export const GREEN_COLOR = 0x3a7d34; // site ground + outside areas (terraces)
 
 // ── Layout constants ──────────────────────────────────────────────────────────
