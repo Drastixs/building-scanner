@@ -1,0 +1,62 @@
+{
+  "floor_level": -2,
+  "rooms": [
+    {
+      "room_id": "L-2-01",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {"x": 0.30, "y": 0.25, "w": 0.40, "h": 0.40},
+      "neighbours": ["L-2-02", "L-2-03", "L-2-05"]
+    },
+    {
+      "room_id": "L-2-02",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {"x": 0.25, "y": 0.10, "w": 0.20, "h": 0.15},
+      "neighbours": ["L-2-01", "L-2-03"]
+    },
+    {
+      "room_id": "L-2-03",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {"x": 0.50, "y": 0.10, "w": 0.20, "h": 0.15},
+      "neighbours": ["L-2-01", "L-2-02", "L-2-05"]
+    },
+    {
+      "room_id": "L-2-04",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {"x": 0.60, "y": 0.45, "w": 0.15, "h": 0.20},
+      "neighbours": ["L-2-05"]
+    },
+    {
+      "room_id": "L-2-05",
+      "label": "Lift Lobby",
+      "type": "circulation",
+      "approximate_bounds": {"x": 0.55, "y": 0.30, "w": 0.20, "h": 0.20},
+      "neighbours": ["L-2-01", "L-2-03", "L-2-04"]
+    }
+  ],
+  "core_elements": [
+    {
+      "id": "LIFT-01",
+      "type": "lift",
+      "position": {"x": 0.62, "y": 0.33}
+    },
+    {
+      "id": "LIFT-02",
+      "type": "lift",
+      "position": {"x": 0.68, "y": 0.33}
+    },
+    {
+      "id": "STAIR-01",
+      "type": "stair",
+      "position": {"x": 0.35, "y": 0.65}
+    },
+    {
+      "id": "COR-01",
+      "type": "corridor",
+      "position": {"x": 0.55, "y": 0.40}
+    }
+  ]
+}

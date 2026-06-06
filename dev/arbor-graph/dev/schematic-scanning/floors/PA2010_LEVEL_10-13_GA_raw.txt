@@ -1,0 +1,56 @@
+{
+  "floor_level": "10-13",
+  "rooms": [
+    {
+      "room_id": "L10-13-01",
+      "label": "Office",
+      "type": "office",
+      "approximate_bounds": { "x": 0.05, "y": 0.05, "w": 0.90, "h": 0.90 },
+      "neighbours": ["L10-13-02", "L10-13-03", "L10-13-04", "L10-13-05", "L10-13-06", "COR-01"]
+    },
+    {
+      "room_id": "L10-13-02",
+      "label": "Plant West",
+      "type": "plant",
+      "approximate_bounds": { "x": 0.10, "y": 0.75, "w": 0.15, "h": 0.15 },
+      "neighbours": ["L10-13-01", "COR-01"]
+    },
+    {
+      "room_id": "L10-13-03",
+      "label": "Plant East",
+      "type": "plant",
+      "approximate_bounds": { "x": 0.75, "y": 0.75, "w": 0.15, "h": 0.15 },
+      "neighbours": ["L10-13-01", "COR-01"]
+    },
+    {
+      "room_id": "L10-13-04",
+      "label": "WC Male",
+      "type": "amenity",
+      "approximate_bounds": { "x": 0.35, "y": 0.65, "w": 0.10, "h": 0.20 },
+      "neighbours": ["COR-01", "L10-13-01"]
+    },
+    {
+      "room_id": "L10-13-05",
+      "label": "WC Female",
+      "type": "amenity",
+      "approximate_bounds": { "x": 0.55, "y": 0.65, "w": 0.10, "h": 0.20 },
+      "neighbours": ["COR-01", "L10-13-01"]
+    },
+    {
+      "room_id": "L10-13-06",
+      "label": "Accessible WC",
+      "type": "amenity",
+      "approximate_bounds": { "x": 0.48, "y": 0.85, "w": 0.05, "h": 0.10 },
+      "neighbours": ["COR-01", "L10-13-01"]
+    }
+  ],
+  "core_elements": [
+    { "id": "LIFT-01", "type": "lift", "position": { "x": 0.42, "y": 0.70 } },
+    { "id": "LIFT-02", "type": "lift", "position": { "x": 0.47, "y": 0.70 } },
+    { "id": "LIFT-03", "type": "lift", "position": { "x": 0.53, "y": 0.70 } },
+    { "id": "LIFT-04", "type": "lift", "position": { "x": 0.58, "y": 0.70 } },
+    { "id": "STAIR-01", "type": "stair", "position": { "x": 0.30, "y": 0.70 } },
+    { "id": "STAIR-02", "type": "stair", "position": { "x": 0.70, "y": 0.70 } },
+    { "id": "COR-01", "type": "corridor", "position": { "x": 0.50, "y": 0.75 } }
+  ]
+}

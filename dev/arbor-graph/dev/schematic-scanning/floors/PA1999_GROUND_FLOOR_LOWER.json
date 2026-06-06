@@ -1,0 +1,186 @@
+{
+  "floor_level": "L0a",
+  "rooms": [
+    {
+      "room_id": "L0a-01",
+      "label": "Hotel (Core C and D)",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.4,
+        "y": 0.25,
+        "w": 0.3,
+        "h": 0.45
+      },
+      "neighbours": [
+        "L0a-02",
+        "L0a-03",
+        "L0a-04",
+        "L0a-05",
+        "L0a-08",
+        "L0a-09"
+      ]
+    },
+    {
+      "room_id": "L0a-02",
+      "label": "Storage",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.33,
+        "y": 0.4,
+        "w": 0.08,
+        "h": 0.06
+      },
+      "neighbours": [
+        "L0a-01",
+        "L0a-03"
+      ]
+    },
+    {
+      "room_id": "L0a-03",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {
+        "x": 0.33,
+        "y": 0.48,
+        "w": 0.08,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L0a-02",
+        "L0a-04",
+        "L0a-01"
+      ]
+    },
+    {
+      "room_id": "L0a-04",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {
+        "x": 0.33,
+        "y": 0.6,
+        "w": 0.1,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L0a-03",
+        "L0a-01"
+      ]
+    },
+    {
+      "room_id": "L0a-05",
+      "label": "Power",
+      "type": "plant",
+      "approximate_bounds": {
+        "x": 0.48,
+        "y": 0.55,
+        "w": 0.06,
+        "h": 0.07
+      },
+      "neighbours": [
+        "L0a-06",
+        "L0a-07",
+        "L0a-01"
+      ]
+    },
+    {
+      "room_id": "L0a-06",
+      "label": "Unisex Accessible WC",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.55,
+        "y": 0.55,
+        "w": 0.05,
+        "h": 0.07
+      },
+      "neighbours": [
+        "L0a-05",
+        "L0a-07"
+      ]
+    },
+    {
+      "room_id": "L0a-07",
+      "label": "Public WCs",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.55,
+        "y": 0.63,
+        "w": 0.08,
+        "h": 0.09
+      },
+      "neighbours": [
+        "L0a-06",
+        "L0a-05"
+      ]
+    },
+    {
+      "room_id": "L0a-08",
+      "label": "Short Stay Cycle Parking",
+      "type": "external",
+      "approximate_bounds": {
+        "x": 0.67,
+        "y": 0.42,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L0a-01"
+      ]
+    },
+    {
+      "room_id": "L0a-09",
+      "label": "Thames Path",
+      "type": "external",
+      "approximate_bounds": {
+        "x": 0.28,
+        "y": 0.12,
+        "w": 0.47,
+        "h": 0.08
+      },
+      "neighbours": [
+        "L0a-01"
+      ]
+    }
+  ],
+  "core_elements": [
+    {
+      "id": "LIFT-01",
+      "type": "lift",
+      "position": {
+        "x": 0.6,
+        "y": 0.34
+      }
+    },
+    {
+      "id": "LIFT-02",
+      "type": "lift",
+      "position": {
+        "x": 0.63,
+        "y": 0.34
+      }
+    },
+    {
+      "id": "STAIR-01",
+      "type": "stair",
+      "position": {
+        "x": 0.41,
+        "y": 0.6
+      }
+    },
+    {
+      "id": "STAIR-02",
+      "type": "stair",
+      "position": {
+        "x": 0.58,
+        "y": 0.44
+      }
+    },
+    {
+      "id": "CORRIDOR-01",
+      "type": "corridor",
+      "position": {
+        "x": 0.55,
+        "y": 0.48
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+- generic [ref=e4]:
+  - heading "IDOX Public Access" [level=1] [ref=e6]
+  - heading "Page not found" [level=2] [ref=e8]
+  - generic [ref=e9]:
+    - paragraph [ref=e10]: "The requested URL was not found on this server. If you had typed the URL, please check especially the following possibilities:"
+    - list [ref=e11]:
+      - listitem [ref=e12]: Perhaps the URL you typed contained lower case letters instead of upper case letters, or vice versa? URLs are case-sensitive, generally speaking.
+      - listitem [ref=e13]: A space somewhere? A URL must not contain a blank (space) character.
+      - listitem [ref=e14]: Check whether there are some extra characters at the end of the URL, or perhaps some missing characters.

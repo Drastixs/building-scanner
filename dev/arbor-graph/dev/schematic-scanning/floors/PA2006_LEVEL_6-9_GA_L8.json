@@ -1,0 +1,189 @@
+{
+  "floor_level": 8,
+  "rooms": [
+    {
+      "room_id": "L8-9-01",
+      "label": "Office",
+      "type": "office",
+      "approximate_bounds": {
+        "x": 0.05,
+        "y": 0.25,
+        "w": 0.9,
+        "h": 0.7
+      },
+      "neighbours": [
+        "L6-9-02",
+        "L6-9-03",
+        "L6-9-04",
+        "L6-9-05",
+        "L6-9-06",
+        "L6-9-07",
+        "L6-9-08"
+      ]
+    },
+    {
+      "room_id": "L8-9-02",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {
+        "x": 0.05,
+        "y": 0.1,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-04"
+      ]
+    },
+    {
+      "room_id": "L8-9-03",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": {
+        "x": 0.83,
+        "y": 0.1,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-06"
+      ]
+    },
+    {
+      "room_id": "L8-9-04",
+      "label": "WC",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.18,
+        "y": 0.1,
+        "w": 0.07,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-02",
+        "L6-9-05",
+        "L6-9-08"
+      ]
+    },
+    {
+      "room_id": "L8-9-05",
+      "label": "WC",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.25,
+        "y": 0.1,
+        "w": 0.05,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-04",
+        "L6-9-08"
+      ]
+    },
+    {
+      "room_id": "L8-9-08",
+      "label": "WC",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.72,
+        "y": 0.1,
+        "w": 0.07,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-03",
+        "L6-9-07",
+        "L6-9-08"
+      ]
+    },
+    {
+      "room_id": "L8-9-07",
+      "label": "WC",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.77,
+        "y": 0.1,
+        "w": 0.05,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-06",
+        "L6-9-08"
+      ]
+    },
+    {
+      "room_id": "L8-9-08",
+      "label": "Lobby",
+      "type": "circulation",
+      "approximate_bounds": {
+        "x": 0.35,
+        "y": 0.1,
+        "w": 0.3,
+        "h": 0.15
+      },
+      "neighbours": [
+        "L6-9-01",
+        "L6-9-04",
+        "L6-9-05",
+        "L6-9-06",
+        "L6-9-07"
+      ]
+    }
+  ],
+  "core_elements": [
+    {
+      "id": "LIFT-01-L8",
+      "type": "lift",
+      "position": {
+        "x": 0.4,
+        "y": 0.1
+      }
+    },
+    {
+      "id": "LIFT-02-L8",
+      "type": "lift",
+      "position": {
+        "x": 0.475,
+        "y": 0.1
+      }
+    },
+    {
+      "id": "LIFT-03-L8",
+      "type": "lift",
+      "position": {
+        "x": 0.55,
+        "y": 0.1
+      }
+    },
+    {
+      "id": "STAIR-01-L8",
+      "type": "stair",
+      "position": {
+        "x": 0.3,
+        "y": 0.1
+      }
+    },
+    {
+      "id": "STAIR-02-L8",
+      "type": "stair",
+      "position": {
+        "x": 0.65,
+        "y": 0.1
+      }
+    },
+    {
+      "id": "COR-01-L8",
+      "type": "corridor",
+      "position": {
+        "x": 0.35,
+        "y": 0.1
+      }
+    }
+  ]
+}

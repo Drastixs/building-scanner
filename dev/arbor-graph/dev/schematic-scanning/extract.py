@@ -15,7 +15,9 @@ import fitz  # pymupdf
 import openai
 import base64
 
-PDF_DIR = Path(__file__).parent.parent.parent.parent / "Arbor-22-AP-2295"
+PDF_DIR = (
+    Path(__file__).parent.parent.parent.parent.parent / "buildings" / "Arbor-22-AP-2295"
+)
 FLOORS_DIR = Path(__file__).parent / "floors"
 FLOORS_DIR.mkdir(exist_ok=True)
 
@@ -60,12 +62,16 @@ Bounds are normalised 0.0–1.0 relative to the drawing area (not the full page)
 Identify lifts, staircases, and corridors as core_elements — these connect floors vertically."""
 
 
-def rasterise(pdf_path: Path, dpi: int = 200) -> bytes:
+def rasterise(pdf_path: Path, target_long_px: int = 4096) -> bytes:
     doc = fitz.open(pdf_path)
     page = doc[0]
     # Crop title block (right ~15% of page)
     clip = fitz.Rect(0, 0, page.rect.width * 0.85, page.rect.height)
-    mat = fitz.Matrix(dpi / 72, dpi / 72)
+    # Scale so the longest edge = target_long_px (OpenAI tiles after scaling to 2048,
+    # so 4096 gives 2× coverage per tile → labels readable at ~10px)
+    long_edge_pts = max(clip.width, clip.height)
+    scale = target_long_px / long_edge_pts
+    mat = fitz.Matrix(scale, scale)
     pix = page.get_pixmap(matrix=mat, clip=clip)
     return pix.tobytes("png")
 
@@ -88,11 +94,11 @@ def extract_floor(pdf_stem: str, client: openai.OpenAI) -> list[dict]:
     level_str = str(levels[0]) if len(levels) == 1 else f"{levels[0]}-{levels[-1]}"
     prompt = PROMPT.format(level=level_str)
 
-    print(f"  Calling GPT-4o vision for {pdf_stem}...")
+    print(f"  Calling o3 vision for {pdf_stem}...")
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",
-            max_tokens=4096,
+            model="o3",
+            max_completion_tokens=8192,
             messages=[
                 {
                     "role": "user",

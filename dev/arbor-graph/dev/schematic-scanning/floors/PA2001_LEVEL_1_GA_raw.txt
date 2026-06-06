@@ -1,0 +1,57 @@
+{
+  "floor_level": 1,
+  "rooms": [
+    {
+      "room_id": "L1-01",
+      "label": "Office",
+      "type": "office",
+      "approximate_bounds": { "x": 0.42, "y": 0.28, "w": 0.26, "h": 0.32 },
+      "neighbours": ["L1-02", "L1-03", "L1-04", "L1-05", "STAIR-01", "LIFT-01"]
+    },
+    {
+      "room_id": "L1-02",
+      "label": "Plant",
+      "type": "plant",
+      "approximate_bounds": { "x": 0.65, "y": 0.32, "w": 0.08, "h": 0.12 },
+      "neighbours": ["L1-01"]
+    },
+    {
+      "room_id": "L1-03",
+      "label": "WC Male",
+      "type": "amenity",
+      "approximate_bounds": { "x": 0.45, "y": 0.48, "w": 0.08, "h": 0.09 },
+      "neighbours": ["L1-01"]
+    },
+    {
+      "room_id": "L1-04",
+      "label": "WC Female",
+      "type": "amenity",
+      "approximate_bounds": { "x": 0.53, "y": 0.48, "w": 0.08, "h": 0.09 },
+      "neighbours": ["L1-01"]
+    },
+    {
+      "room_id": "L1-05",
+      "label": "Accessible WC",
+      "type": "amenity",
+      "approximate_bounds": { "x": 0.61, "y": 0.48, "w": 0.05, "h": 0.09 },
+      "neighbours": ["L1-01"]
+    }
+  ],
+  "core_elements": [
+    {
+      "id": "STAIR-01",
+      "type": "stair",
+      "position": { "x": 0.38, "y": 0.47 }
+    },
+    {
+      "id": "LIFT-01",
+      "type": "lift",
+      "position": { "x": 0.48, "y": 0.59 }
+    },
+    {
+      "id": "COR-01",
+      "type": "corridor",
+      "position": { "x": 0.50, "y": 0.50 }
+    }
+  ]
+}

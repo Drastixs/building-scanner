@@ -1,0 +1,11 @@
+2026-06-06 03:04:42,951  INFO    === search: 'Cloudflare' (v6=False) ===
+2026-06-06 03:04:42,951  INFO    [bgpview] querying api.bgpview.io ...
+2026-06-06 03:04:43,003  WARNING [bgpview] search failed: <urlopen error [Errno -2] Name or service not known>
+2026-06-06 03:04:43,003  INFO    [arin] querying whois.arin.net ...
+2026-06-06 03:04:43,523  INFO    [arin] 1 matching org(s)
+2026-06-06 03:04:43,524  DEBUG   [arin] org CLOUD14 (Cloudflare, Inc.) -> nets
+2026-06-06 03:04:44,681  INFO    [arin] +202 ranges
+2026-06-06 03:04:44,681  INFO    [ripe] querying rest.db.ripe.net ...
+2026-06-06 03:04:44,865  INFO    [ripe] +18 ranges
+2026-06-06 03:04:44,872  INFO    total: 220 raw ranges -> 146 collapsed CIDRs
+2026-06-06 03:04:44,873  INFO    saved 146 CIDRs -> /home/jacke/Documents/Hackerthons/Pop-The-Bubble/ideas/building-hacking/ip-range/ip-search/cloudflare-20260606-030444.cidrs.txt

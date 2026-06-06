@@ -1,0 +1,126 @@
+                                                                                                          case study
+
+
+
+
+Level39 Uses Zoom Rooms to Enhance Collaboration for
+their 200+ Member Technology Companies
+                                                  Customer
+ Customer: Level39, a world-class tech
+                                                  Level39 is a world-class technology community and incubator
+ community and incubator with over 200
+                                                  that supports high-tech, global companies which is located in
+ resident technology startups & scaleups.
+                                                  Canary Wharf, London’s biggest financial hub and a major centre
+ Challenge: Needed conference rooms               for technology startups.
+ that let the 200+ resident companies share       Founded in 2013, on the 39th floor of the iconic One Canada
+ content wirelessly, invite global participants   Square skyscraper with just six member startups, Level39 has
+ remotely, have a self-service approach, and
+                                                  expanded to three floors and has over 200 member startups and
+ not require end users to register or pay.
+                                                  scaleups from a wide range of sectors and have hosted over 1000
+ Solution: Zoom Rooms’ had all the video
+                                                  events in tech-related industries.
+ conferencing, collaboration & wireless           Level39 provides access to a large vibrant technology community,
+ screen technology features required, was         ecosystem activity with mentor and investor partners, co-working
+ hardware agnostic and had an affordable          & dynamic office spaces, meeting rooms and event spaces.
+ pricing point.
+                                                  Level39’s member base is high tech companies from all sectors,
+ Result: Level39’s Zoom Rooms are most            their member base includes companies who are involved in
+ popular due to its many one click features.      FinTech, cybersecurity, PropTech, HealthTech, blockchain, smart
+ It’s being used for podcasts, product            cities technologies, productivity tools, creative industries, virtual
+ demos, recruitment interviews, remote            reality and many other industries. Members of Level39 include
+ training sessions, and video tutorials.          Revolut, Ripple, Tesla, eToro and the Shenzhen government.
+
+
+
+                                                  Challenge
+
+                                                  Level39 places huge importance pushing the boundaries of
+                                                  innovation in their services. As they expanded, Level39 wanted
+                                                  meeting rooms that could allow their members to increase
+                                                  productivity, the best way to do this was to make a meeting room
+                                                  that allowed for secure connectivity with external participants,
+                                                  collaborative annotations and wireless screen sharing of laptops,
+mobiles and tablets.
+
+Level39 wanted a solution that would cut costs, be easy to use, requires end users to not need to login or
+pay for any services (host and participants), and create a unique experience. After looking through possible
+solutions, the team chose Zoom Rooms for its compatibility with off-the-shelf hardware, reliability, and cost
+effectiveness. Zoom’s competitors were too license heavy, wouldn’t work well with off-the-shelf-hardware and
+couldn’t properly support dual and triple screen experiences.
+
+
+
+Solution
+
+Level39’s deployment of Zoom Rooms could not have been easier. “I’m a huge techie and wanted to create
+Zoom Rooms with the best hardware and experience for our end users.
+
+The whole process was so simple as Zoom Rooms is software driven, its plug and play making it super easy
+to setup and the end result is an extremely advanced conference and collaboration room where people can
+record their meetings, share their screens and invite visitors all via one click processes.
+
+With the money for one traditional room, we could make six or seven Zoom Rooms, we didn’t have to deal
+with middle partners or suppliers, I was just able to get off the shelf hardware and connect it to zoom in a few
+clicks, we’ve saved huge sums on custom hardware and licenses and Zoom keep releasing great features, now
+attendees can join rooms directly from a web browser!
+
+A key decision feature was that Zoom’s support team know their product inside out and are always available, I
+was surprised at how quickly I got a response from Zooms support team via email or live chat.” says Qaunain
+Meghjee, Head of Systems & Technology at Level39.
+
+Thanks to Zoom’s affordable and user-friendly software platform, Level39 was able to focus more on creating
+a unique meeting room experience. “Zoom didn’t rely on any specific hardware, so we really went all out on
+customisation and interior design. With the money saved, we were able to put in a patterned floor consisting
+of wood, vinyl and carpet, reconstruct the walls to integrate colour changing vertical lighting, modify a glass wall
+on one side create a brandable third logo screen so users can tailor their meetings to their company brand..
+Zoom Rooms is also simpler and cleaner looking than our other rooms. The power sockets and USB ports were
+built into the table, making it less cluttered. We just have the iPad on the table to control the Zoom Room. Our
+members who consist of over 1250 individuals have been using this room for over a year without any training
+or instructions” says Qaunain Meghjee.
+
+
+
+Result
+
+Since deployment, Level39’s Zoom Rooms have become the most popular and most booked meeting rooms
+by their members. In addition to collaborative meetings, members use the Zoom Rooms for everything from
+interviews and international board meetings to podcasting and product demo sessions.
+
+Because so many of Level39’s partners are global companies and growth stage companies, they use Zoom
+Rooms for international interviews and meetings, cutting back on time and resources spent flying candidates
+to and from locations. The Zoom Rooms’ rear screen can display company logos allowing partners to enforce
+their branding during meetings. Zoom Rooms’ easy screen sharing between devices has also been perfect for
+companies demoing products and applications.
+
+The Zoom Rooms’ excellent audio and video quality has fostered creative development as well. “Our partners
+have been using the Zoom Rooms for video recordings and podcasting, we never thought the room would
+double up as a studio! We were planning on making a separate podcast studio, but it turns out people have
+been using our Zoom Rooms to make podcasts. The audio and video is already studio-quality, and with Zoom’s
+recording, the podcasts are automatically rendered after a session,” says Qaunain Meghjee.
+
+Level39 won the opportunity to host the United Kingdom’s official and only Cyber Demonstration Centre, the
+tech stack of Zoom Rooms powers this facility as it allows for secure local and remote product demos, on
+multiple screens via wireless screen sharing of laptops, mobiles and tablets in a universal way. “This facility and
+program allows cyber security companies from the UK to collaborate with their stakeholders in an advanced
+way. It’s been featured in the media many times,” says Qaunain Meghjee.
+
+For their next steps, Level39 plans on using Zoom Rooms Digital Signage to empower wireless screens sharing
+for their ecosystem mentoring sessions and is working with the Zoom API platform to incorporate self-generating
+Zoom Rooms conference codes for a meeting room portal which Qaunain has recently launched.
+
+
+
+
+                                                                                                                  About Zoom
+                                                               Zoom is the leader in modern enterprise video communications,
+                                                                        with an easy, reliable cloud platform for video and audio
+                                                            conferencing, chat, and webinars across mobile, desktop, and room
+                                                               systems. Zoom Rooms is the original software-based conference
+                                                            room solution used around the world in board, conference, huddle,
+                                                                and training rooms, as well as executive offices and classrooms.
+                                                              Founded in 2011, Zoom helps businesses and organizations bring
+                                                                 their teams together in a frictionless environment to get more
+                                                               done. Zoom is a private company headquartered in San Jose, CA.
+

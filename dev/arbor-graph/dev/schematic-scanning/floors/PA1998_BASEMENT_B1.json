@@ -1,0 +1,195 @@
+{
+  "floor_level": -1,
+  "rooms": [
+    {
+      "room_id": "L-1-01",
+      "label": "Changing Room",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.43,
+        "y": 0.22,
+        "w": 0.16,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L-1-02",
+        "L-1-03",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-02",
+      "label": "Drying Room",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.58,
+        "y": 0.22,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L-1-01",
+        "L-1-04",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-03",
+      "label": "Female Changing Room",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.43,
+        "y": 0.33,
+        "w": 0.16,
+        "h": 0.09
+      },
+      "neighbours": [
+        "L-1-01",
+        "L-1-05",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-04",
+      "label": "Vending",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.7,
+        "y": 0.25,
+        "w": 0.05,
+        "h": 0.05
+      },
+      "neighbours": [
+        "L-1-02",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-05",
+      "label": "Comms Room",
+      "type": "plant",
+      "approximate_bounds": {
+        "x": 0.43,
+        "y": 0.45,
+        "w": 0.12,
+        "h": 0.08
+      },
+      "neighbours": [
+        "L-1-03",
+        "L-1-06",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-06",
+      "label": "Lab safety wash room",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.57,
+        "y": 0.45,
+        "w": 0.1,
+        "h": 0.08
+      },
+      "neighbours": [
+        "L-1-05",
+        "L-1-07",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-07",
+      "label": "Store",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.67,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.08
+      },
+      "neighbours": [
+        "L-1-06",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-08",
+      "label": "Store",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.53,
+        "y": 0.55,
+        "w": 0.1,
+        "h": 0.06
+      },
+      "neighbours": [
+        "L-1-09",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-09",
+      "label": "Injury bench room",
+      "type": "unknown",
+      "approximate_bounds": {
+        "x": 0.47,
+        "y": 0.63,
+        "w": 0.18,
+        "h": 0.13
+      },
+      "neighbours": [
+        "L-1-08",
+        "L-1-10",
+        "COR-01"
+      ]
+    },
+    {
+      "room_id": "L-1-10",
+      "label": "Cycle Store",
+      "type": "amenity",
+      "approximate_bounds": {
+        "x": 0.6,
+        "y": 0.62,
+        "w": 0.22,
+        "h": 0.24
+      },
+      "neighbours": [
+        "L-1-09",
+        "COR-01"
+      ]
+    }
+  ],
+  "core_elements": [
+    {
+      "id": "LIFT-01",
+      "type": "lift",
+      "position": {
+        "x": 0.5,
+        "y": 0.73
+      }
+    },
+    {
+      "id": "LIFT-02",
+      "type": "lift",
+      "position": {
+        "x": 0.54,
+        "y": 0.73
+      }
+    },
+    {
+      "id": "STAIR-01",
+      "type": "stair",
+      "position": {
+        "x": 0.65,
+        "y": 0.34
+      }
+    },
+    {
+      "id": "COR-01",
+      "type": "corridor",
+      "position": {
+        "x": 0.55,
+        "y": 0.4
+      }
+    }
+  ]
+}

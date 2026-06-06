@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level39 — Speculative Floor Plan Reconstruction</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    color: #e0e0e0;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #111118 0%, #1a1a2e 100%);
+    border-bottom: 1px solid #2a2a3e;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .header .subtitle {
+    font-size: 14px;
+    color: #8888aa;
+    font-weight: 400;
+  }
+
+  .header .confidence {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    background: rgba(255, 170, 0, 0.15);
+    border: 1px solid rgba(255, 170, 0, 0.3);
+    border-radius: 4px;
+    font-size: 12px;
+    color: #ffaa00;
+    font-weight: 500;
+  }
+
+  .main-container {
+    display: flex;
+    gap: 0;
+    min-height: calc(100vh - 100px);
+  }
+
+  .plan-container {
+    flex: 1;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .sidebar {
+    width: 360px;
+    background: #111118;
+    border-left: 1px solid #2a2a3e;
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+  }
+
+  .sidebar h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2a2a3e;
+  }
+
+  .sidebar h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .room-card {
+    background: #1a1a25;
+    border: 1px solid #2a2a3e;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .room-card:hover, .room-card.active {
+    background: #222235;
+    border-left-color: var(--room-color, #666);
+  }
+
+  .room-card .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .room-card .area {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .room-card .capacity {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  .room-card .conf {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .conf-high { background: rgba(0,200,100,0.15); color: #00c864; }
+  .conf-medium { background: rgba(255,170,0,0.15); color: #ffaa00; }
+  .conf-low { background: rgba(255,80,80,0.15); color: #ff5050; }
+
+  .legend {
+    margin-top: 24px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .dimensions-info {
+    background: #1a1a25;
+    border: 1px solid #2a2a3e;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .dimensions-info .row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .dimensions-info .label { color: #888; }
+  .dimensions-info .value { color: #fff; font-weight: 500; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+  .source-note {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #1a1a2e;
+  }
+
+  svg text {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  }
+
+  .compass { position: absolute; bottom: 24px; left: 32px; }
+
+  .tooltip {
+    position: absolute;
+    background: #222235;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 100;
+    max-width: 240px;
+    line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+
+  .tooltip.visible { opacity: 1; }
+
+  .dim-line { stroke: #ffaa00; stroke-width: 0.8; stroke-dasharray: 4,3; }
+  .dim-text { fill: #ffaa00; font-size: 7px; font-weight: 500; }
+
+  @media (max-width: 900px) {
+    .main-container { flex-direction: column; }
+    .sidebar { width: 100%; max-height: none; border-left: none; border-top: 1px solid #2a2a3e; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Level39 — Speculative Floor Plan</h1>
+  <div class="subtitle">39th Floor, One Canada Square, Canary Wharf, London E14 5AB</div>
+  <div class="confidence">SPECULATIVE — based on structural shell from Level 43 plan + venue capacity data + media research</div>
+</div>
+
+<div class="main-container">
+  <div class="plan-container">
+    <div id="tooltip" class="tooltip"></div>
+
+    <svg id="floor-plan" viewBox="-10 -10 620 620" width="100%" style="max-width: 700px; max-height: calc(100vh - 160px);">
+      <defs>
+        <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#333" stroke-width="0.5"/>
+        </pattern>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ===== STRUCTURAL SHELL (from Level 43 plan) ===== -->
+      <!-- Floor plate outline — roughly square with notched corners -->
+      <!-- Scale: 1 unit = ~0.1m, so 569 units = 56.9m. Using 10x scale: 569 units -->
+      <!-- Simplified to 570 x 570 with corner notches -->
+      <g id="shell">
+        <!-- Outer floor plate with chamfered corners -->
+        <polygon
+          points="40,0 530,0 570,0 570,40 570,530 570,570 530,570 40,570 0,570 0,530 0,40 0,0"
+          fill="#141420" stroke="#3a3a50" stroke-width="2"/>
+
+        <!-- Perimeter column grid (3m centres = 30 units) -->
+        <g id="columns" fill="#2a2a40" stroke="#3a3a50" stroke-width="0.5">
+          <!-- North wall -->
+          <rect x="30" y="-2" width="6" height="6" rx="1"/>
+          <rect x="60" y="-2" width="6" height="6" rx="1"/>
+          <rect x="90" y="-2" width="6" height="6" rx="1"/>
+          <rect x="120" y="-2" width="6" height="6" rx="1"/>
+          <rect x="150" y="-2" width="6" height="6" rx="1"/>
+          <rect x="180" y="-2" width="6" height="6" rx="1"/>
+          <rect x="210" y="-2" width="6" height="6" rx="1"/>
+          <rect x="240" y="-2" width="6" height="6" rx="1"/>
+          <rect x="270" y="-2" width="6" height="6" rx="1"/>
+          <rect x="300" y="-2" width="6" height="6" rx="1"/>
+          <rect x="330" y="-2" width="6" height="6" rx="1"/>
+          <rect x="360" y="-2" width="6" height="6" rx="1"/>
+          <rect x="390" y="-2" width="6" height="6" rx="1"/>
+          <rect x="420" y="-2" width="6" height="6" rx="1"/>
+          <rect x="450" y="-2" width="6" height="6" rx="1"/>
+          <rect x="480" y="-2" width="6" height="6" rx="1"/>
+          <rect x="510" y="-2" width="6" height="6" rx="1"/>
+          <!-- South wall -->
+          <rect x="30" y="566" width="6" height="6" rx="1"/>
+          <rect x="60" y="566" width="6" height="6" rx="1"/>
+          <rect x="90" y="566" width="6" height="6" rx="1"/>
+          <rect x="120" y="566" width="6" height="6" rx="1"/>
+          <rect x="150" y="566" width="6" height="6" rx="1"/>
+          <rect x="180" y="566" width="6" height="6" rx="1"/>
+          <rect x="210" y="566" width="6" height="6" rx="1"/>
+          <rect x="240" y="566" width="6" height="6" rx="1"/>
+          <rect x="270" y="566" width="6" height="6" rx="1"/>
+          <rect x="300" y="566" width="6" height="6" rx="1"/>
+          <rect x="330" y="566" width="6" height="6" rx="1"/>
+          <rect x="360" y="566" width="6" height="6" rx="1"/>
+          <rect x="390" y="566" width="6" height="6" rx="1"/>
+          <rect x="420" y="566" width="6" height="6" rx="1"/>
+          <rect x="450" y="566" width="6" height="6" rx="1"/>
+          <rect x="480" y="566" width="6" height="6" rx="1"/>
+          <rect x="510" y="566" width="6" height="6" rx="1"/>
+          <!-- West wall -->
+          <rect x="-2" y="30" width="6" height="6" rx="1"/>
+          <rect x="-2" y="60" width="6" height="6" rx="1"/>
+          <rect x="-2" y="90" width="6" height="6" rx="1"/>
+          <rect x="-2" y="120" width="6" height="6" rx="1"/>
+          <rect x="-2" y="150" width="6" height="6" rx="1"/>
+          <rect x="-2" y="180" width="6" height="6" rx="1"/>
+          <rect x="-2" y="210" width="6" height="6" rx="1"/>
+          <rect x="-2" y="240" width="6" height="6" rx="1"/>
+          <rect x="-2" y="270" width="6" height="6" rx="1"/>
+          <rect x="-2" y="300" width="6" height="6" rx="1"/>
+          <rect x="-2" y="330" width="6" height="6" rx="1"/>
+          <rect x="-2" y="360" width="6" height="6" rx="1"/>
+          <rect x="-2" y="390" width="6" height="6" rx="1"/>
+          <rect x="-2" y="420" width="6" height="6" rx="1"/>
+          <rect x="-2" y="450" width="6" height="6" rx="1"/>
+          <rect x="-2" y="480" width="6" height="6" rx="1"/>
+          <rect x="-2" y="510" width="6" height="6" rx="1"/>
+          <!-- East wall -->
+          <rect x="566" y="30" width="6" height="6" rx="1"/>
+          <rect x="566" y="60" width="6" height="6" rx="1"/>
+          <rect x="566" y="90" width="6" height="6" rx="1"/>
+          <rect x="566" y="120" width="6" height="6" rx="1"/>
+          <rect x="566" y="150" width="6" height="6" rx="1"/>
+          <rect x="566" y="180" width="6" height="6" rx="1"/>
+          <rect x="566" y="210" width="6" height="6" rx="1"/>
+          <rect x="566" y="240" width="6" height="6" rx="1"/>
+          <rect x="566" y="270" width="6" height="6" rx="1"/>
+          <rect x="566" y="300" width="6" height="6" rx="1"/>
+          <rect x="566" y="330" width="6" height="6" rx="1"/>
+          <rect x="566" y="360" width="6" height="6" rx="1"/>
+          <rect x="566" y="390" width="6" height="6" rx="1"/>
+          <rect x="566" y="420" width="6" height="6" rx="1"/>
+          <rect x="566" y="450" width="6" height="6" rx="1"/>
+          <rect x="566" y="480" width="6" height="6" rx="1"/>
+          <rect x="566" y="510" width="6" height="6" rx="1"/>
+        </g>
+
+        <!-- ===== NORTH CORE ===== -->
+        <!-- Position: offset east. West edge at x=203 (20.3m from west wall) -->
+        <!-- Width: 171 (17.1m), Depth: 139 (13.9m) -->
+        <!-- North core top at y=46 (4.6m from north wall) -->
+        <g id="north-core">
+          <rect x="203" y="46" width="271" height="139"
+                fill="#1e1e2e" stroke="#4a4a60" stroke-width="1.5" rx="2"/>
+          <!-- Lift shafts -->
+          <rect x="213" y="56" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <rect x="253" y="56" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <rect x="293" y="56" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <rect x="333" y="56" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <!-- Goods/Firemen's lift -->
+          <rect x="393" y="56" width="40" height="45" fill="#2a2a3a" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <!-- Stairwell -->
+          <rect x="440" y="56" width="28" height="55" fill="url(#hatch)" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <!-- Toilets -->
+          <rect x="213" y="110" width="60" height="65" fill="#1c1c2c" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <rect x="283" y="110" width="60" height="65" fill="#1c1c2c" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <!-- Risers -->
+          <rect x="360" y="115" width="25" height="60" fill="#1a1a28" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <rect x="393" y="115" width="25" height="60" fill="#1a1a28" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <!-- Stairwell 2 -->
+          <rect x="430" y="120" width="35" height="55" fill="url(#hatch)" stroke="#3a3a50" stroke-width="1" rx="1"/>
+
+          <text x="338" y="100" text-anchor="middle" fill="#555" font-size="8" font-weight="500">CORE N</text>
+          <text x="234" y="150" text-anchor="middle" fill="#444" font-size="6">WC</text>
+          <text x="314" y="150" text-anchor="middle" fill="#444" font-size="6">WC</text>
+        </g>
+
+        <!-- ===== SOUTH CORE ===== -->
+        <!-- Gap between cores: north core bottom (46+139=185) to south core top -->
+        <!-- Gap = ~203 units (20.3m) — this is the "Technology Tunnel" zone -->
+        <!-- South core top at y=388, bottom at y=388+139=527 -->
+        <g id="south-core">
+          <rect x="203" y="385" width="271" height="139"
+                fill="#1e1e2e" stroke="#4a4a60" stroke-width="1.5" rx="2"/>
+          <!-- Lift shafts -->
+          <rect x="213" y="395" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <rect x="253" y="395" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <rect x="293" y="395" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <rect x="333" y="395" width="35" height="35" fill="#252538" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <!-- Goods lift -->
+          <rect x="393" y="395" width="40" height="45" fill="#2a2a3a" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <!-- Stairwell -->
+          <rect x="440" y="395" width="28" height="55" fill="url(#hatch)" stroke="#3a3a50" stroke-width="1" rx="1"/>
+          <!-- Toilets -->
+          <rect x="213" y="448" width="60" height="65" fill="#1c1c2c" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <rect x="283" y="448" width="60" height="65" fill="#1c1c2c" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <!-- Risers -->
+          <rect x="360" y="455" width="25" height="60" fill="#1a1a28" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <rect x="393" y="455" width="25" height="60" fill="#1a1a28" stroke="#3a3a50" stroke-width="0.8" rx="1"/>
+          <!-- Stairwell 2 -->
+          <rect x="430" y="458" width="35" height="55" fill="url(#hatch)" stroke="#3a3a50" stroke-width="1" rx="1"/>
+
+          <text x="338" y="438" text-anchor="middle" fill="#555" font-size="8" font-weight="500">CORE S</text>
+          <text x="234" y="488" text-anchor="middle" fill="#444" font-size="6">WC</text>
+          <text x="314" y="488" text-anchor="middle" fill="#444" font-size="6">WC</text>
+        </g>
+      </g>
+
+      <!-- ===== LEVEL39 FIT-OUT (SPECULATIVE) ===== -->
+
+      <!-- ENTRANCE / RECEPTION — between north core and lift lobby -->
+      <g class="room" data-room="entrance"
+         data-info="Entrance &amp; Reception|~40 sq m|You arrive via lifts in the north core, stepping out into the reception area. Booths line the entrance for visitor check-in. This is the transition zone between the lift lobby and the main workspace.">
+        <rect x="203" y="185" width="120" height="60"
+              fill="rgba(100, 200, 255, 0.12)" stroke="#64c8ff" stroke-width="1.5" rx="3"/>
+        <text x="263" y="212" text-anchor="middle" fill="#64c8ff" font-size="9" font-weight="600">ENTRANCE</text>
+        <text x="263" y="224" text-anchor="middle" fill="#64c8ff" font-size="6" opacity="0.7">Reception + Booths</text>
+      </g>
+
+      <!-- TECHNOLOGY TUNNEL — corridor between cores (the "main street") -->
+      <g class="room" data-room="tunnel"
+         data-info="Technology Tunnel|~150 sq m (circulation corridor)|The main east-west spine connecting the west workspace zones to the east perimeter. Functions as refreshment breakout and informal meeting space. Not exclusive — serves as primary circulation. Historically named 'Technology Tunnel', now unnamed but still the connective tissue of the floor.">
+        <rect x="203" y="247" width="271" height="136"
+              fill="rgba(180, 140, 255, 0.06)" stroke="#b48cff" stroke-width="1" stroke-dasharray="6,4" rx="3"/>
+        <text x="338" y="318" text-anchor="middle" fill="#b48cff" font-size="9" font-weight="600">TECHNOLOGY TUNNEL</text>
+        <text x="338" y="330" text-anchor="middle" fill="#b48cff" font-size="6" opacity="0.7">Main circulation corridor + breakout</text>
+      </g>
+
+      <!-- CAFÉ / KITCHEN — between cores, west side -->
+      <g class="room" data-room="cafe"
+         data-info="Café &amp; Kitchen|~80 sq m|Positioned between the two cores on the west side, adjacent to the main circulation spine. Serves the open coworking areas. Part of the 24/7 accessible facilities.">
+        <rect x="130" y="260" width="70" height="110"
+              fill="rgba(255, 180, 100, 0.12)" stroke="#ffb464" stroke-width="1.5" rx="3"/>
+        <text x="165" y="312" text-anchor="middle" fill="#ffb464" font-size="8" font-weight="600">CAFÉ</text>
+        <text x="165" y="324" text-anchor="middle" fill="#ffb464" font-size="6" opacity="0.7">Kitchen</text>
+      </g>
+
+      <!-- SANDBOX 1 (formerly EastMinster) — west side, north quadrant -->
+      <g class="room" data-room="sandbox1"
+         data-info="Sandbox 1 (fmr. EastMinster)|~170-195 sq m|Theatre: 130 / Cabaret: 80|The larger half of The Sandbox, against the west perimeter with views. Movable partition wall on the south side connects to Sandbox 2 to create the combined Sandbox space (200 theatre). High-end AV setup.">
+        <rect x="15" y="50" width="180" height="130"
+              fill="rgba(255, 100, 100, 0.12)" stroke="#ff6464" stroke-width="1.5" rx="3"/>
+        <text x="105" y="108" text-anchor="middle" fill="#ff6464" font-size="10" font-weight="700">SANDBOX 1</text>
+        <text x="105" y="122" text-anchor="middle" fill="#ff6464" font-size="7" opacity="0.7">fmr. EastMinster</text>
+        <text x="105" y="135" text-anchor="middle" fill="#ff6464" font-size="6" opacity="0.5">~180 sq m · 130 theatre</text>
+        <!-- Partition wall indicator -->
+        <line x1="15" y1="180" x2="195" y2="180" stroke="#ff6464" stroke-width="2" stroke-dasharray="8,4"/>
+        <text x="105" y="176" text-anchor="middle" fill="#ff6464" font-size="5" opacity="0.5">▼ MOVABLE PARTITION ▼</text>
+      </g>
+
+      <!-- SANDBOX 2 (formerly FutureCities) — west side, below Sandbox 1 -->
+      <g class="room" data-room="sandbox2"
+         data-info="Sandbox 2 (fmr. FutureCities)|~96 sq m (HeadBox verified)|Theatre: 60 / Cabaret: 50|The smaller half of The Sandbox. Combined with Sandbox 1 via partition wall to create 'The Sandbox' (fmr. FutureMinster) at 200 theatre capacity.">
+        <rect x="15" y="183" width="110" height="73"
+              fill="rgba(255, 130, 130, 0.12)" stroke="#ff8282" stroke-width="1.5" rx="3"/>
+        <text x="70" y="215" text-anchor="middle" fill="#ff8282" font-size="9" font-weight="600">SANDBOX 2</text>
+        <text x="70" y="228" text-anchor="middle" fill="#ff8282" font-size="6" opacity="0.7">fmr. FutureCities</text>
+        <text x="70" y="240" text-anchor="middle" fill="#ff8282" font-size="5" opacity="0.5">~96 sq m · 60 theatre</text>
+      </g>
+
+      <!-- SPACE39 — south-west quadrant, large event space -->
+      <g class="room" data-room="space39"
+         data-info="Space39|~280 sq m|Seated informal: 90 / Standing: 250|Level39's primary evening event venue. Located in the south-west quadrant with panoramic views. Evening hire only — during the day this area may function as extended coworking. The largest single bookable space.">
+        <rect x="15" y="400" width="183" height="155"
+              fill="rgba(100, 255, 180, 0.12)" stroke="#64ffb4" stroke-width="1.5" rx="3"/>
+        <text x="106" y="470" text-anchor="middle" fill="#64ffb4" font-size="12" font-weight="700">SPACE39</text>
+        <text x="106" y="486" text-anchor="middle" fill="#64ffb4" font-size="7" opacity="0.7">Evening event venue</text>
+        <text x="106" y="500" text-anchor="middle" fill="#64ffb4" font-size="6" opacity="0.5">~280 sq m · 250 standing</text>
+      </g>
+
+      <!-- GROW BOARDROOM — near south core, interior -->
+      <g class="room" data-room="boardroom"
+         data-info="GROW Boardroom|~50 sq m|Seated: 20|A private boardroom near the south core. Used for investor meetings, board sessions, and private events. The smallest bookable space.">
+        <rect x="130" y="372" width="68" height="55"
+              fill="rgba(255, 220, 100, 0.12)" stroke="#ffdc64" stroke-width="1.5" rx="3"/>
+        <text x="164" y="396" text-anchor="middle" fill="#ffdc64" font-size="8" font-weight="600">GROW</text>
+        <text x="164" y="408" text-anchor="middle" fill="#ffdc64" font-size="6" opacity="0.7">Boardroom</text>
+        <text x="164" y="418" text-anchor="middle" fill="#ffdc64" font-size="5" opacity="0.5">~50 sq m · 20 pax</text>
+      </g>
+
+      <!-- OPEN COWORKING — east perimeter strip -->
+      <g class="room" data-room="cowork-east"
+         data-info="Open Coworking (East)|~400 sq m|Hot desks, fixed desks, and private offices along the east perimeter. 10m deep strip with full-height windows looking east toward the Thames and Greenwich. Exposed ceiling with industrial aesthetic. 24/7 access for Coworking and Office tier members.">
+        <rect x="480" y="15" width="75" height="540"
+              fill="rgba(100, 180, 255, 0.06)" stroke="#64b4ff" stroke-width="1" stroke-dasharray="4,3" rx="3"/>
+        <text x="517" y="265" text-anchor="middle" fill="#64b4ff" font-size="8" font-weight="500"
+              transform="rotate(90, 517, 265)">OPEN COWORKING — East Perimeter</text>
+      </g>
+
+      <!-- OPEN COWORKING — north perimeter -->
+      <g class="room" data-room="cowork-north"
+         data-info="Open Coworking (North)|~200 sq m|Hot desks and drop-in zones along the north perimeter. Views north toward Hertfordshire and the City.">
+        <rect x="15" y="15" width="460" height="30"
+              fill="rgba(100, 180, 255, 0.06)" stroke="#64b4ff" stroke-width="1" stroke-dasharray="4,3" rx="3"/>
+      </g>
+
+      <!-- OPEN COWORKING — south perimeter -->
+      <g class="room" data-room="cowork-south"
+         data-info="Open Coworking (South)|~160 sq m|Desks along the south perimeter with views toward the O2 and Docklands.">
+        <rect x="200" y="530" width="275" height="30"
+              fill="rgba(100, 180, 255, 0.06)" stroke="#64b4ff" stroke-width="1" stroke-dasharray="4,3" rx="3"/>
+      </g>
+
+      <!-- PHONE BOOTHS / ZEN DENS — scattered near cores -->
+      <g class="room" data-room="booths"
+         data-info="Phone Booths &amp; Zen Dens|~5 sq m each, ~6-8 units|Small enclosed pods for private calls or quiet focus work. Positioned near the cores where natural light is limited. Originally called 'Skype Rooms' in the 2013 Gensler fit-out.">
+        <rect x="340" y="192" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="362" y="192" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="384" y="192" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="340" y="214" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="362" y="214" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="384" y="214" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <text x="370" y="246" text-anchor="middle" fill="#aaaacc" font-size="6">Booths / Zen</text>
+
+        <rect x="340" y="360" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="362" y="360" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+        <rect x="384" y="360" width="18" height="18" fill="rgba(200,200,255,0.15)" stroke="#aaaacc" stroke-width="1" rx="2"/>
+      </g>
+
+      <!-- LOUNGE — west side between sandbox and space39 -->
+      <g class="room" data-room="lounge"
+         data-info="Lounge|~90 sq m|Informal seating area for Community tier drop-in members. Soft seating, low tables, relaxed atmosphere. Buffer zone between the event/sandbox spaces and the café.">
+        <rect x="15" y="260" width="110" height="105"
+              fill="rgba(180, 255, 200, 0.08)" stroke="#b4ffc8" stroke-width="1" stroke-dasharray="4,3" rx="3"/>
+        <text x="70" y="310" text-anchor="middle" fill="#b4ffc8" font-size="8" font-weight="500">LOUNGE</text>
+        <text x="70" y="323" text-anchor="middle" fill="#b4ffc8" font-size="6" opacity="0.6">Drop-in / Social</text>
+      </g>
+
+      <!-- PRIVATE OFFICES — between south core and south-east perimeter -->
+      <g class="room" data-room="offices"
+         data-info="Private Offices|~200 sq m total|Enclosed offices for Office tier members (dedicated teams). Positioned in the south-east corner with perimeter views. Glass-fronted for transparency while maintaining acoustic privacy.">
+        <rect x="480" y="385" width="75" height="139"
+              fill="rgba(255, 200, 100, 0.08)" stroke="#ffc864" stroke-width="1" stroke-dasharray="4,3" rx="3"/>
+        <text x="517" y="450" text-anchor="middle" fill="#ffc864" font-size="7" font-weight="500"
+              transform="rotate(90, 517, 450)">PRIVATE OFFICES</text>
+      </g>
+
+      <!-- MEETING ROOMS — east side between cores -->
+      <g class="room" data-room="meeting"
+         data-info="Meeting Rooms|~80 sq m total (3-4 rooms)|Small bookable meeting rooms for members. 4-8 person capacity each. Glass partitions. Located east of the main corridor with some natural light from the east perimeter.">
+        <rect x="480" y="200" width="75" height="60" fill="rgba(200,180,255,0.1)" stroke="#c8b4ff" stroke-width="1" rx="3"/>
+        <rect x="480" y="264" width="75" height="60" fill="rgba(200,180,255,0.1)" stroke="#c8b4ff" stroke-width="1" rx="3"/>
+        <rect x="480" y="328" width="75" height="52" fill="rgba(200,180,255,0.1)" stroke="#c8b4ff" stroke-width="1" rx="3"/>
+        <text x="517" y="230" text-anchor="middle" fill="#c8b4ff" font-size="7" font-weight="500">MTG 1</text>
+        <text x="517" y="298" text-anchor="middle" fill="#c8b4ff" font-size="7" font-weight="500">MTG 2</text>
+        <text x="517" y="358" text-anchor="middle" fill="#c8b4ff" font-size="7" font-weight="500">MTG 3</text>
+      </g>
+
+      <!-- ===== DIMENSION LINES ===== -->
+      <!-- Overall N-S -->
+      <line x1="590" y1="0" x2="590" y2="570" class="dim-line"/>
+      <line x1="585" y1="0" x2="595" y2="0" class="dim-line"/>
+      <line x1="585" y1="570" x2="595" y2="570" class="dim-line"/>
+      <text x="598" y="290" class="dim-text" transform="rotate(90, 598, 290)">56.9m</text>
+
+      <!-- West to core -->
+      <line x1="0" y1="-6" x2="203" y2="-6" class="dim-line"/>
+      <line x1="0" y1="-9" x2="0" y2="-3" class="dim-line"/>
+      <line x1="203" y1="-9" x2="203" y2="-3" class="dim-line"/>
+      <text x="101" y="-8" class="dim-text" text-anchor="middle">20.3m</text>
+
+      <!-- Core to east -->
+      <line x1="474" y1="-6" x2="570" y2="-6" class="dim-line"/>
+      <line x1="474" y1="-9" x2="474" y2="-3" class="dim-line"/>
+      <line x1="570" y1="-9" x2="570" y2="-3" class="dim-line"/>
+      <text x="522" y="-8" class="dim-text" text-anchor="middle">10.0m</text>
+
+      <!-- Core width -->
+      <line x1="203" y1="-6" x2="474" y2="-6" class="dim-line" opacity="0.4"/>
+      <text x="338" y="-8" class="dim-text" text-anchor="middle" opacity="0.6">~27m (core width)</text>
+
+      <!-- North core depth -->
+      <line x1="196" y1="46" x2="196" y2="185" class="dim-line"/>
+      <text x="190" y="118" class="dim-text" text-anchor="end" transform="rotate(-90, 190, 118)">13.9m</text>
+
+      <!-- Gap between cores -->
+      <line x1="196" y1="185" x2="196" y2="385" class="dim-line"/>
+      <text x="190" y="288" class="dim-text" text-anchor="end" transform="rotate(-90, 190, 288)">20.0m gap</text>
+
+      <!-- South core depth -->
+      <line x1="196" y1="385" x2="196" y2="524" class="dim-line"/>
+      <text x="190" y="457" class="dim-text" text-anchor="end" transform="rotate(-90, 190, 457)">13.9m</text>
+
+      <!-- ===== COMPASS ===== -->
+      <g transform="translate(50, 530)">
+        <circle cx="0" cy="0" r="16" fill="none" stroke="#555" stroke-width="1"/>
+        <polygon points="0,-14 -4,0 0,-4 4,0" fill="#ffaa00" stroke="none"/>
+        <polygon points="0,14 -4,0 0,4 4,0" fill="#555" stroke="none"/>
+        <text x="0" y="-18" text-anchor="middle" fill="#ffaa00" font-size="8" font-weight="700">N</text>
+      </g>
+
+      <!-- Scale bar -->
+      <g transform="translate(15, 565)">
+        <line x1="0" y1="0" x2="100" y2="0" stroke="#666" stroke-width="1.5"/>
+        <line x1="0" y1="-3" x2="0" y2="3" stroke="#666" stroke-width="1"/>
+        <line x1="50" y1="-2" x2="50" y2="2" stroke="#666" stroke-width="0.5"/>
+        <line x1="100" y1="-3" x2="100" y2="3" stroke="#666" stroke-width="1"/>
+        <text x="0" y="10" fill="#666" font-size="6">0</text>
+        <text x="50" y="10" fill="#666" font-size="6" text-anchor="middle">5m</text>
+        <text x="100" y="10" fill="#666" font-size="6" text-anchor="middle">10m</text>
+      </g>
+
+      <!-- Window indicators (small marks along perimeter) -->
+      <g stroke="#335" stroke-width="0.5" opacity="0.5">
+        <!-- Simplified window marks on all four sides -->
+        <line x1="15" y1="0" x2="15" y2="-3"/><line x1="45" y1="0" x2="45" y2="-3"/>
+        <line x1="75" y1="0" x2="75" y2="-3"/><line x1="105" y1="0" x2="105" y2="-3"/>
+        <line x1="135" y1="0" x2="135" y2="-3"/><line x1="165" y1="0" x2="165" y2="-3"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <div class="sidebar">
+    <h2>Floor Data</h2>
+
+    <div class="dimensions-info">
+      <div class="row"><span class="label">Floor</span><span class="value">Level 39</span></div>
+      <div class="row"><span class="label">Usable area</span><span class="value">~2,709 sq m</span></div>
+      <div class="row"><span class="label">Floor plate</span><span class="value">~56.9m × 56.9m</span></div>
+      <div class="row"><span class="label">Structure</span><span class="value">Steel frame, twin core</span></div>
+      <div class="row"><span class="label">Column grid</span><span class="value">3m centres (perim.)</span></div>
+      <div class="row"><span class="label">Ceiling</span><span class="value">Exposed (industrial)</span></div>
+      <div class="row"><span class="label">Shell source</span><span class="value">Level 43 plan (CW)</span></div>
+    </div>
+
+    <h3>Event / Bookable Spaces</h3>
+
+    <div class="room-card" data-target="sandbox1" style="--room-color: #ff6464">
+      <div class="name" style="color: #ff6464">Sandbox 1</div>
+      <div class="area">~170-195 sq m · fmr. EastMinster</div>
+      <div class="capacity">Theatre: 130 / Cabaret: 80</div>
+      <div class="conf conf-medium">Medium confidence — capacity-derived area</div>
+    </div>
+
+    <div class="room-card" data-target="sandbox2" style="--room-color: #ff8282">
+      <div class="name" style="color: #ff8282">Sandbox 2</div>
+      <div class="area">~96 sq m (HeadBox) · fmr. FutureCities</div>
+      <div class="capacity">Theatre: 60 / Cabaret: 50</div>
+      <div class="conf conf-high">High confidence — HeadBox verified area</div>
+    </div>
+
+    <div class="room-card" data-target="space39" style="--room-color: #64ffb4">
+      <div class="name" style="color: #64ffb4">Space39</div>
+      <div class="area">~280 sq m · Evening hire only</div>
+      <div class="capacity">Seated informal: 90 / Standing: 250</div>
+      <div class="conf conf-medium">Medium confidence — position speculative</div>
+    </div>
+
+    <div class="room-card" data-target="boardroom" style="--room-color: #ffdc64">
+      <div class="name" style="color: #ffdc64">GROW Boardroom</div>
+      <div class="area">~50 sq m</div>
+      <div class="capacity">Seated: 20</div>
+      <div class="conf conf-medium">Medium confidence — size from ratio</div>
+    </div>
+
+    <h3>Work Zones</h3>
+
+    <div class="room-card" data-target="cowork-east" style="--room-color: #64b4ff">
+      <div class="name" style="color: #64b4ff">Open Coworking</div>
+      <div class="area">~760 sq m total (east + north + south perimeter)</div>
+      <div class="capacity">Hot desks, fixed desks, drop-in zones</div>
+      <div class="conf conf-high">High confidence — perimeter placement confirmed by Gensler</div>
+    </div>
+
+    <div class="room-card" data-target="offices" style="--room-color: #ffc864">
+      <div class="name" style="color: #ffc864">Private Offices</div>
+      <div class="area">~200 sq m · Office tier members</div>
+      <div class="conf conf-low">Low confidence — placement speculative</div>
+    </div>
+
+    <div class="room-card" data-target="meeting" style="--room-color: #c8b4ff">
+      <div class="name" style="color: #c8b4ff">Meeting Rooms</div>
+      <div class="area">~80 sq m total · 3-4 rooms</div>
+      <div class="conf conf-low">Low confidence — count and position speculative</div>
+    </div>
+
+    <h3>Support / Circulation</h3>
+
+    <div class="room-card" data-target="entrance" style="--room-color: #64c8ff">
+      <div class="name" style="color: #64c8ff">Entrance & Reception</div>
+      <div class="area">~40 sq m · Visitor booths</div>
+      <div class="conf conf-medium">Medium — entrance booths confirmed by Officelovin</div>
+    </div>
+
+    <div class="room-card" data-target="tunnel" style="--room-color: #b48cff">
+      <div class="name" style="color: #b48cff">Technology Tunnel</div>
+      <div class="area">~150 sq m · Main circulation spine</div>
+      <div class="conf conf-high">High — corridor between cores confirmed by CC Events</div>
+    </div>
+
+    <div class="room-card" data-target="cafe" style="--room-color: #ffb464">
+      <div class="name" style="color: #ffb464">Café & Kitchen</div>
+      <div class="area">~80 sq m</div>
+      <div class="conf conf-medium">Medium — existence confirmed, position speculative</div>
+    </div>
+
+    <div class="room-card" data-target="lounge" style="--room-color: #b4ffc8">
+      <div class="name" style="color: #b4ffc8">Lounge</div>
+      <div class="area">~90 sq m · Community drop-in</div>
+      <div class="conf conf-medium">Medium — confirmed by Officelovin</div>
+    </div>
+
+    <div class="room-card" data-target="booths" style="--room-color: #aaaacc">
+      <div class="name" style="color: #aaaacc">Phone Booths / Zen Dens</div>
+      <div class="area">~5 sq m each · 6-8 units</div>
+      <div class="conf conf-medium">Medium — type confirmed, count speculative</div>
+    </div>
+
+    <h3>Legend</h3>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background: #1e1e2e; border: 1px solid #4a4a60"></div> Service Core (lifts, stairs, WC)</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: rgba(255,100,100,0.3)"></div> Event / Sandbox spaces</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: rgba(100,255,180,0.3)"></div> Space39 (evening events)</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: rgba(100,180,255,0.15)"></div> Open coworking</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: rgba(180,140,255,0.15)"></div> Circulation / corridor</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: rgba(255,180,100,0.3)"></div> Kitchen / support</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: #2a2a40; border: 1px solid #3a3a50"></div> Structural columns (3m grid)</div>
+    </div>
+
+    <div class="source-note">
+      <strong>Sources:</strong> Shell geometry from Canary Wharf Level 43 &amp; 47 marketing plans.
+      Room sizes from Level39 venues page, CC Events, HeadBox. Spatial programme from
+      Gensler portfolio, Officelovin (2018), UK Tech News (2013). Planning data from
+      Tower Hamlets PA/15/01229 (Level 38) and PA/24/01241 (Levels 48-49).
+      <br><br>
+      <strong>Caveat:</strong> Room positions are speculative. Only the structural shell, room existence,
+      and approximate sizes are verified. The actual layout may differ significantly.
+      Level39 now spans Levels 24, 26, and 39 — some functions may have moved to other floors.
+    </div>
+  </div>
+</div>
+
+<script>
+  const tooltip = document.getElementById('tooltip');
+  const rooms = document.querySelectorAll('.room');
+
+  rooms.forEach(room => {
+    room.style.cursor = 'pointer';
+
+    room.addEventListener('mouseenter', (e) => {
+      const info = room.dataset.info;
+      if (!info) return;
+      const parts = info.split('|');
+      tooltip.innerHTML = `<strong>${parts[0]}</strong><br>${parts.slice(1).join('<br>')}`;
+      tooltip.classList.add('visible');
+      room.querySelector('rect')?.setAttribute('stroke-width', '2.5');
+    });
+
+    room.addEventListener('mousemove', (e) => {
+      const rect = document.querySelector('.plan-container').getBoundingClientRect();
+      tooltip.style.left = (e.clientX - rect.left + 16) + 'px';
+      tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+    });
+
+    room.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('visible');
+      room.querySelector('rect')?.setAttribute('stroke-width', '1.5');
+    });
+  });
+
+  // Sidebar card hover highlights
+  const cards = document.querySelectorAll('.room-card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const target = card.dataset.target;
+      const room = document.querySelector(`[data-room="${target}"]`);
+      if (room) {
+        room.querySelectorAll('rect').forEach(r => {
+          r.setAttribute('stroke-width', '3');
+          r.style.filter = 'url(#glow)';
+        });
+      }
+      card.classList.add('active');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      const target = card.dataset.target;
+      const room = document.querySelector(`[data-room="${target}"]`);
+      if (room) {
+        room.querySelectorAll('rect').forEach(r => {
+          r.setAttribute('stroke-width', '1.5');
+          r.style.filter = '';
+        });
+      }
+      card.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
