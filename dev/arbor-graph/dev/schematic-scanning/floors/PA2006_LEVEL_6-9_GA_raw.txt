@@ -1,93 +1,280 @@
 {
-  "floor_level": "06-09",
+  "floor_level": "6-9",
   "rooms": [
     {
-      "room_id": "L6-9-01",
+      "room_id": "L06-01",
       "label": "Office",
+      "label_source": "text",
       "type": "office",
-      "approximate_bounds": {"x": 0.05, "y": 0.25, "w": 0.90, "h": 0.70},
-      "neighbours": ["L6-9-02", "L6-9-03", "L6-9-04", "L6-9-05", "L6-9-06", "L6-9-07", "L6-9-08"]
+      "function": "Open-plan Office Floor",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.93,
+      "approximate_bounds": {"x": 0.05, "y": 0.05, "w": 0.40, "h": 0.36},
+      "neighbours": ["L06-02", "L06-03", "L06-04", "L06-05"]
     },
     {
-      "room_id": "L6-9-02",
+      "room_id": "L06-02",
       "label": "Plant",
+      "label_source": "text",
       "type": "plant",
-      "approximate_bounds": {"x": 0.05, "y": 0.10, "w": 0.12, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-04"]
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.12, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L06-01", "L06-04"]
     },
     {
-      "room_id": "L6-9-03",
+      "room_id": "L06-03",
       "label": "Plant",
+      "label_source": "text",
       "type": "plant",
-      "approximate_bounds": {"x": 0.83, "y": 0.10, "w": 0.12, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-06"]
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.33, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L06-01", "L06-05"]
     },
     {
-      "room_id": "L6-9-04",
+      "room_id": "L06-04",
       "label": "WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": {"x": 0.18, "y": 0.10, "w": 0.07, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-02", "L6-9-05", "L6-9-08"]
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.22, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L06-01", "L06-02"]
     },
     {
-      "room_id": "L6-9-05",
+      "room_id": "L06-05",
       "label": "WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": {"x": 0.25, "y": 0.10, "w": 0.05, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-04", "L6-9-08"]
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.30, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L06-01", "L06-03"]
+    },
+
+    {
+      "room_id": "L07-01",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "Open-plan Office Floor",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.93,
+      "approximate_bounds": {"x": 0.55, "y": 0.05, "w": 0.40, "h": 0.36},
+      "neighbours": ["L07-02", "L07-03", "L07-04", "L07-05"]
     },
     {
-      "room_id": "L6-9-06",
+      "room_id": "L07-02",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.64, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L07-01", "L07-04"]
+    },
+    {
+      "room_id": "L07-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.86, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L07-01", "L07-05"]
+    },
+    {
+      "room_id": "L07-04",
       "label": "WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": {"x": 0.72, "y": 0.10, "w": 0.07, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-03", "L6-9-07", "L6-9-08"]
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.72, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L07-01", "L07-02"]
     },
     {
-      "room_id": "L6-9-07",
+      "room_id": "L07-05",
       "label": "WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": {"x": 0.77, "y": 0.10, "w": 0.05, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-06", "L6-9-08"]
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.80, "y": 0.35, "w": 0.08, "h": 0.08},
+      "neighbours": ["L07-01", "L07-03"]
+    },
+
+    {
+      "room_id": "L08-01",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "Open-plan Office Floor",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.93,
+      "approximate_bounds": {"x": 0.05, "y": 0.50, "w": 0.40, "h": 0.36},
+      "neighbours": ["L08-02", "L08-03", "L08-04", "L08-05"]
     },
     {
-      "room_id": "L6-9-08",
-      "label": "Lobby",
-      "type": "circulation",
-      "approximate_bounds": {"x": 0.35, "y": 0.10, "w": 0.30, "h": 0.15},
-      "neighbours": ["L6-9-01", "L6-9-04", "L6-9-05", "L6-9-06", "L6-9-07"]
+      "room_id": "L08-02",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.12, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L08-01", "L08-04"]
+    },
+    {
+      "room_id": "L08-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.33, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L08-01", "L08-05"]
+    },
+    {
+      "room_id": "L08-04",
+      "label": "WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.22, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L08-01", "L08-02"]
+    },
+    {
+      "room_id": "L08-05",
+      "label": "WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.30, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L08-01", "L08-03"]
+    },
+
+    {
+      "room_id": "L09-01",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "Open-plan Office Floor",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.93,
+      "approximate_bounds": {"x": 0.55, "y": 0.50, "w": 0.40, "h": 0.36},
+      "neighbours": ["L09-02", "L09-03", "L09-04", "L09-05"]
+    },
+    {
+      "room_id": "L09-02",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.64, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L09-01", "L09-04"]
+    },
+    {
+      "room_id": "L09-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.87,
+      "approximate_bounds": {"x": 0.86, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L09-01", "L09-05"]
+    },
+    {
+      "room_id": "L09-04",
+      "label": "WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.72, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L09-01", "L09-02"]
+    },
+    {
+      "room_id": "L09-05",
+      "label": "WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Washroom / WC Cluster",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.80, "y": 0.85, "w": 0.08, "h": 0.08},
+      "neighbours": ["L09-01", "L09-03"]
     }
   ],
   "core_elements": [
     {
       "id": "LIFT-01",
       "type": "lift",
-      "position": {"x": 0.40, "y": 0.10}
+      "position": {"x": 0.28, "y": 0.32}
     },
     {
       "id": "LIFT-02",
       "type": "lift",
-      "position": {"x": 0.475, "y": 0.10}
+      "position": {"x": 0.31, "y": 0.32}
     },
     {
       "id": "LIFT-03",
       "type": "lift",
-      "position": {"x": 0.55, "y": 0.10}
+      "position": {"x": 0.34, "y": 0.32}
+    },
+    {
+      "id": "LIFT-04",
+      "type": "lift",
+      "position": {"x": 0.37, "y": 0.32}
     },
     {
       "id": "STAIR-01",
       "type": "stair",
-      "position": {"x": 0.30, "y": 0.10}
+      "position": {"x": 0.24, "y": 0.33}
     },
     {
       "id": "STAIR-02",
       "type": "stair",
-      "position": {"x": 0.65, "y": 0.10}
-    },
-    {
-      "id": "COR-01",
-      "type": "corridor",
-      "position": {"x": 0.35, "y": 0.10}
+      "position": {"x": 0.41, "y": 0.33}
     }
   ]
 }

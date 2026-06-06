@@ -2,155 +2,725 @@
   "floor_level": 10,
   "rooms": [
     {
-      "room_id": "L10-13-01",
+      "room_id": "L10-01",
       "label": "Office",
+      "label_source": "text",
       "type": "office",
+      "function": "Open-plan Office",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.91,
       "approximate_bounds": {
         "x": 0.05,
         "y": 0.05,
-        "w": 0.9,
-        "h": 0.9
+        "w": 0.4,
+        "h": 0.3
       },
       "neighbours": [
-        "L10-13-02",
-        "L10-13-03",
-        "L10-13-04",
-        "L10-13-05",
-        "L10-13-06",
-        "COR-01"
+        "L10-02",
+        "L10-03",
+        "L10-04",
+        "L10-05",
+        "L10-06"
       ]
     },
     {
-      "room_id": "L10-13-02",
-      "label": "Plant West",
+      "room_id": "L10-02",
+      "label": "Plant",
+      "label_source": "text",
       "type": "plant",
+      "function": "Plant Room (south-west corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
       "approximate_bounds": {
-        "x": 0.1,
-        "y": 0.75,
+        "x": 0.05,
+        "y": 0.35,
         "w": 0.15,
-        "h": 0.15
-      },
-      "neighbours": [
-        "L10-13-01",
-        "COR-01"
-      ]
-    },
-    {
-      "room_id": "L10-13-03",
-      "label": "Plant East",
-      "type": "plant",
-      "approximate_bounds": {
-        "x": 0.75,
-        "y": 0.75,
-        "w": 0.15,
-        "h": 0.15
-      },
-      "neighbours": [
-        "L10-13-01",
-        "COR-01"
-      ]
-    },
-    {
-      "room_id": "L10-13-04",
-      "label": "WC Male",
-      "type": "amenity",
-      "approximate_bounds": {
-        "x": 0.35,
-        "y": 0.65,
-        "w": 0.1,
-        "h": 0.2
-      },
-      "neighbours": [
-        "COR-01",
-        "L10-13-01"
-      ]
-    },
-    {
-      "room_id": "L10-13-05",
-      "label": "WC Female",
-      "type": "amenity",
-      "approximate_bounds": {
-        "x": 0.55,
-        "y": 0.65,
-        "w": 0.1,
-        "h": 0.2
-      },
-      "neighbours": [
-        "COR-01",
-        "L10-13-01"
-      ]
-    },
-    {
-      "room_id": "L10-13-06",
-      "label": "Accessible WC",
-      "type": "amenity",
-      "approximate_bounds": {
-        "x": 0.48,
-        "y": 0.85,
-        "w": 0.05,
         "h": 0.1
       },
       "neighbours": [
-        "COR-01",
-        "L10-13-01"
+        "L10-01",
+        "L10-04"
+      ]
+    },
+    {
+      "room_id": "L10-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-east corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.25,
+        "y": 0.35,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L10-01",
+        "L10-05"
+      ]
+    },
+    {
+      "room_id": "L10-04",
+      "label": "Male WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Male Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.1,
+        "y": 0.3,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L10-01",
+        "L10-02",
+        "L10-06"
+      ]
+    },
+    {
+      "room_id": "L10-05",
+      "label": "Female WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Female Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.3,
+        "y": 0.3,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L10-01",
+        "L10-03",
+        "L10-06"
+      ]
+    },
+    {
+      "room_id": "L10-06",
+      "label": "Lobby",
+      "label_source": "vision",
+      "type": "circulation",
+      "function": "Lift / Stair Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.64,
+      "approximate_bounds": {
+        "x": 0.18,
+        "y": 0.3,
+        "w": 0.14,
+        "h": 0.12
+      },
+      "neighbours": [
+        "L10-01",
+        "L10-04",
+        "L10-05"
+      ]
+    },
+    {
+      "room_id": "L11-01",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "Open-plan Office",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.91,
+      "approximate_bounds": {
+        "x": 0.55,
+        "y": 0.05,
+        "w": 0.4,
+        "h": 0.3
+      },
+      "neighbours": [
+        "L11-02",
+        "L11-03",
+        "L11-04",
+        "L11-05",
+        "L11-06"
+      ]
+    },
+    {
+      "room_id": "L11-02",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-west corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.55,
+        "y": 0.35,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L11-01",
+        "L11-04"
+      ]
+    },
+    {
+      "room_id": "L11-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-east corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.75,
+        "y": 0.35,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L11-01",
+        "L11-05"
+      ]
+    },
+    {
+      "room_id": "L11-04",
+      "label": "Male WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Male Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.6,
+        "y": 0.3,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L11-01",
+        "L11-02",
+        "L11-06"
+      ]
+    },
+    {
+      "room_id": "L11-05",
+      "label": "Female WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Female Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.8,
+        "y": 0.3,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L11-01",
+        "L11-03",
+        "L11-06"
+      ]
+    },
+    {
+      "room_id": "L11-06",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "circulation",
+      "function": "Lift / Stair Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.64,
+      "approximate_bounds": {
+        "x": 0.68,
+        "y": 0.3,
+        "w": 0.14,
+        "h": 0.12
+      },
+      "neighbours": [
+        "L11-01",
+        "L11-04",
+        "L11-05"
+      ]
+    },
+    {
+      "room_id": "L12-01",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "Open-plan Office",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.91,
+      "approximate_bounds": {
+        "x": 0.05,
+        "y": 0.55,
+        "w": 0.4,
+        "h": 0.3
+      },
+      "neighbours": [
+        "L12-02",
+        "L12-03",
+        "L12-04",
+        "L12-05",
+        "L12-06"
+      ]
+    },
+    {
+      "room_id": "L12-02",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-west corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.05,
+        "y": 0.85,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L12-01",
+        "L12-04"
+      ]
+    },
+    {
+      "room_id": "L12-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-east corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.25,
+        "y": 0.85,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L12-01",
+        "L12-05"
+      ]
+    },
+    {
+      "room_id": "L12-04",
+      "label": "Male WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Male Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.1,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L12-01",
+        "L12-02",
+        "L12-06"
+      ]
+    },
+    {
+      "room_id": "L12-05",
+      "label": "Female WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Female Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.3,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L12-01",
+        "L12-03",
+        "L12-06"
+      ]
+    },
+    {
+      "room_id": "L12-06",
+      "label": "Lobby",
+      "label_source": "vision",
+      "type": "circulation",
+      "function": "Lift / Stair Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.64,
+      "approximate_bounds": {
+        "x": 0.18,
+        "y": 0.7,
+        "w": 0.14,
+        "h": 0.12
+      },
+      "neighbours": [
+        "L12-01",
+        "L12-04",
+        "L12-05"
+      ]
+    },
+    {
+      "room_id": "L13-01",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "Open-plan Office",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.91,
+      "approximate_bounds": {
+        "x": 0.55,
+        "y": 0.55,
+        "w": 0.4,
+        "h": 0.3
+      },
+      "neighbours": [
+        "L13-02",
+        "L13-03",
+        "L13-04",
+        "L13-05",
+        "L13-06"
+      ]
+    },
+    {
+      "room_id": "L13-02",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-west corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.55,
+        "y": 0.85,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L13-01",
+        "L13-04"
+      ]
+    },
+    {
+      "room_id": "L13-03",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant Room (south-east corner)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.83,
+      "approximate_bounds": {
+        "x": 0.75,
+        "y": 0.85,
+        "w": 0.15,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L13-01",
+        "L13-05"
+      ]
+    },
+    {
+      "room_id": "L13-04",
+      "label": "Male WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Male Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.6,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L13-01",
+        "L13-02",
+        "L13-06"
+      ]
+    },
+    {
+      "room_id": "L13-05",
+      "label": "Female WC",
+      "label_source": "vision",
+      "type": "amenity",
+      "function": "Female Toilet",
+      "environment": "indoor",
+      "fixtures": [
+        "wc",
+        "basin"
+      ],
+      "confidence": 0.73,
+      "approximate_bounds": {
+        "x": 0.8,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "neighbours": [
+        "L13-01",
+        "L13-03",
+        "L13-06"
+      ]
+    },
+    {
+      "room_id": "L13-06",
+      "label": "Lobby",
+      "label_source": "vision",
+      "type": "circulation",
+      "function": "Lift / Stair Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.64,
+      "approximate_bounds": {
+        "x": 0.68,
+        "y": 0.7,
+        "w": 0.14,
+        "h": 0.12
+      },
+      "neighbours": [
+        "L13-01",
+        "L13-04",
+        "L13-05"
       ]
     }
   ],
   "core_elements": [
     {
-      "id": "LIFT-01-L10",
-      "type": "lift",
-      "position": {
-        "x": 0.42,
-        "y": 0.7
-      }
-    },
-    {
-      "id": "LIFT-02-L10",
-      "type": "lift",
-      "position": {
-        "x": 0.47,
-        "y": 0.7
-      }
-    },
-    {
-      "id": "LIFT-03-L10",
-      "type": "lift",
-      "position": {
-        "x": 0.53,
-        "y": 0.7
-      }
-    },
-    {
-      "id": "LIFT-04-L10",
-      "type": "lift",
-      "position": {
-        "x": 0.58,
-        "y": 0.7
-      }
-    },
-    {
-      "id": "STAIR-01-L10",
+      "id": "L10-ST-01-L10",
       "type": "stair",
       "position": {
-        "x": 0.3,
-        "y": 0.7
+        "x": 0.14,
+        "y": 0.33
       }
     },
     {
-      "id": "STAIR-02-L10",
+      "id": "L10-ST-02-L10",
       "type": "stair",
+      "position": {
+        "x": 0.32,
+        "y": 0.33
+      }
+    },
+    {
+      "id": "L10-LIFT-01-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.2,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L10-LIFT-02-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.23,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L10-LIFT-03-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.26,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L10-LIFT-04-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.29,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L11-ST-01-L10",
+      "type": "stair",
+      "position": {
+        "x": 0.64,
+        "y": 0.33
+      }
+    },
+    {
+      "id": "L11-ST-02-L10",
+      "type": "stair",
+      "position": {
+        "x": 0.82,
+        "y": 0.33
+      }
+    },
+    {
+      "id": "L11-LIFT-01-L10",
+      "type": "lift",
       "position": {
         "x": 0.7,
-        "y": 0.7
+        "y": 0.32
       }
     },
     {
-      "id": "COR-01-L10",
-      "type": "corridor",
+      "id": "L11-LIFT-02-L10",
+      "type": "lift",
       "position": {
-        "x": 0.5,
-        "y": 0.75
+        "x": 0.73,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L11-LIFT-03-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.76,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L11-LIFT-04-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.79,
+        "y": 0.32
+      }
+    },
+    {
+      "id": "L12-ST-01-L10",
+      "type": "stair",
+      "position": {
+        "x": 0.14,
+        "y": 0.73
+      }
+    },
+    {
+      "id": "L12-ST-02-L10",
+      "type": "stair",
+      "position": {
+        "x": 0.32,
+        "y": 0.73
+      }
+    },
+    {
+      "id": "L12-LIFT-01-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.2,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L12-LIFT-02-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.23,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L12-LIFT-03-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.26,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L12-LIFT-04-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.29,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L13-ST-01-L10",
+      "type": "stair",
+      "position": {
+        "x": 0.64,
+        "y": 0.73
+      }
+    },
+    {
+      "id": "L13-ST-02-L10",
+      "type": "stair",
+      "position": {
+        "x": 0.82,
+        "y": 0.73
+      }
+    },
+    {
+      "id": "L13-LIFT-01-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.7,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L13-LIFT-02-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.73,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L13-LIFT-03-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.76,
+        "y": 0.72
+      }
+    },
+    {
+      "id": "L13-LIFT-04-L10",
+      "type": "lift",
+      "position": {
+        "x": 0.79,
+        "y": 0.72
       }
     }
   ]

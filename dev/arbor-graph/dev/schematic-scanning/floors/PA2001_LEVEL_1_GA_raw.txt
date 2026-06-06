@@ -4,54 +4,99 @@
     {
       "room_id": "L1-01",
       "label": "Office",
+      "label_source": "text",
       "type": "office",
-      "approximate_bounds": { "x": 0.42, "y": 0.28, "w": 0.26, "h": 0.32 },
-      "neighbours": ["L1-02", "L1-03", "L1-04", "L1-05", "STAIR-01", "LIFT-01"]
+      "function": "Open-plan Office",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.42, "y": 0.30, "w": 0.25, "h": 0.25},
+      "neighbours": ["L1-02", "L1-03", "L1-04", "L1-05"]
     },
     {
       "room_id": "L1-02",
       "label": "Plant",
+      "label_source": "text",
       "type": "plant",
-      "approximate_bounds": { "x": 0.65, "y": 0.32, "w": 0.08, "h": 0.12 },
+      "function": "Plant Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.74,
+      "approximate_bounds": {"x": 0.60, "y": 0.42, "w": 0.10, "h": 0.12},
       "neighbours": ["L1-01"]
     },
     {
       "room_id": "L1-03",
-      "label": "WC Male",
+      "label": "Male WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.45, "y": 0.48, "w": 0.08, "h": 0.09 },
-      "neighbours": ["L1-01"]
+      "function": "Male WC",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.46,
+      "approximate_bounds": {"x": 0.48, "y": 0.48, "w": 0.05, "h": 0.08},
+      "neighbours": ["L1-01", "L1-04"]
     },
     {
       "room_id": "L1-04",
-      "label": "WC Female",
+      "label": "Female WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.53, "y": 0.48, "w": 0.08, "h": 0.09 },
-      "neighbours": ["L1-01"]
+      "function": "Female WC",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.46,
+      "approximate_bounds": {"x": 0.53, "y": 0.48, "w": 0.05, "h": 0.08},
+      "neighbours": ["L1-01", "L1-03", "L1-05"]
     },
     {
       "room_id": "L1-05",
       "label": "Accessible WC",
+      "label_source": "vision",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.61, "y": 0.48, "w": 0.05, "h": 0.09 },
-      "neighbours": ["L1-01"]
+      "function": "Accessible WC",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin"],
+      "confidence": 0.40,
+      "approximate_bounds": {"x": 0.58, "y": 0.48, "w": 0.04, "h": 0.08},
+      "neighbours": ["L1-04", "L1-01"]
     }
   ],
   "core_elements": [
     {
-      "id": "STAIR-01",
-      "type": "stair",
-      "position": { "x": 0.38, "y": 0.47 }
-    },
-    {
       "id": "LIFT-01",
       "type": "lift",
-      "position": { "x": 0.48, "y": 0.59 }
+      "position": {"x": 0.52, "y": 0.52}
     },
     {
-      "id": "COR-01",
-      "type": "corridor",
-      "position": { "x": 0.50, "y": 0.50 }
+      "id": "LIFT-02",
+      "type": "lift",
+      "position": {"x": 0.54, "y": 0.52}
+    },
+    {
+      "id": "LIFT-03",
+      "type": "lift",
+      "position": {"x": 0.56, "y": 0.52}
+    },
+    {
+      "id": "LIFT-04",
+      "type": "lift",
+      "position": {"x": 0.58, "y": 0.52}
+    },
+    {
+      "id": "CYCLE-LIFT-01",
+      "type": "lift",
+      "position": {"x": 0.58, "y": 0.71}
+    },
+    {
+      "id": "STAIR-01",
+      "type": "stair",
+      "position": {"x": 0.44, "y": 0.47}
+    },
+    {
+      "id": "STAIR-02",
+      "type": "stair",
+      "position": {"x": 0.62, "y": 0.51}
     }
   ]
 }

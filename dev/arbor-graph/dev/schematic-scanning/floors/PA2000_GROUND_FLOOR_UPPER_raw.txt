@@ -2,50 +2,133 @@
   "floor_level": "L0b",
   "rooms": [
     {
-      "room_id": "LL0b-01",
-      "label": "Office Reception & Event Space",
+      "room_id": "L0b-01",
+      "label": "Void Above",
+      "label_source": "text",
+      "type": "core",
+      "function": "Void / double-height space",
+      "environment": "indoor",
+      "fixtures": ["void"],
+      "confidence": 0.45,
+      "approximate_bounds": { "x": 0.43, "y": 0.32, "w": 0.14, "h": 0.11 },
+      "neighbours": ["L0b-02", "L0b-04"]
+    },
+    {
+      "room_id": "L0b-02",
+      "label": "Office Reception",
+      "label_source": "text",
       "type": "office",
-      "approximate_bounds": { "x": 0.44, "y": 0.35, "w": 0.26, "h": 0.35 },
-      "neighbours": ["LL0b-02", "LL0b-03", "LL0b-04", "LL0b-06"]
+      "function": "Reception Lobby",
+      "environment": "indoor",
+      "fixtures": ["desk"],
+      "confidence": 0.55,
+      "approximate_bounds": { "x": 0.49, "y": 0.36, "w": 0.17, "h": 0.11 },
+      "neighbours": ["L0b-01", "L0b-03", "L0b-04", "L0b-05"]
     },
     {
-      "room_id": "LL0b-02",
+      "room_id": "L0b-03",
       "label": "Plant",
+      "label_source": "text",
       "type": "plant",
-      "approximate_bounds": { "x": 0.65, "y": 0.65, "w": 0.05, "h": 0.10 },
-      "neighbours": ["LL0b-01"]
+      "function": "Plant Room",
+      "environment": "indoor",
+      "fixtures": ["plant-equipment"],
+      "confidence": 0.60,
+      "approximate_bounds": { "x": 0.60, "y": 0.42, "w": 0.08, "h": 0.08 },
+      "neighbours": ["L0b-02", "L0b-04"]
     },
     {
-      "room_id": "LL0b-03",
-      "label": "Public Lobby",
-      "type": "amenity",
-      "approximate_bounds": { "x": 0.47, "y": 0.25, "w": 0.15, "h": 0.07 },
-      "neighbours": ["LL0b-01", "LL0b-04", "LL0b-06"]
-    },
-    {
-      "room_id": "LL0b-04",
-      "label": "Retail",
-      "type": "amenity",
-      "approximate_bounds": { "x": 0.60, "y": 0.25, "w": 0.10, "h": 0.07 },
-      "neighbours": ["LL0b-01", "LL0b-03"]
-    },
-    {
-      "room_id": "LL0b-06",
-      "label": "Lift Lobby",
+      "room_id": "L0b-04",
+      "label": "Lobby",
+      "label_source": "vision",
       "type": "circulation",
-      "approximate_bounds": { "x": 0.50, "y": 0.32, "w": 0.10, "h": 0.06 },
-      "neighbours": ["LL0b-01", "LL0b-03"]
+      "function": "Lift / stair lobby",
+      "environment": "indoor",
+      "fixtures": ["lift", "stair"],
+      "confidence": 0.40,
+      "approximate_bounds": { "x": 0.46, "y": 0.49, "w": 0.25, "h": 0.18 },
+      "neighbours": ["L0b-02", "L0b-03", "L0b-05", "L0b-07"]
+    },
+    {
+      "room_id": "L0b-05",
+      "label": "Office Entrance",
+      "label_source": "text",
+      "type": "circulation",
+      "function": "Entrance Vestibule",
+      "environment": "covered",
+      "fixtures": [],
+      "confidence": 0.45,
+      "approximate_bounds": { "x": 0.37, "y": 0.36, "w": 0.10, "h": 0.08 },
+      "neighbours": ["L0b-02", "L0b-06", "L0b-04"]
+    },
+    {
+      "room_id": "L0b-06",
+      "label": "Rennie Garden",
+      "label_source": "text",
+      "type": "external",
+      "function": "Landscaped Garden",
+      "environment": "outdoor",
+      "fixtures": ["tree"],
+      "confidence": 0.60,
+      "approximate_bounds": { "x": 0.30, "y": 0.44, "w": 0.12, "h": 0.15 },
+      "neighbours": ["L0b-05", "L0b-09"]
+    },
+    {
+      "room_id": "L0b-07",
+      "label": "Public",
+      "label_source": "text",
+      "type": "circulation",
+      "function": "Public Cycle-lift Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.50,
+      "approximate_bounds": { "x": 0.52, "y": 0.66, "w": 0.14, "h": 0.10 },
+      "neighbours": ["L0b-04"]
+    },
+    {
+      "room_id": "L0b-08",
+      "label": "Thames Path (below)",
+      "label_source": "text",
+      "type": "external",
+      "function": "Riverside Path",
+      "environment": "outdoor",
+      "fixtures": [],
+      "confidence": 0.55,
+      "approximate_bounds": { "x": 0.47, "y": 0.20, "w": 0.22, "h": 0.07 },
+      "neighbours": []
+    },
+    {
+      "room_id": "L0b-09",
+      "label": "Short stay cycle parking",
+      "label_source": "text",
+      "type": "external",
+      "function": "Cycle Parking",
+      "environment": "outdoor",
+      "fixtures": ["bike-stands"],
+      "confidence": 0.50,
+      "approximate_bounds": { "x": 0.40, "y": 0.56, "w": 0.12, "h": 0.06 },
+      "neighbours": ["L0b-06"]
+    },
+    {
+      "room_id": "L0b-10",
+      "label": "Steps",
+      "label_source": "text",
+      "type": "external",
+      "function": "External Steps",
+      "environment": "outdoor",
+      "fixtures": ["steps"],
+      "confidence": 0.45,
+      "approximate_bounds": { "x": 0.56, "y": 0.64, "w": 0.07, "h": 0.05 },
+      "neighbours": ["L0b-07"]
     }
   ],
   "core_elements": [
-    { "id": "LIFT-01", "type": "lift", "position": { "x": 0.52, "y": 0.34 } },
-    { "id": "LIFT-02", "type": "lift", "position": { "x": 0.54, "y": 0.34 } },
-    { "id": "LIFT-03", "type": "lift", "position": { "x": 0.56, "y": 0.34 } },
-    { "id": "LIFT-04", "type": "lift", "position": { "x": 0.58, "y": 0.34 } },
-    { "id": "LIFT-05", "type": "lift", "position": { "x": 0.52, "y": 0.31 } },
-    { "id": "LIFT-06", "type": "lift", "position": { "x": 0.56, "y": 0.31 } },
-    { "id": "STAIR-01", "type": "stair", "position": { "x": 0.42, "y": 0.30 } },
-    { "id": "STAIR-02", "type": "stair", "position": { "x": 0.62, "y": 0.54 } },
-    { "id": "COR-01", "type": "corridor", "position": { "x": 0.75, "y": 0.50 } }
+    { "id": "LIFT-01", "type": "lift",  "position": { "x": 0.50, "y": 0.53 } },
+    { "id": "LIFT-02", "type": "lift",  "position": { "x": 0.52, "y": 0.53 } },
+    { "id": "LIFT-03", "type": "lift",  "position": { "x": 0.54, "y": 0.53 } },
+    { "id": "LIFT-04", "type": "lift",  "position": { "x": 0.56, "y": 0.53 } },
+    { "id": "CYCLE-LIFT-01", "type": "lift", "position": { "x": 0.553, "y": 0.711 } },
+    { "id": "STAIR-01", "type": "stair", "position": { "x": 0.48, "y": 0.55 } },
+    { "id": "STAIR-02", "type": "stair", "position": { "x": 0.58, "y": 0.55 } }
   ]
 }

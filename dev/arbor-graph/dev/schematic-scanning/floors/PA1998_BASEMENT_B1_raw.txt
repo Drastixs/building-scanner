@@ -3,95 +3,212 @@
   "rooms": [
     {
       "room_id": "L-1-01",
-      "label": "Changing Room",
+      "label": "Male Changing Room",
+      "label_source": "text",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.43, "y": 0.22, "w": 0.16, "h": 0.10 },
-      "neighbours": ["L-1-02", "L-1-03", "COR-01"]
+      "function": "Male Changing Room",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin", "shower", "locker"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.48, "y": 0.34, "w": 0.12, "h": 0.08},
+      "neighbours": ["L-1-02", "L-1-03", "L-1-16"]
     },
     {
       "room_id": "L-1-02",
-      "label": "Drying Room",
+      "label": "Female Changing Room",
+      "label_source": "text",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.58, "y": 0.22, "w": 0.10, "h": 0.10 },
-      "neighbours": ["L-1-01", "L-1-04", "COR-01"]
+      "function": "Female Changing Room",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin", "shower", "locker"],
+      "confidence": 0.71,
+      "approximate_bounds": {"x": 0.485, "y": 0.42, "w": 0.12, "h": 0.09},
+      "neighbours": ["L-1-01", "L-1-05", "L-1-16"]
     },
     {
       "room_id": "L-1-03",
-      "label": "Female Changing Room",
+      "label": "ACC.W\nC and\nShower",
+      "label_source": "text",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.43, "y": 0.33, "w": 0.16, "h": 0.09 },
-      "neighbours": ["L-1-01", "L-1-05", "COR-01"]
+      "function": "Accessible WC & Shower",
+      "environment": "indoor",
+      "fixtures": ["wc", "basin", "shower"],
+      "confidence": 0.68,
+      "approximate_bounds": {"x": 0.585, "y": 0.33, "w": 0.08, "h": 0.06},
+      "neighbours": ["L-1-01", "L-1-04", "L-1-16"]
     },
     {
       "room_id": "L-1-04",
-      "label": "Vending",
+      "label": "Vending\nMachines",
+      "label_source": "text",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.70, "y": 0.25, "w": 0.05, "h": 0.05 },
-      "neighbours": ["L-1-02", "COR-01"]
+      "function": "Vending Machines Alcove",
+      "environment": "indoor",
+      "fixtures": ["vending-machine"],
+      "confidence": 0.55,
+      "approximate_bounds": {"x": 0.573, "y": 0.41, "w": 0.08, "h": 0.05},
+      "neighbours": ["L-1-03", "L-1-13", "L-1-16"]
     },
     {
       "room_id": "L-1-05",
       "label": "Comms Room",
+      "label_source": "text",
       "type": "plant",
-      "approximate_bounds": { "x": 0.43, "y": 0.45, "w": 0.12, "h": 0.08 },
-      "neighbours": ["L-1-03", "L-1-06", "COR-01"]
+      "function": "Comms / IT Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.74,
+      "approximate_bounds": {"x": 0.457, "y": 0.52, "w": 0.10, "h": 0.08},
+      "neighbours": ["L-1-02", "L-1-06", "L-1-11", "L-1-16"]
     },
     {
       "room_id": "L-1-06",
-      "label": "Lab safety wash room",
-      "type": "amenity",
-      "approximate_bounds": { "x": 0.57, "y": 0.45, "w": 0.10, "h": 0.08 },
-      "neighbours": ["L-1-05", "L-1-07", "COR-01"]
+      "label": "Store",
+      "label_source": "text",
+      "type": "plant",
+      "function": "General Store",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.6,
+      "approximate_bounds": {"x": 0.5598, "y": 0.51, "w": 0.08, "h": 0.08},
+      "neighbours": ["L-1-05", "L-1-07", "L-1-15", "L-1-16"]
     },
     {
       "room_id": "L-1-07",
       "label": "Store",
-      "type": "amenity",
-      "approximate_bounds": { "x": 0.67, "y": 0.45, "w": 0.08, "h": 0.08 },
-      "neighbours": ["L-1-06", "COR-01"]
+      "label_source": "text",
+      "type": "plant",
+      "function": "General Store",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.6,
+      "approximate_bounds": {"x": 0.5399, "y": 0.57, "w": 0.08, "h": 0.08},
+      "neighbours": ["L-1-06", "L-1-10", "L-1-11", "L-1-16"]
     },
     {
       "room_id": "L-1-08",
-      "label": "Store",
-      "type": "amenity",
-      "approximate_bounds": { "x": 0.53, "y": 0.55, "w": 0.10, "h": 0.06 },
-      "neighbours": ["L-1-09", "COR-01"]
+      "label": "Refuse",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Refuse Store",
+      "environment": "indoor",
+      "fixtures": ["bin"],
+      "confidence": 0.72,
+      "approximate_bounds": {"x": 0.458, "y": 0.65, "w": 0.08, "h": 0.08},
+      "neighbours": ["L-1-09", "L-1-10", "L-1-16"]
     },
     {
       "room_id": "L-1-09",
-      "label": "Injury bench room",
-      "type": "unknown",
-      "approximate_bounds": { "x": 0.47, "y": 0.63, "w": 0.18, "h": 0.13 },
-      "neighbours": ["L-1-08", "L-1-10", "COR-01"]
+      "label": "store",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Store (adjacent Refuse)",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.55,
+      "approximate_bounds": {"x": 0.455, "y": 0.66, "w": 0.07, "h": 0.06},
+      "neighbours": ["L-1-08", "L-1-10", "L-1-16"]
     },
     {
       "room_id": "L-1-10",
-      "label": "Cycle Store",
+      "label": "HV/LV Switch room",
+      "label_source": "text",
+      "type": "plant",
+      "function": "HV/LV Switch Room",
+      "environment": "indoor",
+      "fixtures": ["switchgear"],
+      "confidence": 0.8,
+      "approximate_bounds": {"x": 0.551, "y": 0.65, "w": 0.10, "h": 0.10},
+      "neighbours": ["L-1-07", "L-1-08", "L-1-09", "L-1-11", "L-1-16"]
+    },
+    {
+      "room_id": "L-1-11",
+      "label": "Life safety switch room",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Life Safety Switch Room",
+      "environment": "indoor",
+      "fixtures": ["switchgear"],
+      "confidence": 0.78,
+      "approximate_bounds": {"x": 0.459, "y": 0.575, "w": 0.10, "h": 0.08},
+      "neighbours": ["L-1-05", "L-1-07", "L-1-10", "L-1-12", "L-1-16"]
+    },
+    {
+      "room_id": "L-1-12",
+      "label": "BSY 1 staff",
+      "label_source": "text",
+      "type": "office",
+      "function": "Staff Room",
+      "environment": "indoor",
+      "fixtures": ["desk"],
+      "confidence": 0.62,
+      "approximate_bounds": {"x": 0.46, "y": 0.74, "w": 0.10, "h": 0.08},
+      "neighbours": ["L-1-11", "L-1-13", "L-1-16"]
+    },
+    {
+      "room_id": "L-1-13",
+      "label": "Building 01 cycle store",
+      "label_source": "text",
       "type": "amenity",
-      "approximate_bounds": { "x": 0.60, "y": 0.62, "w": 0.22, "h": 0.24 },
-      "neighbours": ["L-1-09", "COR-01"]
+      "function": "Cycle Store (275 spaces)",
+      "environment": "indoor",
+      "fixtures": ["bicycle-rack"],
+      "confidence": 0.85,
+      "approximate_bounds": {"x": 0.60, "y": 0.78, "w": 0.25, "h": 0.20},
+      "neighbours": ["L-1-12", "L-1-04", "L-1-14", "L-1-16"]
+    },
+    {
+      "room_id": "L-1-14",
+      "label": "Cycle repair",
+      "label_source": "text",
+      "type": "amenity",
+      "function": "Cycle Repair Workshop",
+      "environment": "indoor",
+      "fixtures": ["workbench"],
+      "confidence": 0.7,
+      "approximate_bounds": {"x": 0.679, "y": 0.487, "w": 0.10, "h": 0.10},
+      "neighbours": ["L-1-06", "L-1-13", "L-1-16"]
+    },
+    {
+      "room_id": "L-1-15",
+      "label": "UKPN Trench",
+      "label_source": "text",
+      "type": "external",
+      "function": "UKPN Service Trench",
+      "environment": "outdoor",
+      "fixtures": [],
+      "confidence": 0.5,
+      "approximate_bounds": {"x": 0.5603, "y": 0.29, "w": 0.18, "h": 0.05},
+      "neighbours": []
+    },
+    {
+      "room_id": "L-1-16",
+      "label": "Circulation Corridor",
+      "label_source": "vision",
+      "type": "circulation",
+      "function": "Main Internal Corridor",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.46,
+      "approximate_bounds": {"x": 0.52, "y": 0.60, "w": 0.20, "h": 0.20},
+      "neighbours": ["L-1-01", "L-1-02", "L-1-03", "L-1-04", "L-1-05", "L-1-06", "L-1-07", "L-1-08", "L-1-09", "L-1-10", "L-1-11", "L-1-12", "L-1-13", "L-1-14"]
     }
   ],
   "core_elements": [
     {
-      "id": "LIFT-01",
-      "type": "lift",
-      "position": { "x": 0.50, "y": 0.73 }
-    },
-    {
-      "id": "LIFT-02",
-      "type": "lift",
-      "position": { "x": 0.54, "y": 0.73 }
-    },
-    {
       "id": "STAIR-01",
       "type": "stair",
-      "position": { "x": 0.65, "y": 0.34 }
+      "position": {"x": 0.67, "y": 0.74}
+    },
+    {
+      "id": "LIFT-01",
+      "type": "lift",
+      "position": {"x": 0.60, "y": 0.68}
     },
     {
       "id": "COR-01",
       "type": "corridor",
-      "position": { "x": 0.55, "y": 0.40 }
+      "position": {"x": 0.52, "y": 0.60}
     }
   ]
 }

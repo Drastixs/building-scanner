@@ -48,6 +48,21 @@ def build_graph(floors: list[dict]) -> nx.Graph:
             h = bounds.get("h", 0.1)
             cx = bounds.get("x", 0.5) + w / 2
             cy = bounds.get("y", 0.5) + h / 2
+            # Carry the richer semantics from extract.py through to the viewer.
+            # type stays in the existing enum (TYPE_COLORS already covers it); the
+            # extra fields are additive — the viewer ignores keys it doesn't read,
+            # and `environment` is here for the later indoor/outdoor layer work.
+            extra = {
+                k: room[k]
+                for k in (
+                    "function",
+                    "environment",
+                    "fixtures",
+                    "confidence",
+                    "label_source",
+                )
+                if k in room
+            }
             G.add_node(
                 room["room_id"],
                 label=room.get("label", ""),
@@ -58,6 +73,7 @@ def build_graph(floors: list[dict]) -> nx.Graph:
                 z=round(z, 4),
                 w=round(w, 4),
                 h=round(h, 4),
+                **extra,
             )
 
         # Add core elements as nodes too (no bounds in source → small default footprint)

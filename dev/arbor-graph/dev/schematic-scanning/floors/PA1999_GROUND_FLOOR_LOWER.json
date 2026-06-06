@@ -3,63 +3,242 @@
   "rooms": [
     {
       "room_id": "L0a-01",
-      "label": "Hotel (Core C and D)",
-      "type": "amenity",
+      "label": "Thames Path",
+      "label_source": "text",
+      "type": "external",
+      "function": "Public riverside footpath",
+      "environment": "outdoor",
+      "fixtures": [],
+      "confidence": 0.85,
       "approximate_bounds": {
-        "x": 0.4,
-        "y": 0.25,
-        "w": 0.3,
-        "h": 0.45
+        "x": 0.5,
+        "y": 0.16,
+        "w": 0.26,
+        "h": 0.08
       },
       "neighbours": [
-        "L0a-02",
-        "L0a-03",
-        "L0a-04",
-        "L0a-05",
-        "L0a-08",
-        "L0a-09"
+        "L0a-10",
+        "L0a-11",
+        "L0a-02"
       ]
     },
     {
       "room_id": "L0a-02",
-      "label": "Storage",
+      "label": "Plant",
+      "label_source": "text",
       "type": "amenity",
+      "function": "Retail Unit 1",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.8,
       "approximate_bounds": {
-        "x": 0.33,
-        "y": 0.4,
-        "w": 0.08,
-        "h": 0.06
+        "x": 0.46,
+        "y": 0.34,
+        "w": 0.22,
+        "h": 0.14
       },
       "neighbours": [
-        "L0a-01",
-        "L0a-03"
+        "L0a-03",
+        "L0a-04",
+        "L0a-06",
+        "L0a-14"
       ]
     },
     {
       "room_id": "L0a-03",
-      "label": "Plant",
-      "type": "plant",
+      "label": "Retail",
+      "label_source": "text",
+      "type": "amenity",
+      "function": "Retail Unit 2",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.8,
       "approximate_bounds": {
-        "x": 0.33,
-        "y": 0.48,
-        "w": 0.08,
+        "x": 0.61,
+        "y": 0.43,
+        "w": 0.1,
         "h": 0.1
       },
       "neighbours": [
         "L0a-02",
-        "L0a-04",
-        "L0a-01"
+        "L0a-07",
+        "L0a-12",
+        "L0a-14"
       ]
     },
     {
       "room_id": "L0a-04",
-      "label": "Plant",
-      "type": "plant",
+      "label": "Storage",
+      "label_source": "text",
+      "type": "amenity",
+      "function": "Storage Room",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.8,
       "approximate_bounds": {
-        "x": 0.33,
-        "y": 0.6,
-        "w": 0.1,
-        "h": 0.15
+        "x": 0.41,
+        "y": 0.5,
+        "w": 0.08,
+        "h": 0.06
+      },
+      "neighbours": [
+        "L0a-05",
+        "L0a-06",
+        "L0a-02"
+      ]
+    },
+    {
+      "room_id": "L0a-05",
+      "label": "Plant",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [
+        "mechanical-equipment"
+      ],
+      "confidence": 0.85,
+      "approximate_bounds": {
+        "x": 0.41,
+        "y": 0.56,
+        "w": 0.08,
+        "h": 0.07
+      },
+      "neighbours": [
+        "L0a-04",
+        "L0a-06"
+      ]
+    },
+    {
+      "room_id": "L0a-06",
+      "label": "Office",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [
+        "mechanical-equipment"
+      ],
+      "confidence": 0.85,
+      "approximate_bounds": {
+        "x": 0.49,
+        "y": 0.57,
+        "w": 0.08,
+        "h": 0.06
+      },
+      "neighbours": [
+        "L0a-04",
+        "L0a-05",
+        "L0a-08",
+        "L0a-14"
+      ]
+    },
+    {
+      "room_id": "L0a-07",
+      "label": "Retail",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Mechanical Plant Room",
+      "environment": "indoor",
+      "fixtures": [
+        "mechanical-equipment"
+      ],
+      "confidence": 0.85,
+      "approximate_bounds": {
+        "x": 0.59,
+        "y": 0.42,
+        "w": 0.08,
+        "h": 0.07
+      },
+      "neighbours": [
+        "L0a-03",
+        "L0a-12"
+      ]
+    },
+    {
+      "room_id": "L0a-08",
+      "label": "Management",
+      "label_source": "text",
+      "type": "office",
+      "function": "Management Suite",
+      "environment": "indoor",
+      "fixtures": [
+        "desk"
+      ],
+      "confidence": 0.7,
+      "approximate_bounds": {
+        "x": 0.53,
+        "y": 0.55,
+        "w": 0.07,
+        "h": 0.05
+      },
+      "neighbours": [
+        "L0a-09",
+        "L0a-06",
+        "L0a-14"
+      ]
+    },
+    {
+      "room_id": "L0a-09",
+      "label": "Office",
+      "label_source": "text",
+      "type": "office",
+      "function": "General Office",
+      "environment": "indoor",
+      "fixtures": [
+        "desk"
+      ],
+      "confidence": 0.7,
+      "approximate_bounds": {
+        "x": 0.54,
+        "y": 0.58,
+        "w": 0.07,
+        "h": 0.05
+      },
+      "neighbours": [
+        "L0a-08",
+        "L0a-06",
+        "L0a-14"
+      ]
+    },
+    {
+      "room_id": "L0a-10",
+      "label": "cycle parking",
+      "label_source": "text",
+      "type": "external",
+      "function": "Short-stay Cycle Parking",
+      "environment": "outdoor",
+      "fixtures": [
+        "bike-rack"
+      ],
+      "confidence": 0.75,
+      "approximate_bounds": {
+        "x": 0.68,
+        "y": 0.27,
+        "w": 0.11,
+        "h": 0.07
+      },
+      "neighbours": [
+        "L0a-01",
+        "L0a-12"
+      ]
+    },
+    {
+      "room_id": "L0a-11",
+      "label": "Bench +",
+      "label_source": "text",
+      "type": "external",
+      "function": "Seating Area",
+      "environment": "outdoor",
+      "fixtures": [
+        "bench"
+      ],
+      "confidence": 0.7,
+      "approximate_bounds": {
+        "x": 0.66,
+        "y": 0.43,
+        "w": 0.06,
+        "h": 0.04
       },
       "neighbours": [
         "L0a-03",
@@ -67,77 +246,93 @@
       ]
     },
     {
-      "room_id": "L0a-05",
-      "label": "Power",
-      "type": "plant",
+      "room_id": "L0a-12",
+      "label": "Entrance",
+      "label_source": "text",
+      "type": "circulation",
+      "function": "Cycle Entrance Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.65,
       "approximate_bounds": {
-        "x": 0.48,
-        "y": 0.55,
-        "w": 0.06,
-        "h": 0.07
-      },
-      "neighbours": [
-        "L0a-06",
-        "L0a-07",
-        "L0a-01"
-      ]
-    },
-    {
-      "room_id": "L0a-06",
-      "label": "Unisex Accessible WC",
-      "type": "amenity",
-      "approximate_bounds": {
-        "x": 0.55,
-        "y": 0.55,
+        "x": 0.65,
+        "y": 0.38,
         "w": 0.05,
-        "h": 0.07
+        "h": 0.05
       },
       "neighbours": [
-        "L0a-05",
-        "L0a-07"
+        "L0a-03",
+        "L0a-07",
+        "L0a-10",
+        "L0a-13",
+        "L0a-14"
       ]
     },
     {
-      "room_id": "L0a-07",
-      "label": "Public WCs",
-      "type": "amenity",
+      "room_id": "L0a-13",
+      "label": "cycle lift",
+      "label_source": "text",
+      "type": "core",
+      "function": "Public Cycle Lift Lobby",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.65,
       "approximate_bounds": {
-        "x": 0.55,
+        "x": 0.61,
+        "y": 0.69,
+        "w": 0.06,
+        "h": 0.06
+      },
+      "neighbours": [
+        "L0a-12",
+        "L0a-14"
+      ]
+    },
+    {
+      "room_id": "L0a-14",
+      "label": "Public",
+      "label_source": "text",
+      "type": "circulation",
+      "function": "Main Internal Corridor",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.5,
+      "approximate_bounds": {
+        "x": 0.56,
+        "y": 0.46,
+        "w": 0.15,
+        "h": 0.25
+      },
+      "neighbours": [
+        "L0a-02",
+        "L0a-03",
+        "L0a-06",
+        "L0a-08",
+        "L0a-09",
+        "L0a-12",
+        "L0a-13",
+        "L0a-15"
+      ]
+    },
+    {
+      "room_id": "L0a-15",
+      "label": "Public",
+      "label_source": "text",
+      "type": "core",
+      "function": "Open Shaft / Void",
+      "environment": "indoor",
+      "fixtures": [
+        "void"
+      ],
+      "confidence": 0.6,
+      "approximate_bounds": {
+        "x": 0.58,
         "y": 0.63,
         "w": 0.08,
-        "h": 0.09
-      },
-      "neighbours": [
-        "L0a-06",
-        "L0a-05"
-      ]
-    },
-    {
-      "room_id": "L0a-08",
-      "label": "Short Stay Cycle Parking",
-      "type": "external",
-      "approximate_bounds": {
-        "x": 0.67,
-        "y": 0.42,
-        "w": 0.1,
-        "h": 0.1
-      },
-      "neighbours": [
-        "L0a-01"
-      ]
-    },
-    {
-      "room_id": "L0a-09",
-      "label": "Thames Path",
-      "type": "external",
-      "approximate_bounds": {
-        "x": 0.28,
-        "y": 0.12,
-        "w": 0.47,
         "h": 0.08
       },
       "neighbours": [
-        "L0a-01"
+        "L0a-14"
       ]
     }
   ],
@@ -146,40 +341,8 @@
       "id": "LIFT-01",
       "type": "lift",
       "position": {
-        "x": 0.6,
-        "y": 0.34
-      }
-    },
-    {
-      "id": "LIFT-02",
-      "type": "lift",
-      "position": {
-        "x": 0.63,
-        "y": 0.34
-      }
-    },
-    {
-      "id": "STAIR-01",
-      "type": "stair",
-      "position": {
-        "x": 0.41,
-        "y": 0.6
-      }
-    },
-    {
-      "id": "STAIR-02",
-      "type": "stair",
-      "position": {
-        "x": 0.58,
-        "y": 0.44
-      }
-    },
-    {
-      "id": "CORRIDOR-01",
-      "type": "corridor",
-      "position": {
-        "x": 0.55,
-        "y": 0.48
+        "x": 0.617,
+        "y": 0.709
       }
     }
   ]

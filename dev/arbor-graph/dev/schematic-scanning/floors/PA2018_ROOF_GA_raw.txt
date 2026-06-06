@@ -3,110 +3,87 @@
   "rooms": [
     {
       "room_id": "L18-01",
-      "label": "Open Plan Office",
-      "type": "office",
-      "approximate_bounds": { "x": 0.20, "y": 0.10, "w": 0.55, "h": 0.70 },
-      "neighbours": ["L18-02", "L18-03", "L18-04", "L18-05", "L18-06", "COR-01"]
+      "label": "Plant screen louvres",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant screen louvres zone",
+      "environment": "covered",
+      "fixtures": ["louvre"],
+      "confidence": 0.77,
+      "approximate_bounds": {"x": 0.28, "y": 0.30, "w": 0.30, "h": 0.30},
+      "neighbours": ["L18-03", "L18-04", "L18-06"]
     },
     {
       "room_id": "L18-02",
-      "label": "Meeting Room 01",
-      "type": "office",
-      "approximate_bounds": { "x": 0.25, "y": 0.20, "w": 0.10, "h": 0.15 },
-      "neighbours": ["L18-01", "COR-01"]
+      "label": "Plant screen louvres",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Plant screen louvres zone",
+      "environment": "covered",
+      "fixtures": ["louvre"],
+      "confidence": 0.77,
+      "approximate_bounds": {"x": 0.55, "y": 0.45, "w": 0.30, "h": 0.35},
+      "neighbours": ["L18-03", "L18-04", "L18-05", "L18-06"]
     },
     {
       "room_id": "L18-03",
-      "label": "Meeting Room 02",
-      "type": "office",
-      "approximate_bounds": { "x": 0.25, "y": 0.40, "w": 0.10, "h": 0.15 },
-      "neighbours": ["L18-01", "COR-01"]
+      "label": "BMU",
+      "label_source": "text",
+      "type": "plant",
+      "function": "Building Maintenance Unit bay",
+      "environment": "covered",
+      "fixtures": [],
+      "confidence": 0.82,
+      "approximate_bounds": {"x": 0.50, "y": 0.52, "w": 0.08, "h": 0.08},
+      "neighbours": ["L18-01", "L18-02", "L18-04", "L18-06"]
     },
     {
       "room_id": "L18-04",
-      "label": "Breakout",
-      "type": "amenity",
-      "approximate_bounds": { "x": 0.35, "y": 0.30, "w": 0.10, "h": 0.20 },
-      "neighbours": ["L18-01", "COR-01"]
+      "label": "Lift overruns",
+      "label_source": "text",
+      "type": "core",
+      "function": "Lift overruns",
+      "environment": "indoor",
+      "fixtures": [],
+      "confidence": 0.80,
+      "approximate_bounds": {"x": 0.53, "y": 0.57, "w": 0.10, "h": 0.10},
+      "neighbours": ["L18-01", "L18-02", "L18-03", "L18-06"]
     },
     {
       "room_id": "L18-05",
-      "label": "WC Male",
-      "type": "core",
-      "approximate_bounds": { "x": 0.60, "y": 0.20, "w": 0.05, "h": 0.15 },
-      "neighbours": ["COR-01"]
+      "label": "Biodiverse roof",
+      "label_source": "text",
+      "type": "external",
+      "function": "Biodiverse roof",
+      "environment": "outdoor",
+      "fixtures": ["green-roof"],
+      "confidence": 0.85,
+      "approximate_bounds": {"x": 0.38, "y": 0.60, "w": 0.20, "h": 0.15},
+      "neighbours": ["L18-02"]
     },
     {
       "room_id": "L18-06",
-      "label": "WC Female",
-      "type": "core",
-      "approximate_bounds": { "x": 0.60, "y": 0.35, "w": 0.05, "h": 0.15 },
-      "neighbours": ["COR-01"]
-    },
-    {
-      "room_id": "L18-07",
-      "label": "Cleaner Store",
-      "type": "plant",
-      "approximate_bounds": { "x": 0.50, "y": 0.25, "w": 0.05, "h": 0.05 },
-      "neighbours": ["COR-01"]
-    },
-    {
-      "room_id": "L18-08",
-      "label": "Comms Room",
-      "type": "plant",
-      "approximate_bounds": { "x": 0.45, "y": 0.50, "w": 0.10, "h": 0.10 },
-      "neighbours": ["COR-01"]
-    },
-    {
-      "room_id": "L18-09",
-      "label": "Server Room",
-      "type": "plant",
-      "approximate_bounds": { "x": 0.50, "y": 0.60, "w": 0.10, "h": 0.10 },
-      "neighbours": ["COR-01"]
-    },
-    {
-      "room_id": "L18-10",
       "label": "Plant Room",
+      "label_source": "vision",
       "type": "plant",
-      "approximate_bounds": { "x": 0.55, "y": 0.70, "w": 0.10, "h": 0.15 },
-      "neighbours": ["COR-01"]
+      "function": "Main plant room",
+      "environment": "indoor",
+      "fixtures": ["equipment"],
+      "confidence": 0.44,
+      "approximate_bounds": {"x": 0.42, "y": 0.45, "w": 0.22, "h": 0.25},
+      "neighbours": ["L18-01", "L18-02", "L18-03", "L18-04"]
     }
   ],
   "core_elements": [
     {
       "id": "LIFT-01",
       "type": "lift",
-      "position": { "x": 0.40, "y": 0.40 }
-    },
-    {
-      "id": "LIFT-02",
-      "type": "lift",
-      "position": { "x": 0.45, "y": 0.40 }
-    },
-    {
-      "id": "LIFT-03",
-      "type": "lift",
-      "position": { "x": 0.50, "y": 0.40 }
-    },
-    {
-      "id": "LIFT-04",
-      "type": "lift",
-      "position": { "x": 0.55, "y": 0.40 }
+      "position": {"x": 0.54, "y": 0.55}
     },
     {
       "id": "STAIR-01",
       "type": "stair",
-      "position": { "x": 0.30, "y": 0.35 }
-    },
-    {
-      "id": "STAIR-02",
-      "type": "stair",
-      "position": { "x": 0.65, "y": 0.35 }
-    },
-    {
-      "id": "COR-01",
-      "type": "corridor",
-      "position": { "x": 0.40, "y": 0.30 }
+      "position": {"x": 0.32, "y": 0.48}
     }
   ]
 }
