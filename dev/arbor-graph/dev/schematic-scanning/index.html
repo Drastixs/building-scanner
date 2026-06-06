@@ -29,11 +29,19 @@
   #hover-readout.visible { opacity: 1; }
   #hover-readout .htype { color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-left: 8px; }
 
-  #legend {
+  #bottom-left {
     position: absolute; bottom: 20px; left: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    pointer-events: none;
+  }
+  #toggles, #legend {
     background: rgba(10,10,15,0.85); backdrop-filter: blur(8px);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px; padding: 12px 14px; pointer-events: auto;
+  }
+  #toggles h3 {
+    font-size: 10px; font-weight: 600; color: #555;
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;
   }
   #legend h3 { font-size: 10px; font-weight: 600; color: #555; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 11px; color: #aaa; }
@@ -97,12 +105,14 @@
     <h3 class="sep">Show Types</h3>
     <div id="type-filters"></div>
 
-    <h3 class="sep">Detail</h3>
-    <div id="detail-filters"></div>
-
     <button id="reset-btn">Reset hidden</button>
   </div>
 
+  <div id="bottom-left">
+  <div id="toggles">
+    <h3>Show / Hide</h3>
+    <div id="detail-filters"></div>
+  </div>
   <div id="legend">
     <h3>Floor Type</h3>
     <div class="legend-item"><div class="legend-swatch" style="background:#4a90d9"></div> Office</div>
@@ -114,7 +124,9 @@
     <div class="legend-item"><div class="legend-swatch" style="background:#c8ccd8"></div> Inner wall</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#ffffff"></div> Door</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#ff6b4a"></div> Stair (solid run)</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#50e3c2;opacity:0.5"></div> Lift shaft</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ff3df0;opacity:0.6"></div> Lift shaft</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#00ff9c"></div> Entrance / exit</div>
+  </div>
   </div>
 
   <div id="stack-hud">
@@ -152,6 +164,7 @@ const TYPE_COLORS = {
 const STAIR_COLOR     = 0xff6b4a;
 const LIFT_COLOR      = 0xff3df0;  // lift shafts: distinct glowing magenta, own colour
 const DOOR_COLOR      = 0xffffff;
+const ENTRANCE_COLOR  = 0x00ff9c;  // external portals (entrances/exits): bright pulse
 const PARTITION_COLOR = 0xc8ccd8;
 const OUTER_WALL_COLOR = 0x8a94b0;  // building envelope (smoothed outline)
 
@@ -160,10 +173,12 @@ const categoryEnabled = {
   office: true, amenity: true, core: true, circulation: true,
   residential: true, external: true, unknown: true, plant: false,
 };
-let coresEnabled      = true;   // vertical stairs/lifts
+let stairsEnabled     = true;   // stair runs
+let liftsEnabled      = true;   // lift shafts
 let partitionsEnabled = true;   // inner walls
 let outerWallsEnabled = true;   // building envelope (outer walls)
 let labelsEnabled     = false;  // room name sprites
+let entrancesEnabled  = true;   // external portal beacons (entrances/exits)
 
 // ── Scene ─────────────────────────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -206,7 +221,9 @@ const MIN_FOOT    = 0.6;   // min footprint / wall length (avoid slivers)
 
 // ── State ───────────────────────────────────────────────────────────────────
 let graphData = null;
+let buildingData = null;  // portal graph from security_graph_builder.py (building.json)
 let wallsData = null;     // M1: real wall segments from vector_extract.py (walls.json)
+const entranceBeacons = [];  // {marker, ring} units pulsed in animate()
 const pickables = [];     // leaf meshes for raycasting (each has userData.hideTarget)
 const hideUnits = [];     // unique Object3D units that visibility applies to
 const undoStack = [];
@@ -414,6 +431,61 @@ function buildCoreMarker(node) {
   registerUnit(m, [m], { type: 'core', floorLevel: String(node.floor), label: node.label, kind: 'core', id: node.id });
 }
 
+// Entrance beacon = an external portal node (is_external) from building.json. A
+// floor-standing ring + a downward cone + a vertical beam, all bright green and
+// pulsing, so every way IN/OUT of the building reads at a glance. Pickable; the
+// hover readout shows the entrance's `via` label ("Office Entrance" etc).
+let entranceCount = 0;
+function buildEntrance(node) {
+  const [cx, cz] = worldXZ(node);
+  const baseY = (node.z || 0) * SCALE_Z;
+  const fl = String(node.floor);
+  const beamH = 5.0;
+  const g = new THREE.Group();
+  const mat = new THREE.MeshStandardMaterial({
+    color: ENTRANCE_COLOR, emissive: ENTRANCE_COLOR, emissiveIntensity: 0.8,
+    transparent: true, opacity: 0.9, roughness: 0.3,
+  });
+
+  // floor ring marking the threshold
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.7, 0.09, 10, 28), mat);
+  ring.rotation.x = Math.PI / 2;
+  ring.position.set(cx, baseY + 0.1, cz);
+  g.add(ring);
+
+  // downward cone hovering above, pointing at the opening
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(0.55, 1.1, 16), mat);
+  cone.rotation.x = Math.PI;            // tip down
+  cone.position.set(cx, baseY + beamH, cz);
+  g.add(cone);
+
+  // vertical beam tying ring to cone
+  const beamMat = new THREE.MeshBasicMaterial({
+    color: ENTRANCE_COLOR, transparent: true, opacity: 0.25,
+  });
+  const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, beamH, 8), beamMat);
+  beam.position.set(cx, baseY + beamH / 2, cz);
+  g.add(beam);
+
+  scene.add(g);
+  const label = node.via || 'Entrance';
+  registerUnit(g, [ring, cone], {
+    type: '__entrance__', isEntrance: true, floorLevel: fl,
+    label, kind: 'entrance', id: node.id,
+  });
+  entranceBeacons.push({ mat, cone, baseY: baseY + beamH });
+  entranceCount++;
+}
+
+// Read external portal nodes out of building.json and drop a beacon on each.
+function buildEntrances(building) {
+  if (!building || !building.nodes) return;
+  for (const n of building.nodes) {
+    if (n.kind === 'portal' && n.is_external) buildEntrance(n);
+  }
+  console.log(`[viewer] entrances: ${entranceCount} external portals beaconed`);
+}
+
 // Inner wall = partition between two neighbouring rooms (one per intra-link).
 // Placed at the midline on the shared boundary → never on the external envelope.
 function buildPartition(a, b) {
@@ -602,6 +674,9 @@ function buildScene(graph) {
   }
   console.log(`[viewer] lift shafts: ${liftCount} continuous columns`);
 
+  // Entrances overlaid from the portal graph (building.json)
+  buildEntrances(buildingData);
+
   document.getElementById('stats').textContent =
     `${roomCount} rooms · ${partitionCount} inner walls · ${doorCount} doors · ${graph.floors.length} floors`;
   console.log(`[viewer] rooms=${roomCount} partitions=${partitionCount} doors=${doorCount} hideUnits=${hideUnits.length} pickables=${pickables.length}`);
@@ -616,10 +691,15 @@ function buildScene(graph) {
 function applyVisibility(unit) {
   const u = unit.userData;
   let vis;
-  if (u.isCore)            vis = coresEnabled && !u.manualHidden;
+  if (u.isCore) {
+    if (u.kind === 'stair')      vis = stairsEnabled && !u.manualHidden;
+    else if (u.kind === 'lift')  vis = liftsEnabled && !u.manualHidden;
+    else                         vis = (stairsEnabled || liftsEnabled) && !u.manualHidden;
+  }
   else {
     const floorOK = activeFloor === 'all' || u.floorLevel === activeFloor;
-    if (u.isPartition)     vis = floorOK && partitionsEnabled && !u.manualHidden;
+    if (u.isEntrance)      vis = floorOK && entrancesEnabled && !u.manualHidden;
+    else if (u.isPartition) vis = floorOK && partitionsEnabled && !u.manualHidden;
     else if (u.isOuterWall) vis = floorOK && outerWallsEnabled && !u.manualHidden;
     else if (u.isLabel)    vis = floorOK && labelsEnabled && !u.manualHidden;
     else if (u.type === '__plate__') vis = floorOK && !u.manualHidden;
@@ -665,7 +745,9 @@ function buildDetailFilters() {
   const rows = [
     { txt: 'inner walls', get: () => partitionsEnabled, set: v => partitionsEnabled = v },
     { txt: 'outer walls', get: () => outerWallsEnabled, set: v => outerWallsEnabled = v },
-    { txt: 'stairs &amp; lifts', get: () => coresEnabled, set: v => coresEnabled = v },
+    { txt: 'stairs', get: () => stairsEnabled, set: v => stairsEnabled = v },
+    { txt: 'lift shafts', get: () => liftsEnabled, set: v => liftsEnabled = v },
+    { txt: 'entrances', get: () => entrancesEnabled, set: v => entrancesEnabled = v },
     { txt: 'labels', get: () => labelsEnabled, set: v => labelsEnabled = v },
   ];
   for (const r of rows) {
@@ -758,6 +840,15 @@ renderer.domElement.addEventListener('pointerup', e => {
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
+  // pulse entrance beacons (emissive + gentle cone bob)
+  if (entranceBeacons.length) {
+    const t = performance.now() * 0.003;
+    const p = 0.5 + 0.5 * Math.sin(t);
+    for (const b of entranceBeacons) {
+      b.mat.emissiveIntensity = 0.5 + 0.9 * p;
+      b.cone.position.y = b.baseY + 0.4 * Math.sin(t);
+    }
+  }
   renderer.render(scene, camera);
 }
 window.addEventListener('resize', () => {
@@ -770,10 +861,12 @@ window.addEventListener('resize', () => {
 Promise.all([
   fetch('./graph.json').then(r => r.json()),
   fetch('./walls.json').then(r => r.ok ? r.json() : null).catch(() => null),
+  fetch('./building.json').then(r => r.ok ? r.json() : null).catch(() => null),
 ])
-  .then(([graph, walls]) => {
+  .then(([graph, walls, building]) => {
     graphData = graph;
     wallsData = walls;  // null → falls back to adjacency partitions
+    buildingData = building;  // null → no entrance overlay
     buildScene(graph);
     animate();
   })
