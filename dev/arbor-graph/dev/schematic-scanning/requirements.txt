@@ -1,0 +1,7 @@
+# schematic-scanning / building security graph deps
+# Runtime: use the project venv at ../../../../../.venv (building-hacking/.venv)
+#   python -c "import fitz, shapely, networkx"  # must succeed before extraction
+PyMuPDF==1.27.2.3      # vector PDF parsing (get_drawings) + raster fallback
+shapely==2.1.2         # polygonize spaces from wall segments (vector path)
+networkx==3.6.1        # security graph build / traversal
+openai==2.41.0         # o3 vision fallback only (flattened pages)

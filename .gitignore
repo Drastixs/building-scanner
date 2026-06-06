@@ -3,3 +3,12 @@ node_modules/
 .env
 .DS_Store
 .gstack/
+
+# Python
+__pycache__/
+*.pyc
+
+# Sensitive: building security recon artifacts (real-building entry maps)
+security_graph.json
+security_floors/
+**/buildings/*.pdf
