@@ -19,6 +19,7 @@ import { Controls } from './ui/Controls';
 import { DetailToggles, type DetailKey } from './ui/DetailToggles';
 import { Legend } from './ui/Legend';
 import { StackHud } from './ui/StackHud';
+import { RoutePanel } from './ui/RoutePanel';
 
 export default function ArborViewer() {
   const [data, setData] = useState<LoadedData | null>(null);
@@ -26,6 +27,7 @@ export default function ArborViewer() {
   const [state, setState] = useState<ViewerState>(DEFAULT_VIEWER_STATE);
   const [hide, dispatch] = useReducer(hideReducer, initialHideState);
   const [hovered, setHovered] = useState<UnitMeta | null>(null);
+  const [routePath, setRoutePath] = useState<string[] | null>(null);
 
   // Drag-vs-click guard: a click that moved > 5px is an orbit drag, not a hide.
   const downXY = useRef<[number, number] | null>(null);
@@ -124,6 +126,7 @@ export default function ArborViewer() {
               hidden={hide.hidden}
               onHover={onHover}
               onHide={onHide}
+              routePath={routePath}
             />
           </Canvas>
         )}
@@ -142,6 +145,10 @@ export default function ArborViewer() {
             onToggleCategory={onToggleCategory}
             onResetHidden={onResetHidden}
           />
+        )}
+
+        {data?.building && (
+          <RoutePanel building={data.building} onPath={setRoutePath} />
         )}
 
         <div id="bottom-left">

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schematic → 3D — How the conversion works</title>
+<style>
+  :root {
+    --bg: #0c0d12; --panel: #14161f; --line: #2a2d3a; --ink: #e7e9f0;
+    --muted: #9aa0b4; --dim: #6a7088;
+    --vision: #f0883e; --vector: #5ad1c4; --graph: #8b9bff; --html: #d98bff;
+    --pdf: #cdd2e6; --json: #ffd166;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 15px/1.55 'Inter','Segoe UI',system-ui,sans-serif;
+    padding: 40px 24px 80px; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 28px; }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  header p { color: var(--muted); margin-top: 6px; font-size: 14px; }
+  .lead {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--json);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 32px; color: var(--ink);
+  }
+  .lead b { color: var(--json); }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em;
+       color: var(--dim); margin: 38px 0 14px; font-weight: 600; }
+  svg { width: 100%; height: auto; display: block; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+          padding: 22px; margin-bottom: 16px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .route-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .pill { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; letter-spacing: .04em; }
+  .pill.v1 { background: rgba(240,136,62,.15); color: var(--vision); border: 1px solid rgba(240,136,62,.4); }
+  .pill.v2 { background: rgba(90,209,196,.13); color: var(--vector); border: 1px solid rgba(90,209,196,.4); }
+  .route-head h3 { font-size: 16px; font-weight: 650; }
+  .route-head .file { margin-left: auto; font-family: ui-monospace,'SF Mono',Menlo,monospace;
+                      font-size: 12px; color: var(--dim); }
+  ol.steps { list-style: none; counter-reset: s; }
+  ol.steps li { counter-increment: s; position: relative; padding: 7px 0 7px 34px; font-size: 14px;
+                color: var(--muted); border-top: 1px solid var(--line); }
+  ol.steps li:first-child { border-top: none; }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 8px;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700;
+    display: grid; place-items: center; color: var(--bg);
+  }
+  .v1 ol.steps li::before { background: var(--vision); }
+  .v2 ol.steps li::before { background: var(--vector); }
+  ol.steps li b { color: var(--ink); font-weight: 600; }
+  code { font-family: ui-monospace,'SF Mono',Menlo,monospace; font-size: 12.5px;
+         background: rgba(255,255,255,.06); padding: 1px 5px; border-radius: 4px; color: #cdd2e6; }
+  .out { font-family: ui-monospace,Menlo,monospace; font-size: 12px; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+  td code { font-weight: 700; }
+  .footnote { color: var(--dim); font-size: 13px; margin-top: 28px; border-top: 1px solid var(--line); padding-top: 16px; }
+  @media (max-width: 720px){ .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Schematic&nbsp;→&nbsp;3D: how the conversion works</h1>
+  <p>Arbor building scanner · architectural floor-plan PDF → browser-rendered 3D model</p>
+</header>
+
+<div class="lead">
+  The schematic is <b>never "converted to HTML."</b> <code>index.html</code> is a fixed
+  Three.js renderer. The real work is parsing each drawing into <b>JSON</b> that the page loads.
+  Source drawing&nbsp;→&nbsp;JSON&nbsp;→&nbsp;3D in the browser.
+</div>
+
+<h2>The whole pipeline</h2>
+<svg viewBox="0 0 940 430" font-family="Inter,system-ui,sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#6a7088"/>
+    </marker>
+  </defs>
+
+  <!-- Source PDF -->
+  <rect x="20" y="180" width="150" height="70" rx="10" fill="#1a1c26" stroke="#cdd2e6" stroke-width="1.5"/>
+  <text x="95" y="205" text-anchor="middle" fill="#cdd2e6" font-size="13" font-weight="700">Floor-plan PDF</text>
+  <text x="95" y="224" text-anchor="middle" fill="#9aa0b4" font-size="11">architect's GA</text>
+  <text x="95" y="239" text-anchor="middle" fill="#9aa0b4" font-size="11">drawing</text>
+
+  <!-- Route A box -->
+  <rect x="250" y="40" width="220" height="120" rx="10" fill="#1a1410" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="360" y="64" text-anchor="middle" fill="#f0883e" font-size="13" font-weight="700">A · VISION ROUTE</text>
+  <text x="360" y="84" text-anchor="middle" fill="#e7e9f0" font-size="12">extract.py</text>
+  <text x="360" y="104" text-anchor="middle" fill="#9aa0b4" font-size="11">rasterise → PNG</text>
+  <text x="360" y="121" text-anchor="middle" fill="#9aa0b4" font-size="11">→ OpenAI o3 vision</text>
+  <text x="360" y="138" text-anchor="middle" fill="#9aa0b4" font-size="11">→ rooms + cores</text>
+
+  <!-- Route B box -->
+  <rect x="250" y="270" width="220" height="120" rx="10" fill="#101a18" stroke="#5ad1c4" stroke-width="1.5"/>
+  <text x="360" y="294" text-anchor="middle" fill="#5ad1c4" font-size="13" font-weight="700">B · VECTOR ROUTE</text>
+  <text x="360" y="314" text-anchor="middle" fill="#e7e9f0" font-size="12">vector_extract.py</text>
+  <text x="360" y="334" text-anchor="middle" fill="#9aa0b4" font-size="11">read PDF lines →</text>
+  <text x="360" y="351" text-anchor="middle" fill="#9aa0b4" font-size="11">crop · normalise</text>
+  <text x="360" y="368" text-anchor="middle" fill="#9aa0b4" font-size="11">(no AI)</text>
+
+  <!-- JSON outputs -->
+  <rect x="540" y="40" width="160" height="46" rx="8" fill="#1c1a0e" stroke="#ffd166" stroke-width="1.3"/>
+  <text x="620" y="59" text-anchor="middle" fill="#ffd166" font-size="12" font-weight="700">floors/*.json</text>
+  <text x="620" y="75" text-anchor="middle" fill="#9aa0b4" font-size="10.5">rooms · cores</text>
+
+  <rect x="540" y="110" width="160" height="46" rx="8" fill="#16172a" stroke="#8b9bff" stroke-width="1.3"/>
+  <text x="620" y="129" text-anchor="middle" fill="#8b9bff" font-size="12" font-weight="700">graph.json</text>
+  <text x="620" y="145" text-anchor="middle" fill="#9aa0b4" font-size="10.5">graph_builder.py</text>
+
+  <rect x="540" y="180" width="160" height="46" rx="8" fill="#16172a" stroke="#8b9bff" stroke-width="1.3"/>
+  <text x="620" y="199" text-anchor="middle" fill="#8b9bff" font-size="12" font-weight="700">building.json</text>
+  <text x="620" y="215" text-anchor="middle" fill="#9aa0b4" font-size="10.5">portals · security</text>
+
+  <rect x="540" y="300" width="160" height="46" rx="8" fill="#1c1a0e" stroke="#ffd166" stroke-width="1.3"/>
+  <text x="620" y="319" text-anchor="middle" fill="#ffd166" font-size="12" font-weight="700">walls.json</text>
+  <text x="620" y="335" text-anchor="middle" fill="#9aa0b4" font-size="10.5">outer + inner walls</text>
+
+  <!-- HTML renderer -->
+  <rect x="770" y="150" width="150" height="130" rx="10" fill="#1c1226" stroke="#d98bff" stroke-width="1.5"/>
+  <text x="845" y="178" text-anchor="middle" fill="#d98bff" font-size="13" font-weight="700">index.html</text>
+  <text x="845" y="198" text-anchor="middle" fill="#e7e9f0" font-size="11">Three.js viewer</text>
+  <text x="845" y="220" text-anchor="middle" fill="#9aa0b4" font-size="10.5">3× fetch()</text>
+  <text x="845" y="236" text-anchor="middle" fill="#9aa0b4" font-size="10.5">extrude to 3D</text>
+  <text x="845" y="258" text-anchor="middle" fill="#d98bff" font-size="11" font-weight="600">🏢 building</text>
+
+  <!-- arrows -->
+  <g stroke="#6a7088" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+    <path d="M170,205 C205,190 215,130 248,110"/>     <!-- pdf->A -->
+    <path d="M170,225 C205,250 215,310 248,330"/>     <!-- pdf->B -->
+    <path d="M470,80 L536,63"/>                        <!-- A->floors -->
+    <path d="M702,63 C730,80 510,110 538,128"/>       <!-- floors->graph -->
+    <path d="M702,70 C740,120 510,180 538,198"/>      <!-- floors->building -->
+    <path d="M470,330 L536,323"/>                      <!-- B->walls -->
+    <path d="M700,133 C745,140 745,175 768,188"/>     <!-- graph->html -->
+    <path d="M700,203 L768,210"/>                      <!-- building->html -->
+    <path d="M700,323 C745,300 745,250 768,238"/>     <!-- walls->html -->
+  </g>
+</svg>
+
+<h2>The two extraction routes</h2>
+<div class="grid2">
+  <div class="card v1">
+    <div class="route-head">
+      <span class="pill v1">A · VISION</span>
+      <h3>Read the picture</h3>
+      <span class="file">extract.py</span>
+    </div>
+    <ol class="steps">
+      <li><b>Rasterise.</b> PyMuPDF crops the title block (right ~15%) and renders the page to a 4096px PNG — big enough that ~10px room labels survive o3's 2048px tiling.</li>
+      <li><b>Ask o3 vision.</b> PNG is base64'd and sent with a strict prompt: return ONLY JSON — every enclosed space with id, label, type, normalised bounds, neighbours, plus lifts/stairs as cores.</li>
+      <li><b>Parse &amp; fan out.</b> Strip ``` fences, save JSON. One "Level&nbsp;2–5" sheet is deep-copied and re-IDed into 4 identical floors.</li>
+    </ol>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted)">→ <span class="out" style="color:var(--json)">floors/*.json</span> &nbsp;(semantic: <i>what each room is</i>)</p>
+  </div>
+
+  <div class="card v2">
+    <div class="route-head">
+      <span class="pill v2">B · VECTOR</span>
+      <h3>Read the geometry</h3>
+      <span class="file">vector_extract.py</span>
+    </div>
+    <ol class="steps">
+      <li><b>Native lines.</b> Reads the PDF's actual vector strokes (<code>get_drawings</code>), keeps only wall-weight ones (width ≥ 0.5); thin clutter dropped.</li>
+      <li><b>Find the plan.</b> Segment midpoints fill a 48×48 occupancy grid; the largest connected blob (BFS) is the real plan — legend/section cropped away.</li>
+      <li><b>Normalise.</b> Uniform scale to 0–1, aspect preserved, y-flipped. Same recipe every floor, so identical footprints stack.</li>
+      <li><b>Split walls.</b> A Shapely concave hull → smooth outer envelope; interior midpoints → inner partitions.</li>
+    </ol>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted)">→ <span class="out" style="color:var(--json)">walls.json</span> &nbsp;(geometric: <i>where every wall is</i>)</p>
+  </div>
+</div>
+
+<h2>The JSON the page loads</h2>
+<div class="card" style="padding:6px 22px 14px">
+  <table>
+    <tr><th>File</th><th>Built by</th><th>Holds</th></tr>
+    <tr><td><code style="color:var(--json)">floors/*.json</code></td><td>extract.py</td><td>Per-floor rooms (id, label, type, bounds, neighbours) + lift/stair cores</td></tr>
+    <tr><td><code style="color:var(--graph)">graph.json</code></td><td>graph_builder.py</td><td>NetworkX merge — rooms as nodes with x/y/w/h and z height (<code>level × 3.5m</code>), neighbours as edges</td></tr>
+    <tr><td><code style="color:var(--graph)">building.json</code></td><td>security_graph_builder.py</td><td>Portal graph — doors/lifts/stairs are <i>nodes</i>; a door is <code>roomA — portal — roomB</code>; inter-floor links share a <code>core_id</code></td></tr>
+    <tr><td><code style="color:var(--json)">walls.json</code></td><td>vector_extract.py</td><td>Render-ready wall segments: <code>outer</code> envelope + <code>inner</code> partitions, normalised 0–1</td></tr>
+  </table>
+</div>
+
+<h2>The HTML</h2>
+<div class="card" style="border-left:3px solid var(--html)">
+  <p style="color:var(--muted)">
+    <code>index.html</code> is a static Three.js page. On load it runs three
+    <code>fetch()</code>es — <code style="color:var(--graph)">graph.json</code>,
+    <code style="color:var(--json)">walls.json</code>,
+    <code style="color:var(--graph)">building.json</code> — then extrudes the normalised
+    0–1 geometry into 3D: floor slabs, inner partitions, a glass outer envelope, and glowing
+    lift/stair cores, with hover readouts and per-floor toggles. Because <b>all the geometry
+    math was done upstream</b>, the renderer just does <code>coord × SCALE</code>. Serve with
+    <code>python -m http.server 8181</code> and the same HTML visualises any building whose
+    JSON you drop beside it.
+  </p>
+</div>
+
+<p class="footnote">
+  <b>One line:</b> the schematic isn't converted to HTML — it's parsed (by vision and/or vector
+  analysis) into a normalised room + wall + portal graph in JSON, and a fixed Three.js HTML page
+  renders that JSON as a 3D model.
+</p>
+
+</div>
+</body>
+</html>
