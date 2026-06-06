@@ -1,0 +1,731 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#pageheading"
+  - generic [ref=e4]:
+    - link "Council logo Southwark Council" [ref=e8] [cursor=pointer]:
+      - /url: https://www.southwark.gov.uk/
+      - img "Council logo" [ref=e9]
+      - generic [ref=e10]: Southwark Council
+    - list [ref=e12]:
+      - listitem [ref=e13]:
+        - link "Home" [ref=e14] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/
+      - listitem [ref=e15]:
+        - text: /
+        - link "Planning, environment and building control" [ref=e16] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/planning-environment-and-building-control
+      - listitem [ref=e17]:
+        - text: /
+        - link "Planning" [ref=e18] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/planning-environment-and-building-control/planning
+      - listitem [ref=e19]: /Search for planning applications
+    - main [ref=e20]:
+      - list [ref=e22]:
+        - listitem [ref=e23] [cursor=pointer]:
+          - generic [ref=e24]: Search
+        - listitem [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: My Profile
+        - listitem [ref=e29] [cursor=pointer]:
+          - link "Saved Searches" [ref=e30]:
+            - /url: https://planning.southwark.gov.uk/online-applications/registered/savedSearch.do?action=display
+        - listitem [ref=e31] [cursor=pointer]:
+          - link "Login" [ref=e32]:
+            - /url: /online-applications/registered/userAdmin.do
+        - listitem [ref=e33] [cursor=pointer]:
+          - link "Register" [ref=e34]:
+            - /url: /online-applications/registrationWizard.do?action=start
+        - listitem [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Apply Online
+      - generic [ref=e38]:
+        - heading "Planning – Planning Application Documents" [level=1] [ref=e39]:
+          - strong [ref=e40]: Planning
+          - text: – Planning Application Documents
+        - paragraph [ref=e41]:
+          - link "Help with this page (opens in a new window)" [ref=e42] [cursor=pointer]:
+            - /url: https://planning.southwark.gov.uk/online-applications/help/pagehelp/applications.htm
+            - text: Help with this page
+            - generic [ref=e43]: (opens in a new window)
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: 19/AP/1950
+          - generic [ref=e47]: "|"
+          - generic [ref=e48]: "Variation to Condition 2 (Approved Plans) of planning permission 18/AP/1702 (which was a minor material amendment to planning permission 17/AP/2286) for the redevelopment of the site to provide new offices, homes and other commercial and leisure floorspace to allow for: Amendments to the façade, including the setting out and profile of the masonry cladding frame; Provision of a canopy at the entrance to the northern residential lobby; Changes to the amenity deck covering the parking drop-off, including being 'greened' with trailing foliage; Amendments to the entrance locations - the north and south elevation entrances remain in similar positions and a new retail entrance to the western elevation; Amendments to the internal layouts of the residential units; Provision of resident amenity space at ground floor mezzanine level and level 21 to provide a total of 717.9m2 total residents' amenity; Minor adjustment by 300mm to the east and west set-back elevations; Minor adjustment by 540mm above level 21 on the north set back elevation; and Details of the proposed landscape design around Ludgate House Block A, Ludgate House Block B and Ludgate House Block C."
+          - generic [ref=e49]: "|"
+          - generic [ref=e50]: Sampson House 64 Hopton Street SE1 9JH & Ludgate House 245 Blackfriars Road SE1 & Railway Arches.
+          - generic [ref=e51]: Major - GRANTED
+        - list [ref=e53]:
+          - listitem:
+            - link "Back to search results" [ref=e54] [cursor=pointer]:
+              - /url: /online-applications/searchResultsBack.do?action=back
+          - listitem [ref=e55]:
+            - button "Track item icon" [ref=e57] [cursor=pointer]
+          - listitem [ref=e58]:
+            - link "Print summary icon" [ref=e59] [cursor=pointer]:
+              - /url: /online-applications/applicationDetails.do?activeTab=printPreview&keyVal=ZZZV0JKBWR656
+              - img "Print summary icon" [ref=e60]
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - generic [ref=e63]: 
+            - generic [ref=e64]:
+              - generic [ref=e65]: Received
+              - generic [ref=e66]: Mon 01 Jul 2019
+          - generic [ref=e67]:
+            - generic [ref=e68]: 
+            - generic [ref=e69]:
+              - generic [ref=e70]: Validated
+              - generic [ref=e71]: Tue 02 Jul 2019
+          - generic [ref=e72]:
+            - generic [ref=e73]: 
+            - generic [ref=e75]: Consultation
+          - generic [ref=e76]:
+            - generic [ref=e77]: 
+            - generic [ref=e79]: Recommendation and/or Committee
+          - generic [ref=e80]:
+            - generic [ref=e81]: 
+            - generic [ref=e82]:
+              - generic [ref=e83]: Decided
+              - generic [ref=e84]: Fri 20 Dec 2019
+        - list [ref=e85]:
+          - listitem [ref=e86]:
+            - link "Details" [ref=e87] [cursor=pointer]:
+              - /url: /online-applications/applicationDetails.do?activeTab=summary&keyVal=ZZZV0JKBWR656
+          - listitem [ref=e88]:
+            - link "Comments (0)" [ref=e89] [cursor=pointer]:
+              - /url: /online-applications/applicationDetails.do?activeTab=makeComment&keyVal=ZZZV0JKBWR656
+          - listitem [ref=e90]:
+            - link "Documents (36)" [ref=e91]:
+              - /url: /online-applications/applicationDetails.do?activeTab=documents&keyVal=ZZZV0JKBWR656
+          - listitem [ref=e92]:
+            - link "Related Cases (1)" [ref=e93] [cursor=pointer]:
+              - /url: /online-applications/applicationDetails.do?activeTab=relatedCases&keyVal=ZZZV0JKBWR656
+          - listitem [ref=e94]:
+            - link "Map" [ref=e95] [cursor=pointer]:
+              - /url: /online-applications/applicationDetails.do?activeTab=map&keyVal=ZZZV0JKBWR656
+        - generic [ref=e96]:
+          - generic [ref=e98]:
+            - text: "Filter By:"
+            - combobox "Filter By:" [ref=e99]:
+              - option "Document Type" [selected]
+              - option "Description"
+            - generic [ref=e100]:
+              - text: "Document Type:"
+              - combobox "Document Type:" [ref=e101]:
+                - option "Show All" [selected]
+                - option "Section 106 - Legal Agreements"
+                - option "Design and Access statement"
+                - option "Environmental statement"
+                - option "Decision - Officer Report"
+                - option "Plan - General"
+                - option "Decision - Notice"
+            - button "Apply" [ref=e103] [cursor=pointer]
+          - paragraph [ref=e104]: You can select up to 25 documents to download in one archive file at a time.
+          - generic [ref=e105]:
+            - table "Documents" [ref=e106]:
+              - rowgroup [ref=e107]:
+                - row "Date Published Document Type Measure Drawing Number Description View" [ref=e108]:
+                  - columnheader [ref=e109]
+                  - columnheader "Date Published" [ref=e110]:
+                    - link "Date Published" [ref=e111] [cursor=pointer]:
+                      - /url: /online-applications/applicationDetails.do?activeTab=documents&keyVal=ZZZV0JKBWR656&documentOrdering.orderBy=date&documentOrdering.orderDirection=ascending
+                  - columnheader "Document Type" [ref=e112]:
+                    - link "Document Type" [ref=e113] [cursor=pointer]:
+                      - /url: /online-applications/applicationDetails.do?activeTab=documents&keyVal=ZZZV0JKBWR656&documentOrdering.orderBy=documentType&documentOrdering.orderDirection=ascending
+                  - columnheader "Measure" [ref=e114]
+                  - columnheader "Drawing Number" [ref=e115]:
+                    - link "Drawing Number" [ref=e116] [cursor=pointer]:
+                      - /url: /online-applications/applicationDetails.do?activeTab=documents&keyVal=ZZZV0JKBWR656&documentOrdering.orderBy=drawingNumber&documentOrdering.orderDirection=ascending
+                  - columnheader "Description" [ref=e117]:
+                    - link "Description" [ref=e118] [cursor=pointer]:
+                      - /url: /online-applications/applicationDetails.do?activeTab=documents&keyVal=ZZZV0JKBWR656&documentOrdering.orderBy=description&documentOrdering.orderDirection=ascending
+                  - columnheader "View" [ref=e119]
+                - row "Select this document 06 Mar 2020 Section 106 - Legal Agreements Measure document icon DEED OF VARIATION (4TH) View document icon" [ref=e120]:
+                  - cell "Select this document" [ref=e121]:
+                    - generic [ref=e122]: Select this document
+                    - checkbox "Select this document" [ref=e123]
+                  - cell "06 Mar 2020" [ref=e124]
+                  - cell "Section 106 - Legal Agreements" [ref=e125]
+                  - cell "Measure document icon" [ref=e126]:
+                    - generic "Cannot measure document" [ref=e127]:
+                      - img "Measure document icon" [ref=e128]
+                  - cell [ref=e129]
+                  - cell "DEED OF VARIATION (4TH)" [ref=e130]
+                  - cell "View document icon" [ref=e131]:
+                    - link "View document icon" [ref=e132] [cursor=pointer]:
+                      - /url: /online-applications/files/2FA11B1C3174CAAB97E2EBE39F41FFD7/pdf/19_AP_1950-DEED_OF_VARIATION__4TH_-850995.pdf
+                      - img "View document icon" [ref=e133]
+                - row "Select this document 20 Dec 2019 Decision - Notice Measure document icon GRANT VARIATION/MINOR MATERIAL AMENDMENT View document icon" [ref=e134]:
+                  - cell "Select this document" [ref=e135]:
+                    - generic [ref=e136]: Select this document
+                    - checkbox "Select this document" [ref=e137]
+                  - cell "20 Dec 2019" [ref=e138]
+                  - cell "Decision - Notice" [ref=e139]
+                  - cell "Measure document icon" [ref=e140]:
+                    - link "Measure document icon" [ref=e141] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE37wqLNyO_cGhEl4NcP-j9XFqxEoxCX_bDg
+                      - img "Measure document icon" [ref=e142]
+                  - cell [ref=e143]
+                  - cell "GRANT VARIATION/MINOR MATERIAL AMENDMENT" [ref=e144]
+                  - cell "View document icon" [ref=e145]:
+                    - link "View document icon" [ref=e146] [cursor=pointer]:
+                      - /url: /online-applications/files/92FA4AECF079D59CE1F46AD251DEA804/pdf/19_AP_1950-GRANT_VARIATION_MINOR_MATERIAL_AMENDMENT-827998.pdf
+                      - img "View document icon" [ref=e147]
+                - row "Select this document 20 Dec 2019 Decision - Officer Report Measure document icon OFFICER REPORT View document icon" [ref=e148]:
+                  - cell "Select this document" [ref=e149]:
+                    - generic [ref=e150]: Select this document
+                    - checkbox "Select this document" [ref=e151]
+                  - cell "20 Dec 2019" [ref=e152]
+                  - cell "Decision - Officer Report" [ref=e153]
+                  - cell "Measure document icon" [ref=e154]:
+                    - link "Measure document icon" [ref=e155] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE37wqLNyO_cGh7R196ndDw3RkQvaWY-Felg
+                      - img "Measure document icon" [ref=e156]
+                  - cell [ref=e157]
+                  - cell "OFFICER REPORT" [ref=e158]
+                  - cell "View document icon" [ref=e159]:
+                    - link "View document icon" [ref=e160] [cursor=pointer]:
+                      - /url: /online-applications/files/A97CF1E026BD6EF419EEAE665BE441AB/pdf/19_AP_1950-OFFICER_REPORT-827999.pdf
+                      - img "View document icon" [ref=e161]
+                - row "Select this document 02 Jul 2019 Design and Access statement Measure document icon ADDENDUM View document icon" [ref=e162]:
+                  - cell "Select this document" [ref=e163]:
+                    - generic [ref=e164]: Select this document
+                    - checkbox "Select this document" [ref=e165]
+                  - cell "02 Jul 2019" [ref=e166]
+                  - cell "Design and Access statement" [ref=e167]
+                  - cell "Measure document icon" [ref=e168]:
+                    - generic "Cannot measure document" [ref=e169]:
+                      - img "Measure document icon" [ref=e170]
+                  - cell [ref=e171]
+                  - cell "ADDENDUM" [ref=e172]
+                  - cell "View document icon" [ref=e173]:
+                    - link "View document icon" [ref=e174] [cursor=pointer]:
+                      - /url: /online-applications/files/2492EA14CCBA0479FB268DC872F30E65/pdf/19_AP_1950-ADDENDUM-2753205.pdf
+                      - img "View document icon" [ref=e175]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-PLN-1022 REV 6 - LEVEL 22 PLAN View document icon" [ref=e176]:
+                  - cell "Select this document" [ref=e177]:
+                    - generic [ref=e178]: Select this document
+                    - checkbox "Select this document" [ref=e179]
+                  - cell "01 Jan 1900" [ref=e180]
+                  - cell "Plan - General" [ref=e181]
+                  - cell "Measure document icon" [ref=e182]:
+                    - link "Measure document icon" [ref=e183] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE39sZZ9FYXkkkLUFamfKuCS8XS_XohhvoVQ
+                      - img "Measure document icon" [ref=e184]
+                  - cell [ref=e185]
+                  - cell "1370-A-PLN-1022 REV 6 - LEVEL 22 PLAN" [ref=e186]
+                  - cell "View document icon" [ref=e187]:
+                    - link "View document icon" [ref=e188] [cursor=pointer]:
+                      - /url: /online-applications/files/C5D58A32FE3CF31712ADBC930E98E88F/pdf/19_AP_1950-1370-A-PLN-1022_REV_6_-_LEVEL_22_PLAN-2288409.pdf
+                      - img "View document icon" [ref=e189]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL110G - LEVELS 00 G FLOORPLATE DRAWING View document icon" [ref=e190]:
+                  - cell "Select this document" [ref=e191]:
+                    - generic [ref=e192]: Select this document
+                    - checkbox "Select this document" [ref=e193]
+                  - cell "01 Jan 1900" [ref=e194]
+                  - cell "Plan - General" [ref=e195]
+                  - cell "Measure document icon" [ref=e196]:
+                    - link "Measure document icon" [ref=e197] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3__S7ZxY7GN7LmP-GTsuF0vEFbowzbeL5g
+                      - img "Measure document icon" [ref=e198]
+                  - cell [ref=e199]
+                  - cell "PL110G - LEVELS 00 G FLOORPLATE DRAWING" [ref=e200]
+                  - cell "View document icon" [ref=e201]:
+                    - link "View document icon" [ref=e202] [cursor=pointer]:
+                      - /url: /online-applications/files/6D97282DFFCFF090F82C190E47E457FA/pdf/19_AP_1950-PL110G_-_LEVELS_00_G_FLOORPLATE_DRAWING-2319914.pdf
+                      - img "View document icon" [ref=e203]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1147 - LEVELS 47 FLOORPLATE DRAWING View document icon" [ref=e204]:
+                  - cell "Select this document" [ref=e205]:
+                    - generic [ref=e206]: Select this document
+                    - checkbox "Select this document" [ref=e207]
+                  - cell "01 Jan 1900" [ref=e208]
+                  - cell "Plan - General" [ref=e209]
+                  - cell "Measure document icon" [ref=e210]:
+                    - link "Measure document icon" [ref=e211] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE30CnTzpq0XVwvPCchXLkt4Yq87LcJlMMig
+                      - img "Measure document icon" [ref=e212]
+                  - cell [ref=e213]
+                  - cell "PL1147 - LEVELS 47 FLOORPLATE DRAWING" [ref=e214]
+                  - cell "View document icon" [ref=e215]:
+                    - link "View document icon" [ref=e216] [cursor=pointer]:
+                      - /url: /online-applications/files/330707CF201AAC50659571DBA1F05637/pdf/19_AP_1950-PL1147_-_LEVELS_47_FLOORPLATE_DRAWING-2351376.pdf
+                      - img "View document icon" [ref=e217]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-PLN-1001 REV 6 - LEVEL O1 PLAN View document icon" [ref=e218]:
+                  - cell "Select this document" [ref=e219]:
+                    - generic [ref=e220]: Select this document
+                    - checkbox "Select this document" [ref=e221]
+                  - cell "01 Jan 1900" [ref=e222]
+                  - cell "Plan - General" [ref=e223]
+                  - cell "Measure document icon" [ref=e224]:
+                    - link "Measure document icon" [ref=e225] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3weCWR9mpm8K5TOc3DylbZO4j43FiPlF_w
+                      - img "Measure document icon" [ref=e226]
+                  - cell [ref=e227]
+                  - cell "1370-A-PLN-1001 REV 6 - LEVEL O1 PLAN" [ref=e228]
+                  - cell "View document icon" [ref=e229]:
+                    - link "View document icon" [ref=e230] [cursor=pointer]:
+                      - /url: /online-applications/files/23DD6B29078EB14E5DE495050680DD36/pdf/19_AP_1950-1370-A-PLN-1001_REV_6_-_LEVEL_O1_PLAN-2394722.pdf
+                      - img "View document icon" [ref=e231]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-PLP-BY2-ZZ-DRG-A-2100- ELEVATIONS NORTH & WEST View document icon" [ref=e232]:
+                  - cell "Select this document" [ref=e233]:
+                    - generic [ref=e234]: Select this document
+                    - checkbox "Select this document" [ref=e235]
+                  - cell "01 Jan 1900" [ref=e236]
+                  - cell "Plan - General" [ref=e237]
+                  - cell "Measure document icon" [ref=e238]:
+                    - link "Measure document icon" [ref=e239] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3698ETM_maAxQLGgsPx3AC8E3WWh8Nv2Qg
+                      - img "Measure document icon" [ref=e240]
+                  - cell [ref=e241]
+                  - cell "1370-PLP-BY2-ZZ-DRG-A-2100- ELEVATIONS NORTH & WEST" [ref=e242]
+                  - cell "View document icon" [ref=e243]:
+                    - link "View document icon" [ref=e244] [cursor=pointer]:
+                      - /url: /online-applications/files/3C8C53494766F50B5C40E7F91B3D865E/pdf/19_AP_1950-1370-PLP-BY2-ZZ-DRG-A-2100-_ELEVATIONS_NORTH___WEST-2428317.pdf
+                      - img "View document icon" [ref=e245]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-PLN-1000 REV 6 - LOWER GROUND FLOOR PLAN View document icon" [ref=e246]:
+                  - cell "Select this document" [ref=e247]:
+                    - generic [ref=e248]: Select this document
+                    - checkbox "Select this document" [ref=e249]
+                  - cell "01 Jan 1900" [ref=e250]
+                  - cell "Plan - General" [ref=e251]
+                  - cell "Measure document icon" [ref=e252]:
+                    - link "Measure document icon" [ref=e253] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE36X4xred7DcZt8XWaaQLNcD-Cow45HSBTQ
+                      - img "Measure document icon" [ref=e254]
+                  - cell [ref=e255]
+                  - cell "1370-A-PLN-1000 REV 6 - LOWER GROUND FLOOR PLAN" [ref=e256]
+                  - cell "View document icon" [ref=e257]:
+                    - link "View document icon" [ref=e258] [cursor=pointer]:
+                      - /url: /online-applications/files/860FAFF98693087CA766C3F60C38E7F7/pdf/19_AP_1950-1370-A-PLN-1000_REV_6_-_LOWER_GROUND_FLOOR_PLAN-2472784.pdf
+                      - img "View document icon" [ref=e259]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1122 - LEVELS 22 FLOORPLATE DRAWING View document icon" [ref=e260]:
+                  - cell "Select this document" [ref=e261]:
+                    - generic [ref=e262]: Select this document
+                    - checkbox "Select this document" [ref=e263]
+                  - cell "01 Jan 1900" [ref=e264]
+                  - cell "Plan - General" [ref=e265]
+                  - cell "Measure document icon" [ref=e266]:
+                    - link "Measure document icon" [ref=e267] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE30CUL0rwVY0QmihuLsf2FwfD8QkacPytoQ
+                      - img "Measure document icon" [ref=e268]
+                  - cell [ref=e269]
+                  - cell "PL1122 - LEVELS 22 FLOORPLATE DRAWING" [ref=e270]
+                  - cell "View document icon" [ref=e271]:
+                    - link "View document icon" [ref=e272] [cursor=pointer]:
+                      - /url: /online-applications/files/887BB72491A3A912F8A83BAD0646A7E5/pdf/19_AP_1950-PL1122_-_LEVELS_22_FLOORPLATE_DRAWING-2560023.pdf
+                      - img "View document icon" [ref=e273]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-ELE-2101 REV 4 - NORTH ELEVATION View document icon" [ref=e274]:
+                  - cell "Select this document" [ref=e275]:
+                    - generic [ref=e276]: Select this document
+                    - checkbox "Select this document" [ref=e277]
+                  - cell "01 Jan 1900" [ref=e278]
+                  - cell "Plan - General" [ref=e279]
+                  - cell "Measure document icon" [ref=e280]:
+                    - link "Measure document icon" [ref=e281] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3-xPM88rVdi65_eT2UOpclyHzFr_U2pqQg
+                      - img "Measure document icon" [ref=e282]
+                  - cell [ref=e283]
+                  - cell "1370-A-ELE-2101 REV 4 - NORTH ELEVATION" [ref=e284]
+                  - cell "View document icon" [ref=e285]:
+                    - link "View document icon" [ref=e286] [cursor=pointer]:
+                      - /url: /online-applications/files/CE3B49BC4E3A3A5F21FC6731FEE97D7E/pdf/19_AP_1950-1370-A-ELE-2101_REV_4_-_NORTH_ELEVATION-2606484.pdf
+                      - img "View document icon" [ref=e287]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL110M - LEVELS 00 M FLOORPLATE DRAWING View document icon" [ref=e288]:
+                  - cell "Select this document" [ref=e289]:
+                    - generic [ref=e290]: Select this document
+                    - checkbox "Select this document" [ref=e291]
+                  - cell "01 Jan 1900" [ref=e292]
+                  - cell "Plan - General" [ref=e293]
+                  - cell "Measure document icon" [ref=e294]:
+                    - link "Measure document icon" [ref=e295] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE32DX8II3iQtlfktxKpLJpQj0hkkZYzxvUw
+                      - img "Measure document icon" [ref=e296]
+                  - cell [ref=e297]
+                  - cell "PL110M - LEVELS 00 M FLOORPLATE DRAWING" [ref=e298]
+                  - cell "View document icon" [ref=e299]:
+                    - link "View document icon" [ref=e300] [cursor=pointer]:
+                      - /url: /online-applications/files/8E94EC69C3E25AD7D5E2C458CDB741C3/pdf/19_AP_1950-PL110M_-_LEVELS_00_M_FLOORPLATE_DRAWING-2679820.pdf
+                      - img "View document icon" [ref=e301]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-SEC-3101 REV 3 - SECTION BB (SOUTH-NORTH) SAMPSON HOUSE SITE View document icon" [ref=e302]:
+                  - cell "Select this document" [ref=e303]:
+                    - generic [ref=e304]: Select this document
+                    - checkbox "Select this document" [ref=e305]
+                  - cell "01 Jan 1900" [ref=e306]
+                  - cell "Plan - General" [ref=e307]
+                  - cell "Measure document icon" [ref=e308]:
+                    - link "Measure document icon" [ref=e309] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE30k9Ud-eOqI-AoUh3k5YMMn0pI0B6dMnQg
+                      - img "Measure document icon" [ref=e310]
+                  - cell [ref=e311]
+                  - cell "1370-A-SEC-3101 REV 3 - SECTION BB (SOUTH-NORTH) SAMPSON HOUSE SITE" [ref=e312]
+                  - cell "View document icon" [ref=e313]:
+                    - link "View document icon" [ref=e314] [cursor=pointer]:
+                      - /url: /online-applications/files/ACE88E0108C312E430376D5C1925D6BA/pdf/19_AP_1950-1370-A-SEC-3101_REV_3_-_SECTION_BB__SOUTH-NORTH__SAMPSON_HOUSE_SITE-2686859.pdf
+                      - img "View document icon" [ref=e315]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1106 - LEVELS 06-15 FLOORPLATE DRAWING View document icon" [ref=e316]:
+                  - cell "Select this document" [ref=e317]:
+                    - generic [ref=e318]: Select this document
+                    - checkbox "Select this document" [ref=e319]
+                  - cell "01 Jan 1900" [ref=e320]
+                  - cell "Plan - General" [ref=e321]
+                  - cell "Measure document icon" [ref=e322]:
+                    - link "Measure document icon" [ref=e323] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3wtIMnzhXXo7R9IBtbGTSSZcYmp7Jq7LSA
+                      - img "Measure document icon" [ref=e324]
+                  - cell [ref=e325]
+                  - cell "PL1106 - LEVELS 06-15 FLOORPLATE DRAWING" [ref=e326]
+                  - cell "View document icon" [ref=e327]:
+                    - link "View document icon" [ref=e328] [cursor=pointer]:
+                      - /url: /online-applications/files/CE3056ADB8F9C004ECF760BCE41F86F1/pdf/19_AP_1950-PL1106_-_LEVELS_06-15_FLOORPLATE_DRAWING-2692353.pdf
+                      - img "View document icon" [ref=e329]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-ELE-2102 REV 4 - SOUTH ELEVATION View document icon" [ref=e330]:
+                  - cell "Select this document" [ref=e331]:
+                    - generic [ref=e332]: Select this document
+                    - checkbox "Select this document" [ref=e333]
+                  - cell "01 Jan 1900" [ref=e334]
+                  - cell "Plan - General" [ref=e335]
+                  - cell "Measure document icon" [ref=e336]:
+                    - link "Measure document icon" [ref=e337] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3wdANtQ67sNQsA9i7ScH4OdrZ1-SLx3b3g
+                      - img "Measure document icon" [ref=e338]
+                  - cell [ref=e339]
+                  - cell "1370-A-ELE-2102 REV 4 - SOUTH ELEVATION" [ref=e340]
+                  - cell "View document icon" [ref=e341]:
+                    - link "View document icon" [ref=e342] [cursor=pointer]:
+                      - /url: /online-applications/files/8AB635D5822B2110BCF4A999D188EEBA/pdf/19_AP_1950-1370-A-ELE-2102_REV_4_-_SOUTH_ELEVATION-2696352.pdf
+                      - img "View document icon" [ref=e343]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1139 - LEVEL 39 FLOORPLATE DRAWING View document icon" [ref=e344]:
+                  - cell "Select this document" [ref=e345]:
+                    - generic [ref=e346]: Select this document
+                    - checkbox "Select this document" [ref=e347]
+                  - cell "01 Jan 1900" [ref=e348]
+                  - cell "Plan - General" [ref=e349]
+                  - cell "Measure document icon" [ref=e350]:
+                    - link "Measure document icon" [ref=e351] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE37MUiTiCLCxEPHWRwEzs-9Z5ZGArwi0UBg
+                      - img "Measure document icon" [ref=e352]
+                  - cell [ref=e353]
+                  - cell "PL1139 - LEVEL 39 FLOORPLATE DRAWING" [ref=e354]
+                  - cell "View document icon" [ref=e355]:
+                    - link "View document icon" [ref=e356] [cursor=pointer]:
+                      - /url: /online-applications/files/99477A803A90ACDFC20F39CEB691E9F9/pdf/19_AP_1950-PL1139_-_LEVEL_39_FLOORPLATE_DRAWING-2708109.pdf
+                      - img "View document icon" [ref=e357]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1136 - LEVELS 36-38 FLOORPLATE DRAWING View document icon" [ref=e358]:
+                  - cell "Select this document" [ref=e359]:
+                    - generic [ref=e360]: Select this document
+                    - checkbox "Select this document" [ref=e361]
+                  - cell "01 Jan 1900" [ref=e362]
+                  - cell "Plan - General" [ref=e363]
+                  - cell "Measure document icon" [ref=e364]:
+                    - link "Measure document icon" [ref=e365] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE38s_GAXBvzyarvPkOKNvkoAZvyIZO6C5CQ
+                      - img "Measure document icon" [ref=e366]
+                  - cell [ref=e367]
+                  - cell "PL1136 - LEVELS 36-38 FLOORPLATE DRAWING" [ref=e368]
+                  - cell "View document icon" [ref=e369]:
+                    - link "View document icon" [ref=e370] [cursor=pointer]:
+                      - /url: /online-applications/files/E55A9D2E3E583ECB0656CF035A09327E/pdf/19_AP_1950-PL1136_-_LEVELS_36-38_FLOORPLATE_DRAWING-2709142.pdf
+                      - img "View document icon" [ref=e371]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-PLN-1049 REV 6 - LEVEL ROOF PLAN View document icon" [ref=e372]:
+                  - cell "Select this document" [ref=e373]:
+                    - generic [ref=e374]: Select this document
+                    - checkbox "Select this document" [ref=e375]
+                  - cell "01 Jan 1900" [ref=e376]
+                  - cell "Plan - General" [ref=e377]
+                  - cell "Measure document icon" [ref=e378]:
+                    - link "Measure document icon" [ref=e379] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE32we1Rxwinsa3R19_5emQsVBOedU5YHiKw
+                      - img "Measure document icon" [ref=e380]
+                  - cell [ref=e381]
+                  - cell "1370-A-PLN-1049 REV 6 - LEVEL ROOF PLAN" [ref=e382]
+                  - cell "View document icon" [ref=e383]:
+                    - link "View document icon" [ref=e384] [cursor=pointer]:
+                      - /url: /online-applications/files/B88C23097AB89DF37D2B5A59C5FCA0EA/pdf/19_AP_1950-1370-A-PLN-1049_REV_6_-_LEVEL_ROOF_PLAN-2716461.pdf
+                      - img "View document icon" [ref=e385]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1123 - LEVELS 23-31 FLOORPLATE DRAWING View document icon" [ref=e386]:
+                  - cell "Select this document" [ref=e387]:
+                    - generic [ref=e388]: Select this document
+                    - checkbox "Select this document" [ref=e389]
+                  - cell "01 Jan 1900" [ref=e390]
+                  - cell "Plan - General" [ref=e391]
+                  - cell "Measure document icon" [ref=e392]:
+                    - link "Measure document icon" [ref=e393] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE34XzAY_IupfcXWUt56ArJ-S14voEPvbvgw
+                      - img "Measure document icon" [ref=e394]
+                  - cell [ref=e395]
+                  - cell "PL1123 - LEVELS 23-31 FLOORPLATE DRAWING" [ref=e396]
+                  - cell "View document icon" [ref=e397]:
+                    - link "View document icon" [ref=e398] [cursor=pointer]:
+                      - /url: /online-applications/files/03BA216493349FD674F0F47ADE243962/pdf/19_AP_1950-PL1123_-_LEVELS_23-31_FLOORPLATE_DRAWING-2842629.pdf
+                      - img "View document icon" [ref=e399]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1116 - LEVELS 16-20 FLOORPLATE DRAWING View document icon" [ref=e400]:
+                  - cell "Select this document" [ref=e401]:
+                    - generic [ref=e402]: Select this document
+                    - checkbox "Select this document" [ref=e403]
+                  - cell "01 Jan 1900" [ref=e404]
+                  - cell "Plan - General" [ref=e405]
+                  - cell "Measure document icon" [ref=e406]:
+                    - link "Measure document icon" [ref=e407] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE36Hm4QUfSNU8XDChS8m3oGoOgyAw_wgHQA
+                      - img "Measure document icon" [ref=e408]
+                  - cell [ref=e409]
+                  - cell "PL1116 - LEVELS 16-20 FLOORPLATE DRAWING" [ref=e410]
+                  - cell "View document icon" [ref=e411]:
+                    - link "View document icon" [ref=e412] [cursor=pointer]:
+                      - /url: /online-applications/files/8DEB74458D64BCBD285114475952D564/pdf/19_AP_1950-PL1116_-_LEVELS_16-20_FLOORPLATE_DRAWING-2872719.pdf
+                      - img "View document icon" [ref=e413]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-PLN-1004 REV 6 - LEVEL 04 PLAN View document icon" [ref=e414]:
+                  - cell "Select this document" [ref=e415]:
+                    - generic [ref=e416]: Select this document
+                    - checkbox "Select this document" [ref=e417]
+                  - cell "01 Jan 1900" [ref=e418]
+                  - cell "Plan - General" [ref=e419]
+                  - cell "Measure document icon" [ref=e420]:
+                    - link "Measure document icon" [ref=e421] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3z3QD0h2u5pibudltN-yKrzu3E8ZmyDnsg
+                      - img "Measure document icon" [ref=e422]
+                  - cell [ref=e423]
+                  - cell "1370-A-PLN-1004 REV 6 - LEVEL 04 PLAN" [ref=e424]
+                  - cell "View document icon" [ref=e425]:
+                    - link "View document icon" [ref=e426] [cursor=pointer]:
+                      - /url: /online-applications/files/BCE574ECE4B6F2E6622FF25A745A4467/pdf/19_AP_1950-1370-A-PLN-1004_REV_6_-_LEVEL_04_PLAN-2934270.pdf
+                      - img "View document icon" [ref=e427]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-SEC-3100 REV 6 - SECTION AA (NORTH-SOUTH) LUDGATE HOUSE SITE View document icon" [ref=e428]:
+                  - cell "Select this document" [ref=e429]:
+                    - generic [ref=e430]: Select this document
+                    - checkbox "Select this document" [ref=e431]
+                  - cell "01 Jan 1900" [ref=e432]
+                  - cell "Plan - General" [ref=e433]
+                  - cell "Measure document icon" [ref=e434]:
+                    - link "Measure document icon" [ref=e435] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3-1pe2DHG1vUTIglh4cynR8zImuSjCpjFQ
+                      - img "Measure document icon" [ref=e436]
+                  - cell [ref=e437]
+                  - cell "1370-A-SEC-3100 REV 6 - SECTION AA (NORTH-SOUTH) LUDGATE HOUSE SITE" [ref=e438]
+                  - cell "View document icon" [ref=e439]:
+                    - link "View document icon" [ref=e440] [cursor=pointer]:
+                      - /url: /online-applications/files/42EDC7A422BAA903C29162EE7BD01161/pdf/19_AP_1950-1370-A-SEC-3100_REV_6_-_SECTION_AA__NORTH-SOUTH__LUDGATE_HOUSE_SITE-2936742.pdf
+                      - img "View document icon" [ref=e441]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1140 - LEVELS 40-45 FLOORPLATE DRAWING View document icon" [ref=e442]:
+                  - cell "Select this document" [ref=e443]:
+                    - generic [ref=e444]: Select this document
+                    - checkbox "Select this document" [ref=e445]
+                  - cell "01 Jan 1900" [ref=e446]
+                  - cell "Plan - General" [ref=e447]
+                  - cell "Measure document icon" [ref=e448]:
+                    - link "Measure document icon" [ref=e449] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE31axlVD-tOE7QecHM3TyQXGH9VdPDOuebg
+                      - img "Measure document icon" [ref=e450]
+                  - cell [ref=e451]
+                  - cell "PL1140 - LEVELS 40-45 FLOORPLATE DRAWING" [ref=e452]
+                  - cell "View document icon" [ref=e453]:
+                    - link "View document icon" [ref=e454] [cursor=pointer]:
+                      - /url: /online-applications/files/A913D9F48BC4DDDBBBD328478AE8F022/pdf/19_AP_1950-PL1140_-_LEVELS_40-45_FLOORPLATE_DRAWING-2975376.pdf
+                      - img "View document icon" [ref=e455]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1101 - LEVELS 01 FLOORPLATE DRAWING View document icon" [ref=e456]:
+                  - cell "Select this document" [ref=e457]:
+                    - generic [ref=e458]: Select this document
+                    - checkbox "Select this document" [ref=e459]
+                  - cell "01 Jan 1900" [ref=e460]
+                  - cell "Plan - General" [ref=e461]
+                  - cell "Measure document icon" [ref=e462]:
+                    - link "Measure document icon" [ref=e463] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE33UhRCFzIorExRKfEAWbP9mV9H_EtwHAlQ
+                      - img "Measure document icon" [ref=e464]
+                  - cell [ref=e465]
+                  - cell "PL1101 - LEVELS 01 FLOORPLATE DRAWING" [ref=e466]
+                  - cell "View document icon" [ref=e467]:
+                    - link "View document icon" [ref=e468] [cursor=pointer]:
+                      - /url: /online-applications/files/35B6629E564C77FACA4679732036953F/pdf/19_AP_1950-PL1101_-_LEVELS_01_FLOORPLATE_DRAWING-3063638.pdf
+                      - img "View document icon" [ref=e469]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-DTL-5111 REV 2 - LUDGATE HOUSE B FACADE TYPE A View document icon" [ref=e470]:
+                  - cell "Select this document" [ref=e471]:
+                    - generic [ref=e472]: Select this document
+                    - checkbox "Select this document" [ref=e473]
+                  - cell "01 Jan 1900" [ref=e474]
+                  - cell "Plan - General" [ref=e475]
+                  - cell "Measure document icon" [ref=e476]:
+                    - link "Measure document icon" [ref=e477] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3-qtrs4qGrb7H9ZJqi7p4WLau43iCQUnNw
+                      - img "Measure document icon" [ref=e478]
+                  - cell [ref=e479]
+                  - cell "1370-A-DTL-5111 REV 2 - LUDGATE HOUSE B FACADE TYPE A" [ref=e480]
+                  - cell "View document icon" [ref=e481]:
+                    - link "View document icon" [ref=e482] [cursor=pointer]:
+                      - /url: /online-applications/files/03AECE81AECDFEE7C5CE4E4D3A6C7475/pdf/19_AP_1950-1370-A-DTL-5111_REV_2_-_LUDGATE_HOUSE_B_FACADE_TYPE_A-3070907.pdf
+                      - img "View document icon" [ref=e483]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-PLP-BY2-ZZ-DRG-A-2500 REV C - SECTIONS WEST-EAST & NORTH-SOUTH View document icon" [ref=e484]:
+                  - cell "Select this document" [ref=e485]:
+                    - generic [ref=e486]: Select this document
+                    - checkbox "Select this document" [ref=e487]
+                  - cell "01 Jan 1900" [ref=e488]
+                  - cell "Plan - General" [ref=e489]
+                  - cell "Measure document icon" [ref=e490]:
+                    - link "Measure document icon" [ref=e491] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE39dJFzt8o12bRFqkFYVYlqNbi_96AG2Lkg
+                      - img "Measure document icon" [ref=e492]
+                  - cell [ref=e493]
+                  - cell "1370-PLP-BY2-ZZ-DRG-A-2500 REV C - SECTIONS WEST-EAST & NORTH-SOUTH" [ref=e494]
+                  - cell "View document icon" [ref=e495]:
+                    - link "View document icon" [ref=e496] [cursor=pointer]:
+                      - /url: /online-applications/files/2BA22C0257FDB00A7AC5DA41733D3FA5/pdf/19_AP_1950-1370-PLP-BY2-ZZ-DRG-A-2500_REV_C_-_SECTIONS_WEST-EAST___NORTH-SOUTH-3074802.pdf
+                      - img "View document icon" [ref=e497]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1132 - LEVELS 32 - 35 FLOORPLATE DRAWING View document icon" [ref=e498]:
+                  - cell "Select this document" [ref=e499]:
+                    - generic [ref=e500]: Select this document
+                    - checkbox "Select this document" [ref=e501]
+                  - cell "01 Jan 1900" [ref=e502]
+                  - cell "Plan - General" [ref=e503]
+                  - cell "Measure document icon" [ref=e504]:
+                    - link "Measure document icon" [ref=e505] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE315ugnYA-I9waz7fBOTcp9CcF7Qtrzx0Zg
+                      - img "Measure document icon" [ref=e506]
+                  - cell [ref=e507]
+                  - cell "PL1132 - LEVELS 32 - 35 FLOORPLATE DRAWING" [ref=e508]
+                  - cell "View document icon" [ref=e509]:
+                    - link "View document icon" [ref=e510] [cursor=pointer]:
+                      - /url: /online-applications/files/62F84230D7C06C38D3AD6D0BE6D1AB43/pdf/19_AP_1950-PL1132_-_LEVELS_32_-_35_FLOORPLATE_DRAWING-3082375.pdf
+                      - img "View document icon" [ref=e511]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-ELE-2103 REV 5 - WEST ELEVATION View document icon" [ref=e512]:
+                  - cell "Select this document" [ref=e513]:
+                    - generic [ref=e514]: Select this document
+                    - checkbox "Select this document" [ref=e515]
+                  - cell "01 Jan 1900" [ref=e516]
+                  - cell "Plan - General" [ref=e517]
+                  - cell "Measure document icon" [ref=e518]:
+                    - link "Measure document icon" [ref=e519] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE38KkwqYZxAvhlOJdBBeAegK4HLPfUxSbgQ
+                      - img "Measure document icon" [ref=e520]
+                  - cell [ref=e521]
+                  - cell "1370-A-ELE-2103 REV 5 - WEST ELEVATION" [ref=e522]
+                  - cell "View document icon" [ref=e523]:
+                    - link "View document icon" [ref=e524] [cursor=pointer]:
+                      - /url: /online-applications/files/0171812599A10772DA11D35ACD998688/pdf/19_AP_1950-1370-A-ELE-2103_REV_5_-_WEST_ELEVATION-3099579.pdf
+                      - img "View document icon" [ref=e525]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-ELE-2104 REV 4 - EAST ELEVATION View document icon" [ref=e526]:
+                  - cell "Select this document" [ref=e527]:
+                    - generic [ref=e528]: Select this document
+                    - checkbox "Select this document" [ref=e529]
+                  - cell "01 Jan 1900" [ref=e530]
+                  - cell "Plan - General" [ref=e531]
+                  - cell "Measure document icon" [ref=e532]:
+                    - link "Measure document icon" [ref=e533] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE35lkc2-y0Q1B5_eYpy2ARdpphCeL7StbPg
+                      - img "Measure document icon" [ref=e534]
+                  - cell [ref=e535]
+                  - cell "1370-A-ELE-2104 REV 4 - EAST ELEVATION" [ref=e536]
+                  - cell "View document icon" [ref=e537]:
+                    - link "View document icon" [ref=e538] [cursor=pointer]:
+                      - /url: /online-applications/files/C2BA578B9D8E2513940CA6EA5D2E8414/pdf/19_AP_1950-1370-A-ELE-2104_REV_4_-_EAST_ELEVATION-3116441.pdf
+                      - img "View document icon" [ref=e539]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1146 - LEVEL 46 FLOORPLATE DRAWING View document icon" [ref=e540]:
+                  - cell "Select this document" [ref=e541]:
+                    - generic [ref=e542]: Select this document
+                    - checkbox "Select this document" [ref=e543]
+                  - cell "01 Jan 1900" [ref=e544]
+                  - cell "Plan - General" [ref=e545]
+                  - cell "Measure document icon" [ref=e546]:
+                    - link "Measure document icon" [ref=e547] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE38qvcRrLxkziAh-Hyb87J2R0ao91JBJ3iw
+                      - img "Measure document icon" [ref=e548]
+                  - cell [ref=e549]
+                  - cell "PL1146 - LEVEL 46 FLOORPLATE DRAWING" [ref=e550]
+                  - cell "View document icon" [ref=e551]:
+                    - link "View document icon" [ref=e552] [cursor=pointer]:
+                      - /url: /online-applications/files/360CA3E54A8CF4BC1F6CDEEBF541F11F/pdf/19_AP_1950-PL1146_-_LEVEL_46_FLOORPLATE_DRAWING-3118736.pdf
+                      - img "View document icon" [ref=e553]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1121 - LEVELS 21 FLOORPLATE DRAWING View document icon" [ref=e554]:
+                  - cell "Select this document" [ref=e555]:
+                    - generic [ref=e556]: Select this document
+                    - checkbox "Select this document" [ref=e557]
+                  - cell "01 Jan 1900" [ref=e558]
+                  - cell "Plan - General" [ref=e559]
+                  - cell "Measure document icon" [ref=e560]:
+                    - link "Measure document icon" [ref=e561] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3-2XgenHtnrIxSWmX_GRlkdXrZ_UDtkHpg
+                      - img "Measure document icon" [ref=e562]
+                  - cell [ref=e563]
+                  - cell "PL1121 - LEVELS 21 FLOORPLATE DRAWING" [ref=e564]
+                  - cell "View document icon" [ref=e565]:
+                    - link "View document icon" [ref=e566] [cursor=pointer]:
+                      - /url: /online-applications/files/8B42F74A2041F61CEA3AC731DEE57968/pdf/19_AP_1950-PL1121_-_LEVELS_21_FLOORPLATE_DRAWING-3201805.pdf
+                      - img "View document icon" [ref=e567]
+                - row "Select this document 01 Jan 1900 Environmental statement Measure document icon EIA STATEMENT OF CONFORMITY View document icon" [ref=e568]:
+                  - cell "Select this document" [ref=e569]:
+                    - generic [ref=e570]: Select this document
+                    - checkbox "Select this document" [ref=e571]
+                  - cell "01 Jan 1900" [ref=e572]
+                  - cell "Environmental statement" [ref=e573]
+                  - cell "Measure document icon" [ref=e574]:
+                    - generic "Cannot measure document" [ref=e575]:
+                      - img "Measure document icon" [ref=e576]
+                  - cell [ref=e577]
+                  - cell "EIA STATEMENT OF CONFORMITY" [ref=e578]
+                  - cell "View document icon" [ref=e579]:
+                    - link "View document icon" [ref=e580] [cursor=pointer]:
+                      - /url: /online-applications/files/C793BCB381EDECA82638DF0702C6C950/pdf/19_AP_1950-EIA_STATEMENT_OF_CONFORMITY-3221238.pdf
+                      - img "View document icon" [ref=e581]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon PL1102 - LEVELS 02-05 FLOORPLATE DRAWING View document icon" [ref=e582]:
+                  - cell "Select this document" [ref=e583]:
+                    - generic [ref=e584]: Select this document
+                    - checkbox "Select this document" [ref=e585]
+                  - cell "01 Jan 1900" [ref=e586]
+                  - cell "Plan - General" [ref=e587]
+                  - cell "Measure document icon" [ref=e588]:
+                    - link "Measure document icon" [ref=e589] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3_rsYtQ8Q8mXoDjfvR6gCUSf2qWmyIfz-Q
+                      - img "Measure document icon" [ref=e590]
+                  - cell [ref=e591]
+                  - cell "PL1102 - LEVELS 02-05 FLOORPLATE DRAWING" [ref=e592]
+                  - cell "View document icon" [ref=e593]:
+                    - link "View document icon" [ref=e594] [cursor=pointer]:
+                      - /url: /online-applications/files/83B7EE8369EF1EFF87B3A45C0A132C89/pdf/19_AP_1950-PL1102_-_LEVELS_02-05_FLOORPLATE_DRAWING-3260774.pdf
+                      - img "View document icon" [ref=e595]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 1370-A-SEC-3104 REV 2 - SECTION EE (WEST-EAST) LH-B/VIADUCT/SH-A View document icon" [ref=e596]:
+                  - cell "Select this document" [ref=e597]:
+                    - generic [ref=e598]: Select this document
+                    - checkbox "Select this document" [ref=e599]
+                  - cell "01 Jan 1900" [ref=e600]
+                  - cell "Plan - General" [ref=e601]
+                  - cell "Measure document icon" [ref=e602]:
+                    - link "Measure document icon" [ref=e603] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE319Obq2yyiDJzwj1uuDqmxtZl4T0FawhCw
+                      - img "Measure document icon" [ref=e604]
+                  - cell [ref=e605]
+                  - cell "1370-A-SEC-3104 REV 2 - SECTION EE (WEST-EAST) LH-B/VIADUCT/SH-A" [ref=e606]
+                  - cell "View document icon" [ref=e607]:
+                    - link "View document icon" [ref=e608] [cursor=pointer]:
+                      - /url: /online-applications/files/A04C77C3ACDE3EE0035543B30BD16039/pdf/19_AP_1950-1370-A-SEC-3104_REV_2_-_SECTION_EE__WEST-EAST__LH-B_VIADUCT_SH-A-3290281.pdf
+                      - img "View document icon" [ref=e609]
+                - row "Select this document 01 Jan 1900 Plan - General Measure document icon 370-PLP-BY2-ZZ-DRG-A-2101- ELEVATIONS SOUTH & EAST View document icon" [ref=e610]:
+                  - cell "Select this document" [ref=e611]:
+                    - generic [ref=e612]: Select this document
+                    - checkbox "Select this document" [ref=e613]
+                  - cell "01 Jan 1900" [ref=e614]
+                  - cell "Plan - General" [ref=e615]
+                  - cell "Measure document icon" [ref=e616]:
+                    - link "Measure document icon" [ref=e617] [cursor=pointer]:
+                      - /url: https://planning.southwark.gov.uk/omt-server/omt.html#docKey=Q8Yp9INBrfPYM9ACDiumlbr5d5wdT0OkzRO6iNwOUaME2RDjpxjE3zIiKD8CRzgKSWkbF6ZGbOORDU9gnpsfjQ
+                      - img "Measure document icon" [ref=e618]
+                  - cell [ref=e619]
+                  - cell "370-PLP-BY2-ZZ-DRG-A-2101- ELEVATIONS SOUTH & EAST" [ref=e620]
+                  - cell "View document icon" [ref=e621]:
+                    - link "View document icon" [ref=e622] [cursor=pointer]:
+                      - /url: /online-applications/files/60392F1DA54B5B62C4393829EECB8611/pdf/19_AP_1950-370-PLP-BY2-ZZ-DRG-A-2101-_ELEVATIONS_SOUTH___EAST-3300789.pdf
+                      - img "View document icon" [ref=e623]
+            - button "Download Selected Files" [disabled] [ref=e624]
+      - paragraph [ref=e625]:
+        - link "Powered by Idox" [ref=e626] [cursor=pointer]:
+          - /url: http://www.idoxgroup.com/
+          - img "Powered by Idox" [ref=e627]
+    - list [ref=e631]:
+      - listitem [ref=e632]:
+        - link "Accessibility statement" [ref=e633] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/about-council/transparency/accessibility-statement
+      - listitem [ref=e634]:
+        - link "Branding" [ref=e635] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/branding
+      - listitem [ref=e636]:
+        - link "Cookies Policy" [ref=e637] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/about-council/transparency/freedom-information-data-protection-and-open-data/cookies-policy
+      - listitem [ref=e638]:
+        - link "Data protection and freedom of information" [ref=e639] [cursor=pointer]:
+          - /url: https://www.southwark.gov.uk/about-council/transparency/freedom-information-data-protection-and-open-data

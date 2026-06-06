@@ -1,0 +1,56 @@
+study:
+  id: residential-layout-30
+  version: 1
+  sample_count: 30
+  unit_of_analysis: anonymized_residential_plan
+  prohibit_real_world_identification: true
+  prohibit_address_storage: true
+  publish_individual_source_plans: false
+
+sources:
+  - dataset: CubiCasa5K
+    count: 10
+    sample_ids: [S01, S02, S03, S04, S05, S06, S07, S08, S09, S10]
+  - dataset: Swiss_Dwellings
+    count: 10
+    sample_ids: [S11, S12, S13, S14, S15, S16, S17, S18, S19, S20]
+  - dataset: Structured3D
+    count: 10
+    sample_ids: [S21, S22, S23, S24, S25, S26, S27, S28, S29, S30]
+
+sampling:
+  seed: 20260606
+  stratify_by:
+    - room_count_band
+    - floor_area_band
+  exclude:
+    - missing_or_unverifiable_license
+    - identifiable_address_or_coordinates
+    - invalid_room_geometry
+    - no_detectable_entrance
+    - duplicate_plan
+
+analysis:
+  graph_metrics:
+    - entrance_to_room_depth
+    - closeness
+    - betweenness
+    - connectivity
+    - route_overlap
+    - privacy_gradient
+    - dead_end_ratio
+  visibility_metrics:
+    - visual_integration
+    - entrance_isovist_area
+    - entrance_to_private_space_visibility
+  controls:
+    - floor_area
+    - room_count
+    - source_dataset
+
+outputs:
+  normalized_plans: data/processed/plans
+  sample_metrics: reports/sample-metrics.csv
+  aggregate_metrics: reports/aggregate-metrics.csv
+  aggregate_report: reports/aggregate-report.md
+
