@@ -1,0 +1,8 @@
+# Live recon observation sentences for Arbor Bankside (building #2).
+# One observation per line. Lines starting with # are ignored.
+# Fed to the extractor adapter via: run_demo.py --recon seeds/arbor_recon.txt
+At 9am a whole cluster of people just streamed in together behind one badge holder.
+There's no turnstile or speedgate in the lobby, just an open walkway past the desk.
+Visitors I watched went up in the lifts on their own, nobody escorted them.
+The reader on the barrier looks like an HID prox unit, the older 125kHz kind.
+Reception was slammed because of a tenant conference starting this morning.
