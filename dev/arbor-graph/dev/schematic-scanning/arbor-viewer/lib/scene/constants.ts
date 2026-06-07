@@ -23,9 +23,17 @@ export const DOOR_COLOR = 0xffffff;
 // Doors — a real leaf reads as warm timber against the cool partition glass.
 export const DOOR_LEAF_COLOR = 0xb07a4f;
 export const DOOR_FRAME_COLOR = 0x6e4a2f;
+// Door leaf inner panel — recessed, reads as a slightly hollow paneled door.
+export const DOOR_PANEL_COLOR = 0x3a2c1d;
 // Sanitaryware — porcelain white + brushed-metal grab rails.
 export const WC_CERAMIC_COLOR = 0xeef2f5;
 export const WC_METAL_COLOR = 0xb8c0cc;
+export const WC_SECTION_COLOR = 0x4fb6c8; // tinted floor zone marking the WC as its own section
+// Furniture / fitted items — simple representative 3D models per room kind.
+export const FURN_WOOD_COLOR = 0x8a6d4a; // desks, tables, counters
+export const FURN_FABRIC_COLOR = 0x46546e; // chairs, sofas, benches
+export const FURN_METAL_COLOR = 0x9aa3b2; // shelving, lockers, rails
+export const FURN_SCREEN_COLOR = 0x223040; // server racks, displays, machines
 // Amenity markers: male / female / accessible (DDA) so WC type reads at a glance.
 export const WC_MALE_COLOR = 0x3a78c2;
 export const WC_FEMALE_COLOR = 0xd14f8f;

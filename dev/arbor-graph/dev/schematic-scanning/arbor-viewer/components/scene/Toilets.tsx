@@ -14,6 +14,8 @@ import {
   WC_MALE_COLOR,
   WC_FEMALE_COLOR,
   WC_ACCESSIBLE_COLOR,
+  WC_SECTION_COLOR,
+  PARTITION_H,
 } from '@/lib/scene/constants';
 import { worldXZ } from '@/lib/scene/geometry';
 
@@ -62,6 +64,31 @@ export function Toilets({ graph, state, hidden, onHover, onHide }: GraphProps) {
         color: WC_METAL_COLOR,
         roughness: 0.35,
         metalness: 0.6,
+      }),
+    [],
+  );
+  // Tinted floor zone + low screen so a WC reads as its own distinct section.
+  const sectionMat = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: WC_SECTION_COLOR,
+        emissive: new THREE.Color(WC_SECTION_COLOR),
+        emissiveIntensity: 0.22,
+        transparent: true,
+        opacity: 0.3,
+        roughness: 0.4,
+        side: THREE.DoubleSide,
+      }),
+    [],
+  );
+  const screenMat = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: WC_SECTION_COLOR,
+        transparent: true,
+        opacity: 0.4,
+        roughness: 0.5,
+        side: THREE.DoubleSide,
       }),
     [],
   );
@@ -127,6 +154,17 @@ export function Toilets({ graph, state, hidden, onHover, onHide }: GraphProps) {
             onHide={onHide}
             pickable
           >
+            {/* Section zone: tinted floor tile marking the WC as its own area */}
+            <mesh position={[cx, floorY + 0.02, cz]} material={sectionMat}>
+              <boxGeometry args={[wWorld * 0.98, 0.03, dWorld * 0.98]} />
+            </mesh>
+            {/* Privacy screen along the back wall (cubicle divider) */}
+            <mesh
+              position={[cx, floorY + Math.min(PARTITION_H * 0.5, 1.1) / 2, backZ + 0.05]}
+              material={screenMat}
+            >
+              <boxGeometry args={[wWorld * 0.9, Math.min(PARTITION_H * 0.5, 1.1), 0.04]} />
+            </mesh>
             {accessible ? (
               // ── Accessible / disabled WC: centred pan with clear floor + grab rails ──
               <>
