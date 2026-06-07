@@ -1,0 +1,10 @@
+[project]
+name = "building-scanner-api"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx",            # Shodan REST + RDAP over the WireGuard tunnel
+    "python-dotenv",    # load SHODAN_API_KEY from ../../.env
+    "fastapi",          # api.py — HTTP wrapper around the scanner
+    "uvicorn[standard]",  # ASGI server for the API
+]
