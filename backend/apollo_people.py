@@ -1,0 +1,193 @@
+"""Apollo-native company roster — server-side, no browser.
+
+Apollo's People Search API (`mixed_people/api_search`) is FREE on the Professional
+plan and returns a company's full roster, but names/emails are masked there (you get
+id + first name + obfuscated last + title). The People Enrichment API
+(`people/bulk_match`) unmasks a person by their Apollo id — full name, work email,
+LinkedIn URL, phone — at 1 credit each.
+
+So this module: search (free) → rank by title → reveal the top `max_reveal` by id
+(budgeted, high-value first) → emit live. Unrevealed people stay a count only.
+
+NOTE the endpoint: it's `mixed_people/api_search`, NOT `mixed_people/search` — the
+latter is the gated internal/UI endpoint and 403s even on paid API keys.
+"""
+
+from __future__ import annotations
+
+import os
+
+import httpx
+
+API = "https://api.apollo.io/v1"
+SEARCH_PEOPLE = f"{API}/mixed_people/api_search"
+SEARCH_COMPANIES = f"{API}/mixed_companies/search"
+BULK_MATCH = f"{API}/people/bulk_match"
+
+PER_PAGE = 100  # api_search max page size
+BATCH = 10  # bulk_match max ids per call
+
+
+def _headers() -> dict:
+    return {
+        "x-api-key": os.environ.get("APOLLO_API_KEY", ""),
+        "Content-Type": "application/json",
+    }
+
+
+def _is_high_value(title: str | None, hv: list[str]) -> bool:
+    if not title:
+        return False
+    t = title.lower()
+    return any(h.lower() in t for h in hv)
+
+
+async def _resolve_org(client, domain: str) -> str | None:
+    r = await client.post(
+        SEARCH_COMPANIES,
+        json={"q_organization_domains": domain, "per_page": 1},
+        headers=_headers(),
+    )
+    r.raise_for_status()
+    orgs = r.json().get("organizations") or r.json().get("accounts") or []
+    if not orgs:
+        return None
+    return orgs[0].get("id") or orgs[0].get("organization_id")
+
+
+async def _search_roster(
+    client, org_id: str, locations: list[str] | None, max_people: int
+) -> list[dict]:
+    """Paginate api_search. Pagination metadata is empty on this plan, so we loop
+    until a short/empty page or max_people. Returns masked candidates with ids."""
+    out: list[dict] = []
+    page = 1
+    while len(out) < max_people:
+        payload: dict = {
+            "organization_ids": [org_id],
+            "page": page,
+            "per_page": PER_PAGE,
+        }
+        if locations:
+            payload["person_locations"] = locations
+        r = await client.post(SEARCH_PEOPLE, json=payload, headers=_headers())
+        r.raise_for_status()
+        batch = r.json().get("people") or []
+        if not batch:
+            break
+        for p in batch:
+            out.append(
+                {
+                    "id": p.get("id"),
+                    "first_name": p.get("first_name") or "",
+                    "title": p.get("title"),
+                    "has_email": bool(p.get("has_email")),
+                    "has_phone": p.get("has_direct_phone") == "Yes",
+                }
+            )
+        if len(batch) < PER_PAGE:
+            break
+        page += 1
+    return out[:max_people]
+
+
+async def _reveal(client, ids: list[str]) -> tuple[list[dict], int]:
+    """bulk_match by id → full records. Returns (records, credits_consumed)."""
+    revealed: list[dict] = []
+    credits = 0
+    for start in range(0, len(ids), BATCH):
+        chunk = ids[start : start + BATCH]
+        r = await client.post(
+            BULK_MATCH,
+            json={
+                "details": [{"id": i} for i in chunk],
+                "reveal_personal_emails": False,
+            },
+            headers=_headers(),
+        )
+        r.raise_for_status()
+        j = r.json()
+        credits += j.get("credits_consumed", 0) or 0
+        for m in j.get("matches") or []:
+            if not m:
+                continue
+            revealed.append(
+                {
+                    "name": m.get("name"),
+                    "role": m.get("title"),
+                    "email": m.get("email"),
+                    "email_verified": m.get("email_status") == "verified",
+                    "phone": m.get("organization", {}).get("phone")
+                    or m.get("sanitized_phone"),
+                    "linkedin_url": m.get("linkedin_url"),
+                    "sources": ["apollo"],
+                }
+            )
+    return revealed, credits
+
+
+async def company_roster(
+    domain: str,
+    location: str = "",
+    max_people: int = 500,
+    max_reveal: int = 60,
+    high_value_titles: list[str] | None = None,
+    on_update=None,
+) -> dict:
+    """Full Apollo roster pull. Returns {people, total_discovered, revealed,
+    credits, coverage_note}. people are revealed (named) records; high-value titles
+    are revealed first within the max_reveal credit budget."""
+    high_value_titles = high_value_titles or []
+    locations = [location] if location else None
+
+    def emit(rec, enriched):
+        if not on_update:
+            return
+        try:
+            on_update(rec, enriched)
+        except Exception:
+            pass
+
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        org_id = await _resolve_org(client, domain)
+        if not org_id:
+            return {
+                "people": [],
+                "total_discovered": 0,
+                "revealed": 0,
+                "credits": 0,
+                "coverage_note": f"No Apollo org found for {domain}",
+            }
+        candidates = await _search_roster(client, org_id, locations, max_people)
+        total = len(candidates)
+
+        # Rank: high-value titles first, then people who have an email on file.
+        candidates.sort(
+            key=lambda c: (
+                not _is_high_value(c["title"], high_value_titles),
+                not c["has_email"],
+            )
+        )
+        to_reveal = [c["id"] for c in candidates[:max_reveal] if c.get("id")]
+        revealed, credits = await _reveal(client, to_reveal)
+
+        people = []
+        for rec in revealed:
+            rec["high_value"] = _is_high_value(rec.get("role"), high_value_titles)
+            people.append(rec)
+            emit(rec, True)
+
+    scope = f" @ {location}" if location else ""
+    note = (
+        f"Apollo roster{scope}: discovered {total}, revealed {len(people)} "
+        f"({credits} credits)"
+    )
+    if len(people) < total:
+        note += f" — {total - len(people)} more available, raise --reveal"
+    return {
+        "people": people,
+        "total_discovered": total,
+        "revealed": len(people),
+        "credits": credits,
+        "coverage_note": note,
+    }

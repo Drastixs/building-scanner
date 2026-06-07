@@ -5,4 +5,7 @@ requires-python = ">=3.11"
 dependencies = [
     "httpx",          # Shodan REST + RDAP over the WireGuard tunnel
     "python-dotenv",  # load SHODAN_API_KEY from ../../.env
+    "rapidfuzz",      # people.py — organizer-enricher person dedup/merge
+    "pydantic",       # people.py — organizer-enricher schema models
+    "playwright",     # people.py — drives your logged-in Chrome over CDP (no browser DL)
 ]
