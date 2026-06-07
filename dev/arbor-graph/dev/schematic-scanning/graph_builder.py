@@ -21,10 +21,10 @@ def level_to_z(level) -> float:
     return float(level) * STOREY_HEIGHT
 
 
-def load_floors() -> list[dict]:
+def load_floors(floors_dir: Path = FLOORS_DIR) -> list[dict]:
     floors = []
-    for f in sorted(FLOORS_DIR.glob("*.json")):
-        if "_raw" in f.name:
+    for f in sorted(floors_dir.glob("*.json")):
+        if "_raw" in f.name or "_labels" in f.name:
             continue
         try:
             data = json.loads(f.read_text())
@@ -164,6 +164,25 @@ def export(G: nx.Graph, floors: list[dict]) -> dict:
         )
 
     return {"nodes": nodes, "edges": edges, "floors": floor_meta}
+
+
+def run(floors_dir, out_path) -> dict:
+    """Merge per-floor JSON in floors_dir into a graph and write out_path (graph.json).
+
+    Returns the graph dict. Raises ValueError if no floor JSON was found, so the
+    caller can fail the ingest job rather than write an empty graph.
+    """
+    floors_dir, out_path = Path(floors_dir), Path(out_path)
+    floors = load_floors(floors_dir)
+    if not floors:
+        raise ValueError(
+            f"no floor JSON in {floors_dir} — extract step produced nothing"
+        )
+    G = build_graph(floors)
+    data = export(G, floors)
+    out_path.write_text(json.dumps(data, indent=2))
+    print(f"Wrote {out_path} ({len(data['nodes'])} nodes, {len(data['edges'])} edges)")
+    return data
 
 
 def main():

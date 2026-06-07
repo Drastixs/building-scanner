@@ -220,8 +220,8 @@ def split_outer_inner(norm):
     return outer, inner
 
 
-def extract_sheet(stem):
-    pdf = PDF_DIR / f"{stem}.pdf"
+def extract_sheet(stem, pdf_dir=PDF_DIR):
+    pdf = Path(pdf_dir) / f"{stem}.pdf"
     if not pdf.exists():
         print(f"  WARN: {pdf} not found, skipping")
         return None
@@ -240,6 +240,52 @@ def extract_sheet(stem):
         f"(dropped {dropped}) -> outer {len(outer)} (smoothed) + inner {len(inner)}"
     )
     return {"outer": outer, "inner": inner}
+
+
+def run(pdf_dir, out_path, progress_cb=None) -> dict:
+    """Extract wall geometry for every floor-plan PDF in pdf_dir → walls.json.
+
+    Floors are inferred per sheet (shares extract.infer_floors), so this works for any
+    building. Best-effort: a sheet that yields no walls is skipped, not fatal. Returns
+    the walls dict {scale, schema, floors}.
+    """
+    from extract import ROOF_MARKER, infer_floors  # same package, avoids a FLOOR_MAP
+
+    pdf_dir, out_path = Path(pdf_dir), Path(out_path)
+    pdfs = sorted(pdf_dir.glob("*.pdf"))
+
+    # Resolve levels per sheet (skip non-floor sheets, resolve ROOF to top+1).
+    planned = []
+    for pdf in pdfs:
+        try:
+            levels, _conf, _reason = infer_floors(pdf.stem, fitz.open(pdf)[0])
+        except Exception:
+            continue
+        if levels is not None:
+            planned.append((pdf.stem, levels))
+    numeric = [lvl for _s, lv in planned for lvl in lv if isinstance(lvl, int)]
+    roof_level = (max(numeric) + 1) if numeric else 1
+
+    floors = {}
+    total = len(planned)
+    for i, (stem, levels) in enumerate(planned, 1):
+        print(f"--- {stem} ---")
+        sheet = extract_sheet(stem, pdf_dir)
+        if sheet is not None:
+            for lvl in levels:
+                lvl = roof_level if lvl == ROOF_MARKER else lvl
+                floors[str(lvl)] = sheet
+        if progress_cb:
+            progress_cb(i, total, stem)
+
+    data = {
+        "scale": "normalised 0..1, aspect-preserved, y-up",
+        "schema": "floors[level] = {outer:[segs], inner:[segs]}",
+        "floors": floors,
+    }
+    out_path.write_text(json.dumps(data))
+    print(f"\nWrote {out_path}: {len(floors)} floors")
+    return data
 
 
 def main():

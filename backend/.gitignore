@@ -5,6 +5,9 @@ __pycache__/
 store.json
 .env
 
+# pipeline_app.py job registry (runtime state)
+jobs.json
+
 # scan.py device index
 camera_index.json
 

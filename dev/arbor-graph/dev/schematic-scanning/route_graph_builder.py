@@ -43,8 +43,8 @@ def level_sort_key(level) -> float:
     return float(level)
 
 
-def main():
-    b = json.loads(IN.read_text())
+def build_routes(b: dict) -> dict:
+    """Collapse a building.json portal graph into the thin traversal skeleton."""
     nodes = {n["id"]: n for n in b["nodes"]}
 
     G = nx.Graph()
@@ -158,14 +158,28 @@ def main():
         "entrances": entrances,
         "edges": edges,
     }
-    OUT.write_text(json.dumps(routes, indent=2))
+    return routes
+
+
+def run(building_path, out_path) -> dict:
+    """building.json → routes.json. Returns the routes dict."""
+    building_path, out_path = Path(building_path), Path(out_path)
+    routes = build_routes(json.loads(building_path.read_text()))
+    out_path.write_text(json.dumps(routes, indent=2))
+    edges = routes["edges"]
     reaches = sum(1 for e in edges if e["rel"] == "reaches")
     transfers = sum(1 for e in edges if e["rel"] == "transfer")
     print(
-        f"Wrote {OUT}: {len(routes['floors'])} floors, {len(connectors)} connectors, "
-        f"{len(routes['rooms'])} rooms, {len(entrances)} entrances, "
+        f"Wrote {out_path}: {len(routes['floors'])} floors, "
+        f"{len(routes['connectors'])} connectors, {len(routes['rooms'])} rooms, "
+        f"{len(routes['entrances'])} entrances, "
         f"{len(edges)} edges ({reaches} reaches, {transfers} transfers)"
     )
+    return routes
+
+
+def main():
+    run(IN, OUT)
 
 
 if __name__ == "__main__":

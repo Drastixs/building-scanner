@@ -54,6 +54,104 @@ FLOOR_MAP = {
     "PA2018_ROOF_GA": [18],
 }
 
+# ── Floor inference (any building, no hand-authored FLOOR_MAP) ─────────────────
+#
+# A GA sheet names its level in the filename and/or title block ("LEVEL 1",
+# "BASEMENT", "ROOF", "GROUND FLOOR LOWER", "LEVEL 2-5"). We parse that instead of
+# relying on a per-building FLOOR_MAP, and return a confidence so the caller can
+# flag sheets it guessed weakly — a wrong level silently renders a wrong 3D model.
+ROOF_MARKER = "__ROOF__"
+_LEVEL_RANGE_RE = re.compile(r"(?:LEVEL|FLOOR|LVL)\s*0*(\d+)\s*[-–]\s*0*(\d+)")
+_LEVEL_ONE_RE = re.compile(r"(?:LEVEL|FLOOR|LVL)\s*0*(\d+)")
+_ORDINAL_RE = re.compile(r"\b0*(\d+)(?:ST|ND|RD|TH)\s+FLOOR")
+_BASEMENT_N_RE = re.compile(r"(?:BASEMENT|LOWER\s+GROUND)\s*(?:LEVEL\s*)?B?\s*0*(\d+)")
+
+
+def _parse_levels(text: str) -> tuple[list | None, float, str]:
+    """Parse floor level(s) from a sheet title string.
+
+    Returns (levels, confidence, reason). levels is None when the string carries no
+    floor signal at all (a non-floor sheet: site plan, section, DAS, register).
+    """
+    s = text.upper()
+
+    # Ground variants first — "GROUND FLOOR LOWER/UPPER" splits into L0a / L0b.
+    if "GROUND" in s and "LOWER" in s:
+        return ["L0a"], 0.85, "ground floor lower"
+    if "GROUND" in s and "UPPER" in s:
+        return ["L0b"], 0.85, "ground floor upper"
+
+    if "ROOF" in s:
+        return [ROOF_MARKER], 0.85, "roof"
+
+    m = _BASEMENT_N_RE.search(s)
+    if m:
+        return [-int(m.group(1))], 0.8, f"basement B{m.group(1)}"
+    if "BASEMENT" in s or "LOWER GROUND" in s:
+        return [-1], 0.6, "basement (no number — assumed -1)"
+
+    m = _LEVEL_RANGE_RE.search(s)
+    if m:
+        lo, hi = int(m.group(1)), int(m.group(2))
+        if 0 <= hi - lo <= 60:
+            return list(range(lo, hi + 1)), 0.9, f"level range {lo}-{hi}"
+
+    m = _LEVEL_ONE_RE.search(s) or _ORDINAL_RE.search(s)
+    if m:
+        return [int(m.group(1))], 0.9, f"level {m.group(1)}"
+
+    if "GROUND" in s or "MEZZANINE" in s:
+        return [0], 0.75, "ground / mezzanine"
+
+    return None, 0.0, "no floor keyword"
+
+
+def sheet_title_text(page) -> str:
+    """First ~40 text lines of the page — cheap source for the sheet's level label."""
+    lines = []
+    for block in page.get_text("dict")["blocks"]:
+        for line in block.get("lines", []):
+            t = "".join(span["text"] for span in line["spans"]).strip()
+            if t:
+                lines.append(t)
+    return " ".join(lines[:40])
+
+
+def infer_floors(stem: str, page=None) -> tuple[list | None, float, str]:
+    """Infer a sheet's floor level(s) from its filename, cross-checked with title text.
+
+    Filename is primary (planning sets name sheets by level). If the filename gives
+    nothing we fall back to the embedded title text at lower confidence. When both
+    agree, confidence is bumped; when they disagree, it is cut and the conflict noted.
+    """
+    name = stem.replace("_", " ")
+    f_levels, f_conf, f_reason = _parse_levels(name)
+
+    t_levels = t_reason = None
+    if page is not None:
+        t_levels, _t_conf, t_reason = _parse_levels(sheet_title_text(page))
+
+    if f_levels is not None:
+        if t_levels is not None and t_levels != f_levels:
+            return (
+                f_levels,
+                min(f_conf, 0.55),
+                f"filename={f_reason}; title disagrees ({t_reason})",
+            )
+        if t_levels == f_levels:
+            return (
+                f_levels,
+                min(0.97, f_conf + 0.05),
+                f"filename+title agree ({f_reason})",
+            )
+        return f_levels, f_conf, f"filename: {f_reason}"
+
+    if t_levels is not None:
+        return t_levels, 0.6, f"title only: {t_reason}"
+
+    return None, 0.0, "no floor signal (skipped — not a floor plan)"
+
+
 # ── Embedded-text extraction (#1: text as a second data source) ───────────────
 #
 #   PDF text lines           normalise to clip 0..1        filter boilerplate
@@ -280,7 +378,7 @@ def _format_labels(labels: list[dict]) -> str:
     return "\n".join(f'- "{lab["text"]}" at ({lab["x"]}, {lab["y"]})' for lab in labels)
 
 
-def _call_o3(client, png_b64, prompt, stem, attempts=3):
+def _call_o3(client, png_b64, prompt, stem, floors_dir=FLOORS_DIR, attempts=3):
     """
     Call o3 vision and parse its JSON, retrying on the empty / unparseable response
     o3 occasionally returns (reasoning ate the token budget, or a transient). Returns
@@ -309,7 +407,7 @@ def _call_o3(client, png_b64, prompt, stem, attempts=3):
                 ],
             )
             raw_text = response.choices[0].message.content or ""
-            (FLOORS_DIR / f"{stem}_raw.txt").write_text(raw_text)  # debug
+            (floors_dir / f"{stem}_raw.txt").write_text(raw_text)  # debug
 
             text = raw_text.strip()
             if text.startswith("```"):
@@ -328,14 +426,26 @@ def _call_o3(client, png_b64, prompt, stem, attempts=3):
                 f"  WARN: API call failed for {stem} (attempt {attempt}/{attempts}): {e}"
             )
     print(
-        f"  ERROR: giving up on {stem}; raw saved to {FLOORS_DIR / f'{stem}_raw.txt'}"
+        f"  ERROR: giving up on {stem}; raw saved to {floors_dir / f'{stem}_raw.txt'}"
     )
     return None
 
 
-def extract_floor(pdf_stem: str, client: openai.OpenAI) -> list[dict]:
-    levels = FLOOR_MAP[pdf_stem]
-    pdf_path = PDF_DIR / f"{pdf_stem}.pdf"
+def extract_floor(
+    pdf_stem: str,
+    client: openai.OpenAI,
+    pdf_dir: Path = PDF_DIR,
+    floors_dir: Path = FLOORS_DIR,
+    levels: list | None = None,
+) -> list[dict]:
+    """Extract one GA sheet into per-level floor JSON.
+
+    levels: the floor level(s) this sheet maps to. When None, falls back to the
+    hand-authored FLOOR_MAP (CLI / Arbor); the API passes inferred levels instead.
+    """
+    if levels is None:
+        levels = FLOOR_MAP[pdf_stem]
+    pdf_path = pdf_dir / f"{pdf_stem}.pdf"
     if not pdf_path.exists():
         print(f"  WARN: {pdf_path} not found, skipping")
         return []
@@ -345,10 +455,10 @@ def extract_floor(pdf_stem: str, client: openai.OpenAI) -> list[dict]:
     print(f"  Rasterising {pdf_stem}...")
     png_bytes = rasterise(page)
     png_b64 = base64.standard_b64encode(png_bytes).decode()
-    (FLOORS_DIR / f"{pdf_stem}.png").write_bytes(png_bytes)  # debug
+    (floors_dir / f"{pdf_stem}.png").write_bytes(png_bytes)  # debug
 
     labels = embedded_labels(page)
-    (FLOORS_DIR / f"{pdf_stem}_labels.json").write_text(json.dumps(labels, indent=2))
+    (floors_dir / f"{pdf_stem}_labels.json").write_text(json.dumps(labels, indent=2))
     print(
         f"  Embedded labels kept: {len(labels)} ({', '.join(l['text'] for l in labels[:8])}{'...' if len(labels) > 8 else ''})"
     )
@@ -357,7 +467,7 @@ def extract_floor(pdf_stem: str, client: openai.OpenAI) -> list[dict]:
     prompt = PROMPT.format(level=level_str, labels=_format_labels(labels))
 
     print(f"  Calling o3 vision for {pdf_stem}...")
-    data = _call_o3(client, png_b64, prompt, pdf_stem)
+    data = _call_o3(client, png_b64, prompt, pdf_stem, floors_dir=floors_dir)
     if data is None:
         return []
 
@@ -368,7 +478,7 @@ def extract_floor(pdf_stem: str, client: openai.OpenAI) -> list[dict]:
     results = []
     if len(levels) == 1:
         data["floor_level"] = levels[0]
-        out = FLOORS_DIR / f"{pdf_stem}.json"
+        out = floors_dir / f"{pdf_stem}.json"
         out.write_text(json.dumps(data, indent=2))
         print(f"  Wrote {out}")
         results.append(data)
@@ -380,12 +490,112 @@ def extract_floor(pdf_stem: str, client: openai.OpenAI) -> list[dict]:
                 room["room_id"] = room["room_id"].replace(str(levels[0]), str(lvl))
             for core in floor_data.get("core_elements", []):
                 core["id"] = f"{core['id']}-L{lvl}"
-            out = FLOORS_DIR / f"{pdf_stem}_L{lvl}.json"
+            out = floors_dir / f"{pdf_stem}_L{lvl}.json"
             out.write_text(json.dumps(floor_data, indent=2))
             print(f"  Wrote {out}")
             results.append(floor_data)
 
     return results
+
+
+def run(pdf_dir, floors_dir, progress_cb=None) -> dict:
+    """Ingest every floor-plan PDF in pdf_dir → per-level JSON in floors_dir.
+
+    Floors are INFERRED per sheet (no FLOOR_MAP). Non-floor sheets (site plans,
+    sections, DAS, registers) are skipped. ROOF markers resolve to one above the
+    highest numeric level found. Returns a summary the API surfaces as A1 progress:
+
+        {sheets_total, sheets_processed, floors_extracted, skipped[], low_confidence[]}
+
+    progress_cb(done, total, stem) is called after each sheet so the caller can poll
+    docs_processed / docs_total live. low_confidence flags any sheet whose level was a
+    weak guess — a wrong level renders a wrong 3D model, so it must surface, not hide.
+    """
+    pdf_dir = Path(pdf_dir)
+    floors_dir = Path(floors_dir)
+    floors_dir.mkdir(parents=True, exist_ok=True)
+
+    pdfs = sorted(p for p in pdf_dir.glob("*.pdf"))
+
+    # Pass 1: classify + infer levels for every sheet (cheap, local — no o3 yet) so we
+    # know which are floor plans and can resolve ROOF against the real top level.
+    plan: list[dict] = []
+    skipped: list[dict] = []
+    for pdf in pdfs:
+        try:
+            page = fitz.open(pdf)[0]
+            levels, conf, reason = infer_floors(pdf.stem, page)
+        except Exception as e:  # corrupt / unreadable PDF
+            skipped.append({"sheet": pdf.stem, "reason": f"open failed: {e}"})
+            continue
+        if levels is None:
+            skipped.append({"sheet": pdf.stem, "reason": reason})
+            continue
+        plan.append(
+            {"stem": pdf.stem, "levels": levels, "conf": conf, "reason": reason}
+        )
+
+    # Resolve ROOF marker → highest numeric level + 1 (per building).
+    numeric = [lvl for p in plan for lvl in p["levels"] if isinstance(lvl, int)]
+    roof_level = (max(numeric) + 1) if numeric else 1
+    for p in plan:
+        p["levels"] = [roof_level if lvl == ROOF_MARKER else lvl for lvl in p["levels"]]
+
+    # Collision flag: two sheets claiming the same level is a likely mis-inference.
+    seen_levels: dict = {}
+    for p in plan:
+        for lvl in p["levels"]:
+            seen_levels.setdefault(lvl, []).append(p["stem"])
+
+    low_confidence: list[dict] = []
+    for p in plan:
+        collided = sorted(
+            {
+                s
+                for lvl in p["levels"]
+                for s in seen_levels.get(lvl, [])
+                if s != p["stem"]
+            }
+        )
+        if p["conf"] < 0.85 or collided:
+            low_confidence.append(
+                {
+                    "sheet": p["stem"],
+                    "levels": p["levels"],
+                    "confidence": round(p["conf"], 2),
+                    "reason": p["reason"],
+                    "collides_with": collided,
+                }
+            )
+
+    # Pass 2: the expensive o3 extraction, one sheet at a time, with progress.
+    client = openai.OpenAI()
+    total = len(plan)
+    floors_extracted = 0
+    for i, p in enumerate(plan, 1):
+        print(f"\n--- {p['stem']} → levels {p['levels']} ({p['reason']}) ---")
+        try:
+            results = extract_floor(
+                p["stem"],
+                client,
+                pdf_dir=pdf_dir,
+                floors_dir=floors_dir,
+                levels=p["levels"],
+            )
+            floors_extracted += len(results)
+        except Exception as e:
+            print(f"  ERROR extracting {p['stem']}: {e}")
+            skipped.append({"sheet": p["stem"], "reason": f"extract failed: {e}"})
+        if progress_cb:
+            progress_cb(i, total, p["stem"])
+
+    return {
+        "sheets_total": total,
+        "sheets_processed": total,
+        "floors_extracted": floors_extracted,
+        "skipped": skipped,
+        "low_confidence": low_confidence,
+    }
 
 
 def main():

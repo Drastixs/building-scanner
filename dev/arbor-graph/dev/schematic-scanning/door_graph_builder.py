@@ -349,6 +349,26 @@ def build(graph: dict, curated: dict | None) -> dict:
     return {"nodes": out_nodes, "edges": out_edges, "floors": floor_meta}
 
 
+def run(graph_path, out_path, curated_path=None) -> dict:
+    """Build the building-wide doorway graph (building.json) from graph.json.
+
+    curated_path is optional — when present it overlays external entrances; when absent
+    the building is still fully navigable, just without curated entrance nodes.
+    Returns the building dict.
+    """
+    graph_path, out_path = Path(graph_path), Path(out_path)
+    graph = json.loads(graph_path.read_text())
+    curated = None
+    if curated_path is not None and Path(curated_path).exists():
+        curated = json.loads(Path(curated_path).read_text())
+    else:
+        print("INFO: no curated entrances — building.json will have no external doors.")
+    data = build(graph, curated)
+    out_path.write_text(json.dumps(data, indent=2))
+    print(f"Wrote {out_path}")
+    return data
+
+
 def main():
     graph = json.loads(GRAPH_IN.read_text())
     curated = json.loads(CURATED_IN.read_text()) if CURATED_IN.exists() else None

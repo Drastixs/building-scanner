@@ -7,7 +7,11 @@ dependencies = [
     "python-dotenv",      # load SHODAN_API_KEY from ../../.env
     "fastapi",            # api.py — HTTP wrapper around the scanner
     "uvicorn[standard]",  # ASGI server for the API
-    "rapidfuzz",          # people.py — organizer-enricher person dedup/merge
+    "rapidfuzz",          # people.py + address.py — fuzzy person/building matching
     "pydantic",           # people.py — organizer-enricher schema models
     "playwright",         # people.py — drives your logged-in Chrome over CDP (no browser DL)
+    "networkx",           # workers/ingest.py — A1 graph + route building
+    "pymupdf",            # workers/ingest.py — A1 PDF rasterise + embedded text (fitz)
+    "openai",             # workers/ingest.py — A1 o3 vision floor extraction
+    "shapely",            # workers/ingest.py — A1 wall hull (vector_extract)
 ]
