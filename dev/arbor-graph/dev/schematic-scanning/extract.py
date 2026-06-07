@@ -227,6 +227,7 @@ EMBEDDED TEXT LABELS:
 
 Visual cues — use these to set `type`, `function`, `environment`, `fixtures`:
 - Toilet / urinal / basin glyphs in small cubicles with door swings -> WC (type: amenity, fixtures: ["wc","basin"], environment: indoor)
+- A larger WC cubicle with a wheelchair / DDA symbol, a corner pan and grab rails -> Accessible WC (type: amenity, function: "Accessible WC", fixtures: ["wc","basin","grab-rail"], environment: indoor)
 - A room sectioned off with a large table ringed by chairs          -> meeting room / boardroom (type: office)
 - Regular tile / brick HATCH fill, usually labelled "Terrace"        -> terrace (type: external, environment: outdoor, fixtures: ["tile-hatch"])
 - Dashed circles (tree canopies), usually labelled "Planting"        -> landscaping (type: external, environment: outdoor, fixtures: ["tree"])

@@ -7,9 +7,7 @@ import { SceneMesh } from '@/components/SceneMesh';
 import {
   PARTITION_H,
   WALL_T,
-  DOOR_H,
   PARTITION_COLOR,
-  DOOR_COLOR,
 } from '@/lib/scene/constants';
 import { partitionPlacement, doorGap } from '@/lib/scene/geometry';
 
@@ -24,19 +22,6 @@ export function Partitions({ graph, state, hidden, onHover, onHide }: GraphProps
         opacity: 0.5,
         roughness: 0.7,
         side: THREE.DoubleSide,
-      }),
-    [],
-  );
-
-  const doorMat = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: DOOR_COLOR,
-        emissive: new THREE.Color(DOOR_COLOR),
-        emissiveIntensity: 0.25,
-        transparent: true,
-        opacity: 0.75,
-        roughness: 0.4,
       }),
     [],
   );
@@ -99,15 +84,7 @@ export function Partitions({ graph, state, hidden, onHover, onHide }: GraphProps
                     <boxGeometry args={[seg.len, PARTITION_H, WALL_T]} />
                   </mesh>
                 ))}
-                {/* Door fill (only when gap exists) */}
-                {g.door != null && (
-                  <mesh
-                    position={[p.xc, p.baseY + DOOR_H / 2, p.zc]}
-                    material={doorMat}
-                  >
-                    <boxGeometry args={[g.door.width, DOOR_H, WALL_T * 0.6]} />
-                  </mesh>
-                )}
+                {/* Opening left for the door — the Doors layer fills it. */}
               </>
             ) : (
               <>
@@ -121,15 +98,7 @@ export function Partitions({ graph, state, hidden, onHover, onHide }: GraphProps
                     <boxGeometry args={[WALL_T, PARTITION_H, seg.len]} />
                   </mesh>
                 ))}
-                {/* Door fill (only when gap exists) */}
-                {g.door != null && (
-                  <mesh
-                    position={[p.xc, p.baseY + DOOR_H / 2, p.zc]}
-                    material={doorMat}
-                  >
-                    <boxGeometry args={[WALL_T * 0.6, DOOR_H, g.door.width]} />
-                  </mesh>
-                )}
+                {/* Opening left for the door — the Doors layer fills it. */}
               </>
             )}
           </SceneMesh>

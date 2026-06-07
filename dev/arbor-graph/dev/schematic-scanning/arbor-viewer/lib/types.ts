@@ -31,6 +31,11 @@ export interface GraphNode {
   z: number;
   w?: number;
   h?: number;
+  // Richer semantics carried through from extract.py (graph_builder copies them).
+  // Used to render fixtures (e.g. a WC's "wc"/"basin") and tell apart Male / Female
+  // / Accessible WCs. Optional — older graph.json files won't have them.
+  function?: string;
+  fixtures?: string[];
 }
 
 export type EdgeType = 'intra' | 'inter';
@@ -111,6 +116,8 @@ export type UnitKind =
   | 'link' // generic vertical link
   | 'entrance'
   | 'partition' // inner wall (adjacency or vector)
+  | 'door' // door leaf + frame in an inner-wall opening
+  | 'fixture' // sanitaryware inside a WC (toilet, basin, grab rail)
   | 'wall' // vector inner wall mesh
   | 'outerwall'
   | 'plate' // per-level reference plate

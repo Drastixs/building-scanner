@@ -12,6 +12,8 @@ import { CoreMarkers } from './CoreMarkers';
 import { Labels } from './Labels';
 import { VectorWalls } from './VectorWalls';
 import { Partitions } from './Partitions';
+import { Doors } from './Doors';
+import { Toilets } from './Toilets';
 import { Stairs } from './Stairs';
 import { Lifts } from './Lifts';
 import { Entrances } from './Entrances';
@@ -53,6 +55,10 @@ export const Scene = memo(function Scene({ data, routePath, ...h }: Props) {
       ) : (
         <Partitions graph={graph} {...h} />
       )}
+      {/* Doors are driven from room adjacency, so they render over either wall mode. */}
+      <Doors graph={graph} {...h} />
+      {/* Sanitaryware inside WC rooms (incl. accessible / disabled). */}
+      <Toilets graph={graph} {...h} />
 
       <Stairs graph={graph} {...h} />
       <Lifts graph={graph} {...h} />
