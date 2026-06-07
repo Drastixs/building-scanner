@@ -51,6 +51,29 @@ SUBDOMAIN_LIMIT = 250  # hostnames to resolve during attribution (concurrent)
 RDAP_IP_LIMIT = 40  # distinct netblocks to RDAP-look-up
 RDAP_URL = "https://rdap.arin.net/registry/ip/{ip}"  # follows redirects to other RIRs
 
+
+# --- errors ------------------------------------------------------------------
+# scan() raises these instead of calling sys.exit(), so the same engine can back
+# both the CLI (translate to an exit code) and the API (translate to an HTTP
+# status) without one ever tearing down the other's process.
+class ScanError(Exception):
+    """Base scan failure. exit_code drives the CLI; the API maps to an HTTP status."""
+
+    exit_code = 1
+
+
+class VpnDownError(ScanError):
+    """The Surfshark tunnel isn't the default route, or its egress check failed."""
+
+    exit_code = 2
+
+
+class NoRangesError(ScanError):
+    """No org-owned IP ranges resolved (apex likely fully CDN-fronted)."""
+
+    exit_code = 3
+
+
 # Orgs that own CDN/cloud space — their blocks aren't the building's own network.
 CDN_ORGS = (
     "akamai",
@@ -393,22 +416,31 @@ async def vpn_preflight() -> str:
         return r.text.strip()
 
 
+async def vpn_status() -> dict:
+    """Non-fatal VPN health snapshot for the API /health endpoint."""
+    up = vpn_is_up()
+    egress = None
+    if up:
+        try:
+            egress = await vpn_preflight()
+        except Exception:
+            up = False  # tunnel claims default route but can't actually egress
+    return {"vpn_up": up, "iface": vpn_route_iface(), "egress_ip": egress}
+
+
 async def scan(domain: str) -> dict:
+    """Run the full pipeline for a domain. Raises ScanError on failure (never exits)."""
     print(f"[*] VPN preflight…", flush=True)
     if not vpn_is_up():
         iface = vpn_route_iface() or "unknown"
-        print(
-            f"[!] Surfshark VPN is not the default route (egress iface: {iface}).\n"
-            f"    Connect Surfshark before scanning.\n"
-            f"    Aborting so your real IP is never sent to Shodan.",
-            file=sys.stderr,
+        raise VpnDownError(
+            f"Surfshark VPN is not the default route (egress iface: {iface}). "
+            f"Connect Surfshark before scanning so your real IP is never sent to Shodan."
         )
-        sys.exit(2)
     try:
         egress = await vpn_preflight()
     except Exception as e:
-        print(f"[!] VPN up but egress check failed ({e}). Aborting.", file=sys.stderr)
-        sys.exit(2)
+        raise VpnDownError(f"VPN up but egress check failed ({e}).") from e
     print(f"[+] Tunnelled via {vpn_route_iface()} → egress {egress}", flush=True)
 
     print(f"[*] Attributing IP space for {domain} (CT logs → RDAP)…", flush=True)
@@ -417,12 +449,10 @@ async def scan(domain: str) -> dict:
     async with osint_client() as client:
         cidrs, org = await attribute(client, domain)
         if not cidrs:
-            print(
-                f"[!] No org-owned IP ranges found for {domain}. "
-                f"Apex may be fully CDN-fronted with no resolvable org subdomains.",
-                file=sys.stderr,
+            raise NoRangesError(
+                f"No org-owned IP ranges found for {domain}. "
+                f"Apex may be fully CDN-fronted with no resolvable org subdomains."
             )
-            sys.exit(3)
         scan_cidrs = cidrs[:CIDR_LIMIT]
         print(f"[+] org={org!r}  cidrs={scan_cidrs}", flush=True)
 
@@ -543,7 +573,11 @@ def main():
         print(f"Could not parse a domain from {args.target!r}", file=sys.stderr)
         sys.exit(1)
 
-    result = asyncio.run(scan(domain))
+    try:
+        result = asyncio.run(scan(domain))
+    except ScanError as e:
+        print(f"[!] {e}", file=sys.stderr)
+        sys.exit(e.exit_code)
     building_id = (args.id or domain).strip().lower()
     save_to_index(building_id, result)
     print_devices(result)
