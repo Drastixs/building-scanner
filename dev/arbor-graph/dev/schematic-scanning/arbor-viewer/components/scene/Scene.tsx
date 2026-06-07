@@ -14,6 +14,7 @@ import { VectorWalls } from './VectorWalls';
 import { Partitions } from './Partitions';
 import { Doors } from './Doors';
 import { Toilets } from './Toilets';
+import { Furniture } from './Furniture';
 import { Stairs } from './Stairs';
 import { Lifts } from './Lifts';
 import { Entrances } from './Entrances';
@@ -59,6 +60,8 @@ export const Scene = memo(function Scene({ data, routePath, ...h }: Props) {
       <Doors graph={graph} {...h} />
       {/* Sanitaryware inside WC rooms (incl. accessible / disabled). */}
       <Toilets graph={graph} {...h} />
+      {/* Representative furniture / fit-out models per room (desks, tables, racks…). */}
+      <Furniture graph={graph} {...h} />
 
       <Stairs graph={graph} {...h} />
       <Lifts graph={graph} {...h} />
