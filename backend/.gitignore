@@ -10,3 +10,6 @@ camera_index.json
 
 # playwright-mcp browser session artifacts (people.py linkedin source)
 .playwright-mcp/
+
+# people.py roster cache
+people_index.json

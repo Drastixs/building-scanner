@@ -91,8 +91,23 @@ async def _search_roster(
     return out[:max_people]
 
 
+def _full_name(m: dict) -> str | None:
+    """bulk_match returns `name`, but fall back to first+last so a revealed
+    (paid-for) person always carries a name."""
+    name = (m.get("name") or "").strip()
+    if name:
+        return name
+    parts = [m.get("first_name"), m.get("last_name")]
+    composed = " ".join(p for p in parts if p).strip()
+    return composed or None
+
+
 async def _reveal(client, ids: list[str]) -> tuple[list[dict], int]:
-    """bulk_match by id → full records. Returns (records, credits_consumed)."""
+    """bulk_match by id → full records. Returns (records, credits_consumed).
+
+    Credits are spent here, so we keep only matches that actually carry a name,
+    and we always surface the LinkedIn URL. Phone reveal is intentionally NOT
+    requested — it's deferred to an in-app feature (would cost extra credits)."""
     revealed: list[dict] = []
     credits = 0
     for start in range(0, len(ids), BATCH):
@@ -102,6 +117,7 @@ async def _reveal(client, ids: list[str]) -> tuple[list[dict], int]:
             json={
                 "details": [{"id": i} for i in chunk],
                 "reveal_personal_emails": False,
+                # reveal_phone_number deferred — phone is a future in-app feature.
             },
             headers=_headers(),
         )
@@ -111,15 +127,17 @@ async def _reveal(client, ids: list[str]) -> tuple[list[dict], int]:
         for m in j.get("matches") or []:
             if not m:
                 continue
+            name = _full_name(m)
+            if not name:
+                continue  # paid reveal returned nothing usable; skip
             revealed.append(
                 {
-                    "name": m.get("name"),
+                    "name": name,
                     "role": m.get("title"),
                     "email": m.get("email"),
                     "email_verified": m.get("email_status") == "verified",
-                    "phone": m.get("organization", {}).get("phone")
-                    or m.get("sanitized_phone"),
                     "linkedin_url": m.get("linkedin_url"),
+                    "phone": None,  # deferred in-app feature
                     "sources": ["apollo"],
                 }
             )
@@ -177,10 +195,11 @@ async def company_roster(
             people.append(rec)
             emit(rec, True)
 
+    with_li = sum(1 for p in people if p.get("linkedin_url"))
     scope = f" @ {location}" if location else ""
     note = (
         f"Apollo roster{scope}: discovered {total}, revealed {len(people)} "
-        f"({credits} credits)"
+        f"({credits} credits, {with_li}/{len(people)} with LinkedIn)"
     )
     if len(people) < total:
         note += f" — {total - len(people)} more available, raise --reveal"
