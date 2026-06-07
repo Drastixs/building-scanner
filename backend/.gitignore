@@ -16,3 +16,6 @@ camera_index.json
 
 # people.py roster cache
 people_index.json
+
+# building.py occupancy cache
+building_index.json
