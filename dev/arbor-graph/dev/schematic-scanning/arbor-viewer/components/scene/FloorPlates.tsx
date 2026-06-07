@@ -9,7 +9,9 @@ import { outerRing } from '@/lib/scene/geometry';
 import {
   FLOOR_W,
   PLATE_H,
+  SCALE_XY,
   SCALE_Z,
+  STAIR_VOID,
   FLOOR_FILL_COLOR,
   GREEN_COLOR,
   GROUND_SIZE,
@@ -21,9 +23,37 @@ const plateBoxGeom = new THREE.BoxGeometry(FLOOR_W, PLATE_H, FLOOR_W);
 // A filled THREE.Shape laid flat. Built in the shape's local XY plane from world
 // (X, Z) points; the mesh is rotated +90° about X so shapeX→worldX, shapeY→worldZ,
 // keeping the slab perfectly aligned with the walls drawn from the same segments.
-const ringShape = (ring: [number, number][]): THREE.Shape | null => {
+//
+// `voids` are world-XZ centres (stairwells) punched straight through the slab so the
+// stair flights below stay visible — no floor renders above a staircase.
+const ringShape = (
+  ring: [number, number][],
+  voids: [number, number][],
+): THREE.Shape | null => {
   if (ring.length < 3) return null;
-  return new THREE.Shape(ring.map(([x, z]) => new THREE.Vector2(x, z)));
+  const shape = new THREE.Shape(ring.map(([x, z]) => new THREE.Vector2(x, z)));
+
+  // Bbox of the outline — only cut holes that sit wholly inside it, otherwise a
+  // void straddling the perimeter corrupts the triangulation.
+  let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+  for (const [x, z] of ring) {
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (z < minZ) minZ = z;
+    if (z > maxZ) maxZ = z;
+  }
+  const hf = STAIR_VOID / 2;
+  for (const [x, z] of voids) {
+    if (x - hf <= minX || x + hf >= maxX || z - hf <= minZ || z + hf >= maxZ) continue;
+    const hole = new THREE.Path();
+    hole.moveTo(x - hf, z - hf);
+    hole.lineTo(x + hf, z - hf);
+    hole.lineTo(x + hf, z + hf);
+    hole.lineTo(x - hf, z + hf);
+    hole.closePath();
+    shape.holes.push(hole);
+  }
+  return shape;
 };
 
 const outerSegsOf = (fl: WallsFile['floors'][string]): WallSeg[] =>
@@ -41,6 +71,21 @@ export function FloorPlates({
   onHover,
   onHide,
 }: Props) {
+  // Stairwell centres per floor (world XZ) — every stair core punches a void so the
+  // run is never roofed over by the slab above it.
+  const stairVoidsByFloor = useMemo(() => {
+    const map = new Map<string, [number, number][]>();
+    for (const n of graph.nodes) {
+      if (n.type !== 'core') continue;
+      if (!(n.label || '').toLowerCase().includes('stair')) continue;
+      const lvl = String(n.floor);
+      const arr = map.get(lvl) ?? [];
+      arr.push([n.x * SCALE_XY, n.y * SCALE_XY]);
+      map.set(lvl, arr);
+    }
+    return map;
+  }, [graph.nodes]);
+
   // Per floor: the filled outline shape (from outer walls) + base height + meta.
   const floors = useMemo(() => {
     return graph.floors.map((fl) => {
@@ -48,7 +93,7 @@ export function FloorPlates({
       const baseY = fl.z * SCALE_Z;
       const wf = walls?.floors[lvl];
       const ring = wf ? outerRing(outerSegsOf(wf)) : [];
-      const shape = ringShape(ring);
+      const shape = ringShape(ring, stairVoidsByFloor.get(lvl) ?? []);
       const meta: UnitMeta = {
         id: `plate-${fl.level}`,
         kind: 'plate',
@@ -57,7 +102,7 @@ export function FloorPlates({
       };
       return { lvl, baseY, shape, meta, label: fl.label, z: fl.z };
     });
-  }, [graph.floors, walls]);
+  }, [graph.floors, walls, stairVoidsByFloor]);
 
   // Lowest floor → green site ground. No predetermined roof cap: green is
   // reserved for genuine outside areas (terraces), drawn as external rooms.

@@ -20,6 +20,16 @@ export function colorForType(type: string): number {
 export const STAIR_COLOR = 0xff6b4a;
 export const LIFT_COLOR = 0xff3df0; // lift shafts: glowing magenta
 export const DOOR_COLOR = 0xffffff;
+// Doors — a real leaf reads as warm timber against the cool partition glass.
+export const DOOR_LEAF_COLOR = 0xb07a4f;
+export const DOOR_FRAME_COLOR = 0x6e4a2f;
+// Sanitaryware — porcelain white + brushed-metal grab rails.
+export const WC_CERAMIC_COLOR = 0xeef2f5;
+export const WC_METAL_COLOR = 0xb8c0cc;
+// Amenity markers: male / female / accessible (DDA) so WC type reads at a glance.
+export const WC_MALE_COLOR = 0x3a78c2;
+export const WC_FEMALE_COLOR = 0xd14f8f;
+export const WC_ACCESSIBLE_COLOR = 0x2f80ed;
 export const ENTRANCE_COLOR = 0x00ff9c; // external portals: bright pulse
 export const PARTITION_COLOR = 0xc8ccd8;
 export const OUTER_WALL_COLOR = 0x8a94b0; // building envelope
@@ -35,7 +45,8 @@ export const PLATE_H = 0.08;
 export const SLAB_H = 0.18; // per-room floor tile thickness
 export const PARTITION_H = 2.4; // inner wall height
 export const WALL_T = 0.07; // wall panel thickness
-export const DOOR_H = 2.0;
+export const DOOR_H = 2.1;
+export const STAIR_VOID = 3.2; // world-unit square cut out of a floor plate over a stairwell
 export const MIN_FOOT = 0.6; // min footprint / wall length
 export const GROUND_SIZE = 220; // green site plane around the building
 

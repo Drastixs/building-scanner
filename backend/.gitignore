@@ -7,3 +7,6 @@ store.json
 
 # scan.py device index
 camera_index.json
+
+# playwright-mcp browser session artifacts (people.py linkedin source)
+.playwright-mcp/

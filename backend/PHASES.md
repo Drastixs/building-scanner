@@ -6,7 +6,7 @@ Agent searches public sources (planning portals, venue hire packs, FOI) to locat
 ## Phase A1 — Ingestion & 3D Mapping
 Ingests discovered documents, extracts spatial features (stairs, lifts, entry points, restricted zones), and builds a floor-by-floor model. Runs after A0.
 
-## Phase B — People Research *(parallel with A1)*
+## Phase B — People Research *(parallel with A1)* (Done API search enrichment with public house (get head people))
 Scouts the organisation's website, searches LinkedIn, then enriches each person found via API. Surfaces roles like head of security, facilities manager, reception.
 
 ## Phase C — OSINT *(parallel with A1 + B)*
