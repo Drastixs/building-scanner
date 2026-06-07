@@ -2,3 +2,8 @@
 __pycache__/
 *.pyc
 .ruff_cache/
+store.json
+.env
+
+# scan.py device index
+camera_index.json
